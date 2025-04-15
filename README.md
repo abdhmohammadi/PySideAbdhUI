@@ -106,7 +106,7 @@ app.exec()
 
 ## ✅ Requirements
 
-- Python ≥ 3.8
+- Python ≥ 3.13
 - PySide6
 
 Install PySide6 if not available:
@@ -133,12 +133,6 @@ Pull requests, issues, and feature suggestions are always welcome. You can:
 
 > Developed with ❤️ by `Abdh`
 > 
-## 🗨️ Join the Discussion
-
-Have questions, feedback, or suggestions? Join the conversation on our GitHub Discussions!
-
-[![GitHub Discussions](https://img.shields.io/badge/discussions-join-blue?style=flat-square&logo=github)](https://github.com/abdhmohammadi/PySideAbdhUI/discussions)
-
 ---
 
 ## 📢 Tips for Distribution
@@ -149,5 +143,11 @@ To use this package in PyInstaller or freeze it with your own application:
 - The `get_resource_path()` function ensures the package detects bundled resources correctly
 
 ---
+## 🗨️ Join the Discussion
+
+Have questions, feedback, or suggestions? Join the conversation on our GitHub Discussions!
+
+[![GitHub Discussions](https://img.shields.io/badge/discussions-join-blue?style=flat-square&logo=github)](https://github.com/abdhmohammadi/PySideAbdhUI/discussions)
+
 
 Enjoy building with **PySideAbdhUI**!
