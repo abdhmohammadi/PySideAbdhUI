@@ -1,0 +1,4 @@
+include README.md
+include LICENSE
+recursive-include PySideAbdhUI/resources/icons/svg *.svg
+recursive-include PySideAbdhUI/resources/styles *.qss

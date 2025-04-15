@@ -1,0 +1,30 @@
+Metadata-Version: 2.1
+Name: PySideAbdhUI
+Version: 1.0.0
+Summary: Customized Python UI components based on PySide6
+Home-page: https://github.com/abdhmohammadi/PySideAbdhUI
+Author: Abdullah Mohammadi
+Author-email: abdhmohammady@gmaile.com
+Classifier: Programming Language :: Python :: 3
+Classifier: Operating System :: Microsoft :: Windows
+Classifier: License :: OSI Approved :: MIT License
+Requires-Python: >=3.13
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: PySide6
+
+# PySideAbdhUI: Customized GUI base on PySide6(Qt for Python)
+This package contains:
+                 
+ * Window       : Customized QMainWindow with advanced functionality
+ * TableWidget  : Customized QTableWidget with auto-hide scroll bar
+ * PopupNotifier: Customized QDialog to show notifications
+ * GridView     : Customized QGridLayout to display data as card view
+
+How to install:
+using pip:
+pip install [full path]/PySidePyQtUI-0.1.0-py3-none-any.whl
+from git: 
+pip install git+https://github.com/yourusername/PySidePyQtUI.git
+
+## version history
