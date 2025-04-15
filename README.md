@@ -45,15 +45,7 @@ pip install -e F:\Projects\Python\PySideAbdhUI
 
 ## 🧪 Test Your Installation
 
-To test whether the package is correctly installed:
-
-```bash
-python
->>> from PySideAbdhUI import Notify
->>> Notify.Info("Test notification works!")
-```
-
-Or run a bundled test file (if provided):
+To test whether the package is correctly installed run a bundled test file (if provided):
 
 ```bash
 python test.py
