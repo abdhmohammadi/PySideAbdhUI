@@ -29,11 +29,7 @@ You can install this package **locally** using pip:
 ```bash
 pip install x:\path\to\PySideAbdhUI
 ```
-
-For example:
-
-```bash
-pip install x:\path\to\PySideAbdhUI
+or
 ```
 ```bash
 pip install git+https://github.com/abdhmohammadi/PySideAbdhUI.git
