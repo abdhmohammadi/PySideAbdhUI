@@ -96,7 +96,7 @@ app = QApplication([])
 # Load and apply custom style
 app.setStyleSheet(load_stylesheet("dark"))
 window = Window.AbdhWindow()
-window.initUI(app_title= 'AbdhUI Application, title_logo_path= state.application_path + "/resources/icons/png/app-icon.png")    
+window.initUI(app_title= 'AbdhUI Application', title_logo_path= state.application_path + "/resources/icons/png/app-icon.png")    
 window.show()
 PopupNotifier.Notify(window,"Wellcome!", "📚 AbdhUI is in your service.", 'bottom-right')
     
