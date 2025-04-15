@@ -136,6 +136,9 @@ Pull requests, issues, and feature suggestions are always welcome. You can:
 ## 🗨️ Join the Discussion
 
 Have questions, feedback, or suggestions? Join the conversation on our GitHub Discussions!
+
+[![GitHub Discussions](https://img.shields.io/badge/discussions-join-blue?style=flat-square&logo=github)](https://github.com/abdhmohammadi/PySideAbdhUI/discussions)
+
 ---
 
 ## 📢 Tips for Distribution
