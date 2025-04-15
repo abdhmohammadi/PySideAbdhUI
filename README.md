@@ -88,20 +88,20 @@ PySideAbdhUI/
 Here’s a quick Python example showing how to use PySideAbdhUI components in your app:
 
 ```python
-from PySideAbdhUI import Notify, load_stylesheet
-from PySide6.QtWidgets import QApplication
+from PySideAbdhUI import PopupNotifier, load_stylesheet
+from PySide6.QtWidgets import QApplication, Window
 
 app = QApplication([])
 
 # Load and apply custom style
 app.setStyleSheet(load_stylesheet("dark"))
-
-# Show a sample notification
-Notify.Success("Project loaded successfully!")
-
+window = Window.AbdhWindow()
+window.initUI(app_title= 'AbdhUI Application, title_logo_path= state.application_path + "/resources/icons/png/app-icon.png")    
+window.show()
+PopupNotifier.Notify(window,"Wellcome!", "📚 AbdhUI is in your service.", 'bottom-right')
+    
 app.exec()
 ```
-
 ---
 
 ## ✅ Requirements
