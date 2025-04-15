@@ -72,7 +72,7 @@ PySideAbdhUI/
 │       │   └── svg/             # Icon SVGs
 │       └── styles/              # .qss stylesheets
 ├── test-images/                 # Screenshots for documentation
-│   ├──01.png
+│   ├── 01.png
 │   ├── 02.png
 │   ├── 03.png
 │   └── 04.png
