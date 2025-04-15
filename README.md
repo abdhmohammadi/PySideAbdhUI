@@ -30,7 +30,6 @@ You can install this package **locally** using pip:
 pip install x:\path\to\PySideAbdhUI
 ```
 or
-```
 ```bash
 pip install git+https://github.com/abdhmohammadi/PySideAbdhUI.git
 ```
