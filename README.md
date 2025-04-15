@@ -72,9 +72,10 @@ PySideAbdhUI/
 │       │   └── svg/             # Icon SVGs
 │       └── styles/              # .qss stylesheets
 ├── test-images/                 # Screenshots for documentation
-│   ├── table-preview.png
-│   ├── notification-preview.png
-│   └── mainwindow-preview.png
+│   ├──01.png
+│   ├── 02.png
+│   ├── 03.png
+│   └── 04.png
 ├── LICENSE                      # MIT License
 ├── README.md                    # This file
 ├── setup.py                     # Install configuration
