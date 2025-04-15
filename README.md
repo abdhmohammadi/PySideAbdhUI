@@ -14,28 +14,29 @@
 - 🛠️ **Ready for Production**: Easily embeddable in other applications, and compatible with PyInstaller and custom build scripts.
 
 ---
+<p>Sample Preview</p>
+<p align="center">
+  <img src="test-images/01.png" width="45%" style="margin: 5px;" />
+  <img src="test-images/02.png" width="45%" style="margin: 5px;" /><br>
+  <img src="test-images/03.png" width="45%" style="margin: 5px;" />
+  <img src="test-images/04.png" width="45%" style="margin: 5px;" />
+</p>
 
 ## 📦 Installation
 
 You can install this package **locally** using pip:
 
 ```bash
-pip install path	o\PySideAbdhUI
+pip install x:\path\to\PySideAbdhUI
 ```
-
-For example:
-
+or
 ```bash
-pip install F:\Projects\Python\PySideAbdhUI
+pip install git+https://github.com/abdhmohammadi/PySideAbdhUI.git
 ```
-
 Alternatively, install in editable mode (recommended for development):
 
 ```bash
 pip install -e F:\Projects\Python\PySideAbdhUI
-```
-```bash
-pip install git+https://github.com/abdhmohammadi/PySideAbdhUI.git
 ```
 
 > ✅ This method allows the package to be used across **any Python IDE**, without needing to build a wheel (`.whl`) file.
@@ -44,15 +45,7 @@ pip install git+https://github.com/abdhmohammadi/PySideAbdhUI.git
 
 ## 🧪 Test Your Installation
 
-To test whether the package is correctly installed:
-
-```bash
-python
->>> from PySideAbdhUI import Notify
->>> Notify.Info("Test notification works!")
-```
-
-Or run a bundled test file (if provided):
+To test whether the package is correctly installed run a bundled test file (if provided):
 
 ```bash
 python test.py
@@ -79,43 +72,15 @@ PySideAbdhUI/
 │       │   └── svg/             # Icon SVGs
 │       └── styles/              # .qss stylesheets
 ├── test-images/                 # Screenshots for documentation
-│   ├── table-preview.png
-│   ├── notification-preview.png
-│   └── mainwindow-preview.png
+│   ├── 01.png
+│   ├── 02.png
+│   ├── 03.png
+│   └── 04.png
 ├── LICENSE                      # MIT License
 ├── README.md                    # This file
 ├── setup.py                     # Install configuration
 └── MANIFEST.in                  # Resource inclusion rules
 ```
-
----
-
-## 🖼️ Visual Preview
-
-Here’s how the components look in a typical application:
-
-### 🔹 Styled Table Widget
-
-A fully styled, responsive QTableWidget with alternate row colors and header formatting.
-
-![Styled Table](test-images/table-preview.png)
-
----
-
-### 🔹 Notification System
-
-Non-blocking, animated popups for success, error, info, or warning messages.
-
-![Notification](test-images/notification-preview.png)
-
----
-
-### 🔹 Custom Main Window with Styled Titlebar
-
-A modern, frameless main window supporting drag, drop, theme application, and stacked widgets.
-
-![Main Window](test-images/mainwindow-preview.png)
-
 ---
 
 ## 🚀 Example Usage
@@ -123,25 +88,28 @@ A modern, frameless main window supporting drag, drop, theme application, and st
 Here’s a quick Python example showing how to use PySideAbdhUI components in your app:
 
 ```python
-from PySideAbdhUI import Notify, load_stylesheet
-from PySide6.QtWidgets import QApplication
+from PySideAbdhUI import PopupNotifier
+from PySideAbdhUI import StyleManagers as sm
+from PySide6.QtWidgets import QApplication, Window
 
 app = QApplication([])
 
 # Load and apply custom style
-app.setStyleSheet(load_stylesheet("dark"))
-
-# Show a sample notification
-Notify.Success("Project loaded successfully!")
-
+style_manager = sm.QtStyleSheetManager()
+style_manager.load_stylesheet(style_path)
+app.setStyleSheet(style_manager.stylesheet)
+window = Window.AbdhWindow()
+window.initUI(app_title= 'AbdhUI Application', title_logo_path= state.application_path + "/resources/icons/png/app-icon.png")    
+window.show()
+PopupNotifier.Notify(window,"Wellcome!", "📚 AbdhUI is in your service.", 'bottom-right')
+    
 app.exec()
 ```
-
 ---
 
 ## ✅ Requirements
 
-- Python ≥ 3.8
+- Python ≥ 3.13
 - PySide6
 
 Install PySide6 if not available:
@@ -166,8 +134,8 @@ Pull requests, issues, and feature suggestions are always welcome. You can:
 - Submit a PR
 - Report bugs or request features
 
-> Developed with ❤️ by [Your Name or Team Name]
-
+> Developed with ❤️ by `Abdh`
+> 
 ---
 
 ## 📢 Tips for Distribution
@@ -178,5 +146,11 @@ To use this package in PyInstaller or freeze it with your own application:
 - The `get_resource_path()` function ensures the package detects bundled resources correctly
 
 ---
+## 🗨️ Join the Discussion
+
+Have questions, feedback, or suggestions? Join the conversation on our GitHub Discussions!
+
+[![GitHub Discussions](https://img.shields.io/badge/discussions-join-blue?style=flat-square&logo=github)](https://github.com/abdhmohammadi/PySideAbdhUI/discussions)
+
 
 Enjoy building with **PySideAbdhUI**!
