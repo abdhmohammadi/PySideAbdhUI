@@ -131,7 +131,7 @@ Pull requests, issues, and feature suggestions are always welcome. You can:
 - Submit a PR
 - Report bugs or request features
 
-> Developed with ❤️ by [Your Name or Team Name]
+> Developed with ❤️ by `Abdh`
 
 ---
 
