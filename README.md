@@ -132,7 +132,9 @@ Pull requests, issues, and feature suggestions are always welcome. You can:
 - Report bugs or request features
 
 > Developed with ❤️ by `Abdh`
-🗨️ Join the Discussion
+> 
+## 🗨️ Join the Discussion
+
 Have questions, feedback, or suggestions? Join the conversation on our GitHub Discussions!
 ---
 
