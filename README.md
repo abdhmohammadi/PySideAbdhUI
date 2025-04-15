@@ -14,6 +14,7 @@
 - 🛠️ **Ready for Production**: Easily embeddable in other applications, and compatible with PyInstaller and custom build scripts.
 
 ---
+<p>Sample Preview</p>
 <p align="center">
   <img src="test-images/01.png" width="45%" style="margin: 5px;" />
   <img src="test-images/02.png" width="45%" style="margin: 5px;" /><br>
