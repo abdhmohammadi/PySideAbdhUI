@@ -81,35 +81,6 @@ PySideAbdhUI/
 ├── setup.py                     # Install configuration
 └── MANIFEST.in                  # Resource inclusion rules
 ```
-
----
-
-## 🖼️ Visual Preview
-
-Here’s how the components look in a typical application:
-
-### 🔹 Styled Table Widget
-
-A fully styled, responsive QTableWidget with alternate row colors and header formatting.
-
-![Styled Table](test-images/table-preview.png)
-
----
-
-### 🔹 Notification System
-
-Non-blocking, animated popups for success, error, info, or warning messages.
-
-![Notification](test-images/notification-preview.png)
-
----
-
-### 🔹 Custom Main Window with Styled Titlebar
-
-A modern, frameless main window supporting drag, drop, theme application, and stacked widgets.
-
-![Main Window](test-images/mainwindow-preview.png)
-
 ---
 
 ## 🚀 Example Usage
