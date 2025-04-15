@@ -20,13 +20,13 @@
 You can install this package **locally** using pip:
 
 ```bash
-pip install path	o\PySideAbdhUI
+pip install x:\path\to\PySideAbdhUI
 ```
 
 For example:
 
 ```bash
-pip install F:\Projects\Python\PySideAbdhUI
+pip install x:\path\to\PySideAbdhUI
 ```
 ```bash
 pip install git+https://github.com/abdhmohammadi/PySideAbdhUI.git
