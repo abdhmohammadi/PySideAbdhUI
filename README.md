@@ -28,14 +28,13 @@ For example:
 ```bash
 pip install F:\Projects\Python\PySideAbdhUI
 ```
-
+```bash
+pip install git+https://github.com/abdhmohammadi/PySideAbdhUI.git
+```
 Alternatively, install in editable mode (recommended for development):
 
 ```bash
 pip install -e F:\Projects\Python\PySideAbdhUI
-```
-```bash
-pip install git+https://github.com/abdhmohammadi/PySideAbdhUI.git
 ```
 
 > ✅ This method allows the package to be used across **any Python IDE**, without needing to build a wheel (`.whl`) file.
