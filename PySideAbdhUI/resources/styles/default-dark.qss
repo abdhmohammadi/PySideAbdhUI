@@ -610,6 +610,8 @@ QPushButton.mini
 QPushButton.mini:hover, QPushButton.grouped_mini:hover
 {
     background-color: #353535;
+    border-left:1px solid #1a73e8;
+    border-right:1px solid #1a73e8;
 }
 QPushButton.mini:pressed , QPushButton.grouped_mini:pressed
 {
