@@ -25,3 +25,4 @@ PySideAbdhUI/resources/icons/svg/settings.svg
 PySideAbdhUI/resources/icons/svg/square.svg
 PySideAbdhUI/resources/icons/svg/x.svg
 PySideAbdhUI/resources/styles/default-dark.qss
+PySideAbdhUI/resources/styles/default-light.qss

@@ -2,10 +2,10 @@ from setuptools import setup, find_packages
 
 setup(
     name="PySideAbdhUI",
-    version="1.0.0",
+    version="0.1.0",
     author="Abdullah Mohammadi",
     author_email="abdhmohammady@gmaile.com",
-    description="Customized Python UI components based on PySide6",
+    description="Customized Python GUI components based on PySide6",
     long_description=open("README.md", encoding="utf-8").read(),
     long_description_content_type="text/markdown",
     url="https://github.com/abdhmohammadi/PySideAbdhUI",

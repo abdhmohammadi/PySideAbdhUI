@@ -1,0 +1,222 @@
+/* Light theme stylesheet generated from dark theme */
+
+QWidget {
+    background-color: #F5F5F5;
+    color: #202124;
+    border: none;
+    border-radius: 8px;
+    font-family: Miriam;
+    font-size: 12px;
+}
+
+QWidget.card {
+    border: 1px solid #DADCE0;
+    border-radius: 8px;
+    padding: 6px;
+    background-color: #FFFFFF;
+}
+
+QWidget.card:selected {
+    background-color: #E8F0FE;
+}
+
+QPushButton#MenuItem 
+{
+    font-size: 12px;
+    text-align: left;
+    border-radius: 4px;
+    padding: 5px 15px;
+    background-color: transparent;
+    color:rgb(35, 34, 34);
+}
+
+QPushButton#MenuItem:hover 
+{
+    background-color: #E0E0E0;
+    border-left:2px solid #1a73e8;
+    border-right:2px solid #1a73e8
+}
+
+QPushButton#MenuItem:pressed {
+    background-color: #D6D6D6;
+}
+
+QPushButton.mini {
+    font-size: 10px;
+    padding: 3px 5px;
+}
+
+QLabel.caption {
+    background-color: transparent;
+    font-size: 12px;
+    color: #5F6368;
+    padding-left: 5px;
+    padding-right:0px;
+    padding-top:4px;
+    padding-bottom:0px;
+    height: 24px;
+    min-height:24px;
+}
+
+QWidget#Titlebar 
+{
+    background-color: transparent;
+    color: #888888;
+    border: 0px;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 0px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 0px;
+}
+QFrame#LeftPaneFrame 
+{
+    background-color:#e5e5e5;
+    border: none;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    padding: 0px;
+    color: #ffffff;
+    font-size:24;
+}
+QFrame#RightPaneFrame 
+{
+    background-color: #e5e5e5;
+    border: none;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    padding: 0px;
+    color: #ffffff;
+}
+QPushButton#TitleButton {
+    border: none;
+    background-color: transparent;
+    padding: 5px;
+}
+
+QPushButton#TitleButton:hover {
+    background-color: #DADCE0;
+}
+
+QPushButton#TitleButton:pressed {
+    background-color: #C6C6C6;
+}
+
+QPushButton {
+    border: 1px solid #DADCE0;
+    background-color: #FFFFFF;
+    padding: 6px 12px;
+    border-radius: 4px;
+    color: #202124;
+}
+
+QPushButton:hover {
+    background-color: #F1F3F4;
+}
+
+QPushButton:pressed {
+    background-color: #E0E0E0;
+}
+
+QCheckBox::indicator, QRadioButton::indicator {
+    width: 16px;
+    height: 16px;
+}
+
+QCheckBox::indicator:unchecked, QRadioButton::indicator:unchecked {
+    image: url(check_unchecked_light.png);
+}
+
+QCheckBox::indicator:checked, QRadioButton::indicator:checked {
+    image: url(check_checked_light.png);
+}
+
+QRadioButton::indicator:unchecked {
+    image: url(radio_unchecked_light.png);
+}
+
+QRadioButton::indicator:checked {
+    image: url(radio_checked_light.png);
+}
+
+QPushButton::menu-indicator {
+    subcontrol-origin: padding;
+    subcontrol-position: right center;
+    right: 5px;
+    width: 12px;
+    height: 12px;
+    image: url(down_arrow_light.png);
+}
+
+QPushButton.grouped_mini
+{
+    background-color: Transparent;
+    color: rgb(155, 160, 165);
+    border: none;
+    padding: 5px;
+    border-radius: 4px;
+    font-size: 14px;
+    width: 24px;
+    height: 24px;
+}
+
+QPushButton.closebutton 
+{
+    background-color: transparent;
+    padding: 5px;
+    border-top-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border-top-right-radius: 8px;
+    border-bottom-left-radius: 0px;
+    border-width: 0px;
+    width: 32px;
+    height: 24px;
+}
+QPushButton.mini:hover, QPushButton.grouped_mini:hover
+{
+    background-color: #D5D5D5;
+    border-left:1px solid #1a73e8;
+    border-right:1px solid #1a73e8;
+}
+QPushButton.mini:pressed , QPushButton.grouped_mini:pressed
+{
+    background-color: #C0C0C0;
+}
+QPushButton.mini:disabled , QPushButton.grouped_mini:disabled
+{
+    color: #F0F0F0;
+    opacity: 0.7;
+}
+QPushButton.closebutton:hover
+{
+    background-color: rgba(200, 10, 10, 0.9);
+}
+
+QScrollBar:vertical, QScrollBar:horizontal {
+    background: #E8EAED;
+    border: none;
+    width: 10px;
+    margin: 0px;
+}
+
+QScrollBar::handle:vertical, QScrollBar::handle:horizontal {
+    background: #C6C6C6;
+    border-radius: 5px;
+    min-height: 20px;
+}
+
+QScrollBar::handle:vertical:hover, QScrollBar::handle:horizontal:hover {
+    background: #B0B0B0;
+}
+
+QScrollBar::add-line, QScrollBar::sub-line {
+    background: none;
+    border: none;
+}
+
+QScrollBar::add-page, QScrollBar::sub-page {
+    background: none;
+}

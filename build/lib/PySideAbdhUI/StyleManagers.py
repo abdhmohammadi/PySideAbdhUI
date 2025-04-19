@@ -84,8 +84,7 @@ class QtStyleSheetManager:
         
         logger.info(f"Removed all stylesheets with name: {name}")
         
-    def add_stylesheet(self,stylesheet:str=None):
-        self.stylesheet = self.stylesheet + '\n' + stylesheet
+    def add_stylesheet(self,stylesheet:str=None):  self.stylesheet = self.stylesheet + '\n' + stylesheet
 
     def load_stylesheet(self,qss_path:str) -> str:
         

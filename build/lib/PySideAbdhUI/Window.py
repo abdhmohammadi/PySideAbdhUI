@@ -1,9 +1,11 @@
+
+
 import os
 
 from PySide6.QtWidgets import (QSizePolicy, QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, 
                                QGridLayout, QPushButton, QLabel, QFrame, QSizeGrip)
 
-from PySide6.QtCore import Qt,QPropertyAnimation,QEasingCurve,QRect,QSize,QPoint,QEvent
+from PySide6.QtCore import Qt,QPropertyAnimation, QParallelAnimationGroup, QEasingCurve,QRect,QSize,QPoint,QEvent
 from PySide6.QtGui import QPainter, QBrush, QColor, QPixmap,QPainterPath,QMouseEvent,QIcon
 
 from .Widgets import StackedWidget
@@ -31,12 +33,11 @@ class AbdhWindow(QMainWindow):
     #          just in this column and auto-close is disabled.
     # Unpined: The left panel sets to column 0 with column-span = 2. it is
     #          able to auto-close.
-    left_panel_pined = True
-
+    overlay  = False
+    expanded = True
     def __init__(self):
         
         super().__init__()
-
         # Track if the window is opening for the first time and used to fade-in animation at start
         self.first_show = True  
 
@@ -64,10 +65,8 @@ class AbdhWindow(QMainWindow):
         
         self.initalized = False
 
-
     def initUI(self,app_title:str='PySideAbdhUI Application', 
-               style_sheet=None, 
-               title_logo_path=None, 
+               style_sheet=None, title_logo_path=None, 
                direction=Qt.LayoutDirection.LeftToRight):
         
         if style_sheet: self.setStyleSheet(style_sheet)
@@ -84,26 +83,22 @@ class AbdhWindow(QMainWindow):
         self.main_layout = QGridLayout(self.main_widget)
         self.main_layout.setContentsMargins(0, 0, 0, 0)
         self.main_layout.setSpacing(0)
-        # set stretch property of column 1
-        self.main_layout.setColumnStretch(1,1)
         
         # Left panel, location -->[0,0], stretched in 2 rows
         self.left_panel = QFrame(self)
+        
         # Uses object name property to correspond the named stylesheet in qss file
         self.left_panel.setObjectName('LeftPaneFrame')
         self.left_panel.setFrameShape(QFrame.Shape.StyledPanel)
-        self.left_panel.setFixedWidth(self.pane_min_width)
-
-
-        # Create animation object
-        self.left_panel.animation = QPropertyAnimation(self.left_panel, b"minimumWidth")  
-        self.left_panel.animation.setDuration(400)  # Animation duration in ms
-        self.left_panel.animation.setEasingCurve(QEasingCurve.Type.OutCubic)  # Smooth effect
+        self.left_panel.setFixedWidth(self.pane_width)
+        self.left_panel.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
 
         self.left_panel_layout = QVBoxLayout(self.left_panel)
-        self.left_panel_layout.setContentsMargins(2,self.titlebar_height, 0,5)
+        # Content margin for leftpanel:
+        # If we set the left margin to a larger value, the mouse 
+        # effect will appear equally large inside the panel. 
+        self.left_panel_layout.setContentsMargins(0,self.titlebar_height, 0,5)
         self.left_panel_layout.setAlignment(Qt.AlignmentFlag.AlignTop)
-        
         
         #Right panel, location -->[0,2], stretched in 3 rows
         self.right_panel = QFrame(self)
@@ -112,10 +107,6 @@ class AbdhWindow(QMainWindow):
         self.right_panel.setFrameShape(QFrame.Shape.StyledPanel)
         self.right_panel.setMinimumWidth(0)   # Start with zero width
         self.right_panel.setMaximumWidth(0)   # Also limit max width when collapsed
-        # Create animation object
-        self.right_panel.animation = QPropertyAnimation(self.right_panel, b"minimumWidth")
-        self.right_panel.animation.setDuration(400)  # Animation duration in ms
-        self.right_panel.animation.setEasingCurve(QEasingCurve.Type.OutCubic)  # Smooth effect
 
         self.right_panel_layout = QVBoxLayout(self.right_panel)
         self.right_panel_layout.setSpacing(5)
@@ -127,8 +118,7 @@ class AbdhWindow(QMainWindow):
         self.toggle_button = QPushButton("")
         self.toggle_button.setProperty('class','grouped_mini')
         self.toggle_button.setIcon(QIcon(get_icon('menu')))
-        self.toggle_button.clicked.connect(lambda _, sender= self.left_panel, min_width= self.pane_min_width: 
-                                           self.toggle_frame(sender,min_width))
+        self.toggle_button.setMinimumWidth(self.pane_min_width)
 
         top_commands_layout.addWidget(self.toggle_button)
 
@@ -137,31 +127,29 @@ class AbdhWindow(QMainWindow):
         self.pin_button = QPushButton("", self)
         self.pin_button.setProperty('class','grouped_mini')
         self.pin_button.setIcon(QIcon(get_icon('pin')))
-        self.pin_button.setVisible(False)
-        self.pin_button.clicked.connect(lambda: self.___toggle_pin())
-        
+        self.pin_button.clicked.connect(self.toggle_overlay)
+    
         top_commands_layout.addWidget(self.pin_button)
 
-        top_commands_widget = QWidget()
-        top_commands_widget.setProperty('class','InnerCommandBar')
-        top_commands_widget.setLayout(top_commands_layout)
-
-        self.left_panel_layout.addWidget(top_commands_widget)
+        self.left_panel_layout.addLayout(top_commands_layout)
         
         # Stacked widget for pages
         self.stacked_widget = StackedWidget()
         self.stacked_widget.setContentsMargins(0,0,0,0)
+        self.stacked_widget.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
         # Set an object name for the parent widget
-        self.stacked_widget.setObjectName("parentWidget")
-        
+        #self.stacked_widget.setObjectName("parentWidget")
+        #self.stacked_widget.setStyleSheet('background-color:brown;border: 2px solid black;')
+        self.toggle_button.clicked.connect(lambda _, frame= self.left_panel, stack= self.stacked_widget: self.animate_content(frame, stack))
+
         # Custom title bar
         self.titlebar = self.__create_titlebar(self.windowTitle(), title_logo_path)
 
         self.main_layout.addWidget(self.stacked_widget, 1, 1,1,2)
         self.main_layout.addWidget(self.right_panel, 0, 2,2,1)
-        self.main_layout.addWidget(self.left_panel, 0, 0, 2, 1)
+        self.main_layout.addWidget(self.left_panel, 0, 0, 2, 1, Qt.AlignmentFlag.AlignLeft)
         self.main_layout.addWidget(self.titlebar, 0, 0, 1, 3)
-
+        
         # Add QSizeGrip to corners and edges
         self.size_grips = []
         self.add_edge_size_grip()
@@ -183,44 +171,88 @@ class AbdhWindow(QMainWindow):
         self.initalized = True
         # Install global event filter to detect clicks anywhere
         QApplication.instance().installEventFilter(self)
+
+    def switch_settings_button(self, on= True): self.settings_button.setVisible(on)
     
-    def eventFilter(self, obj, event):
-        # Detect clicks anywhere in the application to close the frame.
-        if event.type() == QEvent.Type.MouseButtonPress:
-            # Check if click is outside the frame
-            if self.right_panel.width()>0 and not self.right_panel.geometry().contains(self.mapFromGlobal(event.globalPos())):
-                self.toggle_frame(self.right_panel,0)  # Collapse the right pane
+    def switch_navigations(self, on = True):
+        self.back_button.setVisible(on)
+        self.forward_button.setVisible(on)
 
-            if not self.left_panel_pined :
-                if self.left_panel.width() > self.pane_min_width :
-                    if not self.left_panel.geometry().contains(self.mapFromGlobal(event.globalPos())):
-                       self.toggle_frame(self.left_panel, self.pane_min_width)  # Collapse the left pane
-        
-        return super().eventFilter(obj, event)  # Continue normal event processing
+    def toggle_overlay(self):
 
-    def ___toggle_pin(self):
-
-        self.left_panel_pined = not self.left_panel_pined
-        
-        if self.left_panel_pined:
-            # Make unpin
-            self.stacked_widget.setContentsMargins(0,0,0,0)   
-
+        self.overlay = not self.overlay
+        self.expanded = not self.overlay
+        if self.overlay:
+            # In overlay stat left and stacked panels are located in column 0.
+            # In this stat left panel colsed automatically when mouse clicked out of it.
+            # removeing from column 0
             self.main_layout.removeWidget(self.left_panel)
+            self.left_panel.setFixedWidth(self.pane_min_width)
+            # Placeing into column 0 with column span 2.
+            self.main_layout.addWidget(self.left_panel,0, 0, 2, 2, Qt.AlignmentFlag.AlignLeft)
+            # Keeping the left margin equal to the width of the left panel
+            self.stacked_widget.setContentsMargins(self.pane_min_width,0,0,0)
+            #self.stacked_widget.move(self.pane_min_width,0)#,self.stacked_widget.width(),self.stacked_widget.height())
+            
+        else:
+            
+            # removeng left panel from column 1
+            self.main_layout.removeWidget(self.left_panel)
+            # replaceing left panel into column 0
+            self.main_layout.addWidget(self.left_panel, 0, 0, 2, 1, Qt.AlignmentFlag.AlignLeft)
+            #self.stacked_widget.resize(self.stacked_widget.width() - self.pane_width, self.stacked_widget.height())
+            # resetting left margin to zero
+            self.stacked_widget.setContentsMargins(0,0,0,0)    
 
-            self.main_layout.addWidget(self.left_panel, 0, 0, 2, 1)
+        self.pin_button.setVisible(self.expanded)
+    
+    def animate_content(self, frame:QFrame, stack:StackedWidget):
+        
+        if self.overlay: self.toggle_frame(frame, self.pane_min_width)
 
         else:
+            start_width = frame.width()
+            end_width = self.pane_min_width if self.expanded else self.pane_width
+            width_diff = end_width - start_width
 
-            self.stacked_widget.setContentsMargins(self.pane_min_width,0,0,0)
-
-            self.main_layout.removeWidget(self.left_panel)
-
-            self.main_layout.addWidget(self.left_panel, 0, 0, 2, 2)      
+            # Frame animation
+            frame_anim = QPropertyAnimation(frame, b"minimumWidth")
+            frame_anim.setStartValue(start_width)
+            frame_anim.setEndValue(end_width)
+            frame_anim.setDuration(400)
+            frame_anim.setEasingCurve(QEasingCurve.InOutQuad)
             
+            # Stack animation
+            stack_width = stack.width()
+            
+            stack_anim = QPropertyAnimation(stack, b"minimumWidth")
+            stack_anim.setStartValue(stack_width)
+            stack_anim.setEndValue(stack_width - width_diff)
+            stack_anim.setDuration(400)
+            stack_anim.setEasingCurve(QEasingCurve.InOutQuad)
+
+            # Parallel animation
+            self.anim_group = QParallelAnimationGroup()
+            self.anim_group.addAnimation(frame_anim)
+            self.anim_group.addAnimation(stack_anim)
+
+            # Delete animation after it's finished
+            self.anim_group.finished.connect(self.anim_group.deleteLater)
+
+            self.anim_group.start()
+
+        self.expanded = not self.expanded
+
+        self.pin_button.setVisible(self.expanded)
+        
+    def open_settings(self): self.toggle_frame(self.right_panel,0)
 
     def toggle_frame(self, sender:QFrame, min:int):
-                
+        
+        sender.animation = QPropertyAnimation(sender, b"minimumWidth")
+        sender.animation.setDuration(400)  # Animation duration in ms
+        sender.animation.setEasingCurve(QEasingCurve.Type.OutCubic)  # Smooth effect
+
         # Stop any running animation before starting a new one
         sender.animation.stop() 
         
@@ -228,16 +260,12 @@ class AbdhWindow(QMainWindow):
             sender.animation.setStartValue(min)
             # Expand to set width
             sender.animation.setEndValue(self.pane_width)
-            # min width for left panel is 48 and for right panel is 0.
-            # This condition determines the sender is which one.
-            if min >0: self.pin_button.setVisible(True)
         else:
             sender.animation.setStartValue(self.pane_width)
             sender.animation.setEndValue(min)  # Collapse to 0 width
-            self.pin_button.setVisible(False)
         
+        sender.animation.finished.connect(sender.animation.deleteLater)
         sender.animation.start()
- 
 
     def show(self):
         try:
@@ -245,7 +273,8 @@ class AbdhWindow(QMainWindow):
             super().show()  # Call the original show() method from QMainWindow
         except Exception as e:
             print(e)
-    
+
+
     def __create_titlebar(self,title_text,title_logo):
 
         layout = QHBoxLayout()
@@ -333,8 +362,10 @@ class AbdhWindow(QMainWindow):
         titlebar.setLayout(layout)
 
         return titlebar
-    
+
+
     def set_direction(self,direction:Qt.LayoutDirection=Qt.LayoutDirection.LeftToRight): self.stacked_widget.setLayoutDirection(direction)
+
 
     def update_navigation_buttons(self, can_go_back, can_go_forward):
         
@@ -346,29 +377,24 @@ class AbdhWindow(QMainWindow):
         self.right_panel_layout.insertWidget(self.right_panel_layout.count()-1, item)
         
 
-    def add_left_panel_item(self,item:QWidget):
+    def add_left_panel_item(self,item:QWidget): self.left_panel_layout.addWidget(item)
 
-        #item.setFixedWidth(self.pane_width-2)
+
+    def toggle_maximize_restore(self):
         
-        #item.setMinimumWidth(self.pane_width-2)
-        
-        self.left_panel_layout.addWidget(item)
-
-
-    def toggle_maximize_restore(self,svg_path):
         if self.is_maximized:
             self.animate_restore()
             self.maximize_button.setIcon(QIcon(get_icon('square')))            
         else:
             self.animate_maximize()
             self.maximize_button.setIcon(QIcon(get_icon('double-square')))
-            self.is_maximized = not self.is_maximized
+        
+        self.is_maximized = not self.is_maximized
 
 
     def animate_maximize(self):
         # Stop any ongoing animation
-        if self.animation.state() == QPropertyAnimation.Running:
-            self.animation.stop()
+        if self.animation.state() == QPropertyAnimation.State.Running: self.animation.stop()
 
         # Store the original geometry before maximizing
         self.original_geometry = self.geometry()
@@ -380,22 +406,32 @@ class AbdhWindow(QMainWindow):
         self.animation.setStartValue(self.geometry())
         self.animation.setEndValue(screen_geometry)
 
+
+        #self.animation.finished.connect(self.update_page)
+
         # Start the animation
         self.animation.start()
 
 
     def animate_restore(self):
         # Stop any ongoing animation
-        if self.animation.state() == QPropertyAnimation.Running:
-            self.animation.stop()
+        if self.animation.state() == QPropertyAnimation.State.Running: self.animation.stop()
 
         # Set up the animation to shrink to the original size
         self.animation.setStartValue(self.geometry())
         self.animation.setEndValue(self.original_geometry)
 
+        #self.animation.finished.connect(self.update_page)
         # Start the animation
         self.animation.start()
 
+        
+    def update_page(self):
+
+        w = self.stacked_widget.currentWidget()
+        self.stacked_widget.setCurrentWidgetAnimated(w,0)
+        
+        
     # fade-in effect animation
     def animate_fadeIn(self):
         # Animation for opacity (fade-in effect)
@@ -415,7 +451,7 @@ class AbdhWindow(QMainWindow):
         self.geometry_animation.setDuration(500)  # 500ms duration
         self.geometry_animation.setStartValue(start_rect)
         self.geometry_animation.setEndValue(end_rect)
-        self.geometry_animation.setEasingCurve(QEasingCurve.OutQuad)
+        self.geometry_animation.setEasingCurve(QEasingCurve.Type.OutQuad)
 
         # Start both animations
         self.opacity_animation.start()
@@ -437,7 +473,6 @@ class AbdhWindow(QMainWindow):
             return ""
 
 
-
     def add_size_grip(self, row, col, alignment):
         size_grip = QSizeGrip(self)
         size_grip.setFixedSize(10, 10)
@@ -445,6 +480,7 @@ class AbdhWindow(QMainWindow):
         self.size_grips.append(size_grip)
         self.main_layout.addWidget(size_grip, row, col, alignment=alignment)
     
+
     def add_edge_size_grip(self):
         # Left edge
         size_grip = QSizeGrip(self)
@@ -484,8 +520,7 @@ class AbdhWindow(QMainWindow):
         size_grip.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
         self.main_layout.addWidget(size_grip,1,0,1,3, Qt.AlignmentFlag.AlignBottom)
 
-        
-
+    
     def showEvent(self, event):
         # Animate the window only when it's shown for the first time
         if self.first_show:
@@ -493,7 +528,7 @@ class AbdhWindow(QMainWindow):
             self.animate_fadeIn()
 
         super().showEvent(event)
-    
+        
 
     def paintEvent(self, event):
         painter = QPainter(self)
@@ -502,6 +537,23 @@ class AbdhWindow(QMainWindow):
         path.addRoundedRect(self.rect(), 8, 8)
         painter.fillPath(path, QBrush(QColor(255, 255, 255)))
     
+    
+    def eventFilter(self, obj, event):
+        # Detect clicks anywhere in the application to close the frame.
+        if event.type() == QEvent.Type.MouseButtonPress:
+            # Check if click is outside the frame
+            if self.right_panel.width()>0 and not self.right_panel.geometry().contains(self.mapFromGlobal(event.globalPos())):
+                self.toggle_frame(self.right_panel,0)  # Collapse the right pane
+
+            if self.overlay and self.expanded:
+                if not self.left_panel.geometry().contains(self.mapFromGlobal(event.globalPos())):
+                    
+                    self.animate_content(self.left_panel, self.stacked_widget)  # Collapse the left pane
+
+        
+        return super().eventFilter(obj, event)  # Continue normal event processing
+
+
 
     def mousePressEvent(self, event:QMouseEvent):
 
@@ -529,3 +581,5 @@ class AbdhWindow(QMainWindow):
             event.accept()
 
         super().mouseMoveEvent(event)
+
+# End Window

@@ -268,7 +268,7 @@ class CLI:
 
     def Run(self):
 
-        style_path = "PySideAbdhUI\\resources\\styles\\default-light.qss"
+        style_path = "PySideAbdhUI\\resources\\styles\\default-dark.qss"
         # Using QtStyleSheetManager to manage custom styles
         st.load_stylesheet(style_path)
     

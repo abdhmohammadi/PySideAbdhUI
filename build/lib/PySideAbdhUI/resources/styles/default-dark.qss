@@ -2,14 +2,17 @@
 /* Global theme for all PySide6 widgets                                                              */
 /*                                                                                                   */
 /* ************************************************************************************************* */
+
+
+
 QWidget 
 {
     background-color:  #2d2d2d;
     color: #ffffff;
     border: none;
     border-radius: 8px;
-    font-family: Vazirmatn;
-    font-size: 12;
+    font-family: Miriam;
+    font-size: 12px;
 }
 
 QFrame
@@ -422,7 +425,7 @@ QTableCornerButton::section
 /*                                                                       */
 /* ********************************************************************* */
 
-QWidget #Titlebar 
+QWidget#Titlebar 
 {
     background-color: transparent; /*Keep Titlebar transparent */
     color: #e8eaed;
@@ -585,6 +588,7 @@ QPushButton.closebutton
     width: 32px;
     height: 24px;
 }
+
 QPushButton.closebutton:hover
 {
     background-color: rgba(200, 10, 10, 0.9);
@@ -610,6 +614,8 @@ QPushButton.mini
 QPushButton.mini:hover, QPushButton.grouped_mini:hover
 {
     background-color: #353535;
+    border-left:1px solid #1a73e8;
+    border-right:1px solid #1a73e8;
 }
 QPushButton.mini:pressed , QPushButton.grouped_mini:pressed
 {
