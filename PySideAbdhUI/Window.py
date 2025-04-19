@@ -172,7 +172,12 @@ class AbdhWindow(QMainWindow):
         # Install global event filter to detect clicks anywhere
         QApplication.instance().installEventFilter(self)
 
+    def switch_settings_button(self, on= True): self.settings_button.setVisible(on)
     
+    def switch_navigations(self, on = True):
+        self.back_button.setVisible(on)
+        self.forward_button.setVisible(on)
+
     def toggle_overlay(self):
 
         self.overlay = not self.overlay
@@ -180,15 +185,14 @@ class AbdhWindow(QMainWindow):
         if self.overlay:
             # In overlay stat left and stacked panels are located in column 0.
             # In this stat left panel colsed automatically when mouse clicked out of it.
-            # removeing from column 1
+            # removeing from column 0
             self.main_layout.removeWidget(self.left_panel)
             self.left_panel.setFixedWidth(self.pane_min_width)
-            self.left_panel.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
-            #self.animate_content(self.left_panel, self.stacked_widget)
-            # Placeing into column 0
+            # Placeing into column 0 with column span 2.
             self.main_layout.addWidget(self.left_panel,0, 0, 2, 2, Qt.AlignmentFlag.AlignLeft)
             # Keeping the left margin equal to the width of the left panel
             self.stacked_widget.setContentsMargins(self.pane_min_width,0,0,0)
+            #self.stacked_widget.move(self.pane_min_width,0)#,self.stacked_widget.width(),self.stacked_widget.height())
             
         else:
             
@@ -196,7 +200,7 @@ class AbdhWindow(QMainWindow):
             self.main_layout.removeWidget(self.left_panel)
             # replaceing left panel into column 0
             self.main_layout.addWidget(self.left_panel, 0, 0, 2, 1, Qt.AlignmentFlag.AlignLeft)
-            self.stacked_widget.resize(self.stacked_widget.width() - self.pane_width, self.stacked_widget.height())
+            #self.stacked_widget.resize(self.stacked_widget.width() - self.pane_width, self.stacked_widget.height())
             # resetting left margin to zero
             self.stacked_widget.setContentsMargins(0,0,0,0)    
 
@@ -241,6 +245,7 @@ class AbdhWindow(QMainWindow):
 
         self.pin_button.setVisible(self.expanded)
         
+    def open_settings(self): self.toggle_frame(self.right_panel,0)
 
     def toggle_frame(self, sender:QFrame, min:int):
         

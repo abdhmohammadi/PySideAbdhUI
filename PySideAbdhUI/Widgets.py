@@ -17,8 +17,9 @@ class StackedWidget(QStackedWidget):
         self.setPalette(palette)
 
     def add_page(self, page: QWidget):
-        if isinstance(page, type(self.currentWidget())):
-            return
+
+        if isinstance(page, type(self.currentWidget())): return
+
         page.setAutoFillBackground(True)
         self.addWidget(page)
         self.go_last()
@@ -33,14 +34,11 @@ class StackedWidget(QStackedWidget):
         if new_index >= 0:
             self.setCurrentIndexAnimated(new_index)
 
-    def goto_index(self, index):
-        self.setCurrentIndexAnimated(index)
+    def goto_index(self, index): self.setCurrentIndexAnimated(index)
 
-    def go_last(self):
-        self.setCurrentIndexAnimated(self.count() - 1)
+    def go_last(self): self.setCurrentIndexAnimated(self.count() - 1)
 
-    def go_first(self):
-        self.setCurrentIndexAnimated(0)
+    def go_first(self): self.setCurrentIndexAnimated(0)
 
     def setCurrentIndexAnimated(self, index):
 
@@ -90,6 +88,7 @@ class StackedWidget(QStackedWidget):
         self.animation_group.start()
 
     def _on_animation_finished(self):
+        
         self.setCurrentIndex(self.target_index)
         self.animating = False
         self.animation_group.deleteLater()
@@ -108,7 +107,7 @@ class StackedWidget(QStackedWidget):
         if not self.animating:
             current = self.currentWidget()
             if current:
-                current.setGeometry(0, 0, self.width(), self.height())
+                #current.setGeometry(0, 0, self.width(), self.height())
                 layout = current.layout()
                 if layout:
                     layout.activate()
