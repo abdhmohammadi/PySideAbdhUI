@@ -52,7 +52,6 @@ class CLI:
 
             self.app.setStyleSheet(st.stylesheet)
 
-
     # Creates a vertical panel on the right edge of the mian window
     # This panel is used to settings porpose
     def create_settings_pane(self):
@@ -107,20 +106,17 @@ class CLI:
         left_item.setIcon(QIcon('F:\\Projects\\Python\\icons\\shapes.svg'))
         left_item.setCheckable(True)
         left_item.setChecked(True)
-        left_item.setObjectName('MenuItem')
+        left_item.setProperty('class','MenuItem')
         self.window.add_left_panel_item(left_item)
-        left_item.clicked.connect(self.load_window_properties_page)
+        left_item.clicked.connect(lambda s= left_item:self.load_window_properties_page(s))
         self.load_window_properties_page(left_item)
         
-        """self.window.add_left_panel_item(left_item)
-        
-        left_item = QPushButton('Learning resource Editor')
-        left_item.setIcon(QIcon(root + '\\notebook-pen.svg'))
+        left_item = QPushButton('Widgets')
+        left_item.setIcon(QIcon('F:\\Projects\\Python\\icons\\shapes.svg'))
         left_item.setCheckable(True)
-        left_item.setObjectName('MenuItem')
-        left_item.clicked.connect(lambda _, sender=left_item: self.load_EduResourceEditor(sender))
-        
+        left_item.setProperty('class','MenuItem')
         self.window.add_left_panel_item(left_item)
+        """
 
         left_item = QPushButton('Resource collection')
         left_item.setIcon(QIcon(root + '\\library.svg'))
@@ -156,7 +152,7 @@ class CLI:
 
     def load_window_properties_page(self, sender:QPushButton): 
         
-        #self.uncheck_items(self.window.left_panel_layout)
+        self.uncheck_items(self.window.left_panel_layout)
         
         w = QWidget()
         layout = QGridLayout(w)
@@ -164,8 +160,7 @@ class CLI:
         layout.setColumnStretch(1,1)
         self.window.add_page(w)
         
-        s =  '<div style="line-height: 200%; font-size: 20px;">'
-        s += '<b>Important features of the main window:</b></div>'
+        s = '<b>Important features of the main window:</b>'
         lbl = QLabel(s)
         lbl.setWordWrap(True)
         lbl.setProperty('class', 'title')
@@ -174,7 +169,6 @@ class CLI:
         layout.addWidget(lbl,0,0,alignment=Qt.AlignmentFlag.AlignTop)
 
         s =  '<div style="line-height: 200%; font-size: 16px;">'
-        s += '• <b>Important features of the main window:</b><br>'
         s += 'The main window has a built-in function to apply custom themes. '
         s += 'You can also use <b>StyleManagers.QtStyleSheetManager</b> '
         s += 'To change the theme of the application. Practice now by clicking <b>"Change Style"</b> button from right panel of this page.</div>'
@@ -267,8 +261,8 @@ class CLI:
 
 
     def Run(self):
-
-        style_path = "PySideAbdhUI\\resources\\styles\\default-dark.qss"
+        root = os.path.dirname(__file__) 
+        style_path = root + "\\PySideAbdhUI\\resources\\styles\\default-dark.qss"
         # Using QtStyleSheetManager to manage custom styles
         st.load_stylesheet(style_path)
     
@@ -279,12 +273,12 @@ class CLI:
         self.app.setStyleSheet(st.stylesheet)
         
         # Our custom ICON is available in application_path + "/resources/icons/
-        self.app.setWindowIcon(QIcon('PySideAbdhUI\\resources\\png\\app-icon.png'))
+        self.app.setWindowIcon(QIcon(root + '\\PySideAbdhUI\\resources\\png\\app-icon.png'))
         # Create the main customized UI window
         self.window = Window.AbdhWindow()
 
         self.window.initUI(app_title= 'PySideAbdhUI - Application test | ' + PySideAbdhUI.__version__, 
-                           title_logo_path=  "PySideAbdhUI\\resources\\png\\app-icon.png",
+                           title_logo_path= root + "\\PySideAbdhUI\\resources\\png\\app-icon.png",
                            direction= Qt.LayoutDirection.LeftToRight)
     
         

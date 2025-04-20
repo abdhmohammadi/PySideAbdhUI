@@ -1,4 +1,4 @@
-from PySide6.QtWidgets import QStackedWidget, QLabel, QWidget, QSizePolicy
+from PySide6.QtWidgets import QStackedWidget, QLabel, QWidget, QSizePolicy, QFrame
 from PySide6.QtCore import Signal, QPropertyAnimation, QRect, QEasingCurve, QParallelAnimationGroup
 from PySide6.QtGui import Qt
 
@@ -18,21 +18,25 @@ class StackedWidget(QStackedWidget):
 
     def add_page(self, page: QWidget):
 
-        if isinstance(page, type(self.currentWidget())): return
-
+        if page in [self.widget(i) for i in range(self.count())]: return
+        
         page.setAutoFillBackground(True)
+        
         self.addWidget(page)
+        
         self.go_last()
 
     def go_next(self):
+        
         new_index = self.currentIndex() + 1
-        if new_index < self.count():
-            self.setCurrentIndexAnimated(new_index)
+        
+        if new_index < self.count(): self.setCurrentIndexAnimated(new_index)
 
     def go_back(self):
+
         new_index = self.currentIndex() - 1
-        if new_index >= 0:
-            self.setCurrentIndexAnimated(new_index)
+        
+        if new_index >= 0: self.setCurrentIndexAnimated(new_index)
 
     def goto_index(self, index): self.setCurrentIndexAnimated(index)
 
@@ -48,6 +52,7 @@ class StackedWidget(QStackedWidget):
         current_widget = self.currentWidget()
         current_widget.hide()
         next_widget = self.widget(index)
+        
         direction = 1 if index > self.currentIndex() else -1
         
         self.setCurrentWidgetAnimated(next_widget, direction)
@@ -98,9 +103,10 @@ class StackedWidget(QStackedWidget):
         widget.setGeometry(0, 0, self.width(), self.height())
         widget.updateGeometry()
         widget.adjustSize()
+       
         layout = widget.layout()
-        if layout:
-            layout.activate()
+       
+        if layout: layout.activate()
 
     def resizeEvent(self, event):
         super().resizeEvent(event)
@@ -113,6 +119,19 @@ class StackedWidget(QStackedWidget):
                     layout.activate()
 
  
+class Separator(QFrame):
+    def __init__(self, orientation='horizontal',stroke:int=2, color:str='#888888', parent=None):
+        super().__init__(parent)
+        #self.setStyleSheet('background-color:#666666;')
+        if orientation == 'horizontal': self.setFrameShape(QFrame.Shape.HLine)
+        else: self.setFrameShape(QFrame.Shape.VLine)
+        
+        self.setFrameShadow(QFrame.Plain)  # No 3D effect
+        self.setLineWidth(1)               # Line thickness
+        self.setMidLineWidth(0)
+        self.setStyleSheet(f"color: {color}; background-color: {color}; max-height: {stroke}px;")
+        
+        self.setLineWidth(stroke)
 
 class Label(QLabel):
     def __init__(self,text:str=''):
