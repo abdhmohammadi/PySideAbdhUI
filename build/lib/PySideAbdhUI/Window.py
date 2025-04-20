@@ -396,18 +396,35 @@ class AbdhWindow(QMainWindow):
         # Stop any ongoing animation
         if self.animation.state() == QPropertyAnimation.State.Running: self.animation.stop()
 
-        # Store the original geometry before maximizing
-        self.original_geometry = self.geometry()
-
         # Get the available screen geometry (excluding taskbar)
         screen_geometry = QApplication.primaryScreen().availableGeometry()
+
+        # Store the original geometry before maximizing
+        geo = self.geometry()
+
+        if geo.width() >= screen_geometry.width(): 
+            diff = geo.width() - screen_geometry.width()
+            geo.setWidth(geo.width() - diff - 10 )
+
+        if geo.height() >= screen_geometry.height():
+            diff = geo.height() - screen_geometry.height()
+            geo.setHeight(geo.height() - diff - 10)
+
+        if geo.left()<0: geo.setLeft(5)
+
+        if geo.top()<0: geo.setTop(5)
+        
+        if geo.bottom()>= screen_geometry.bottom():
+            geo.setBottom(screen_geometry.bottom() - 5)
+
+        if geo.right()>= screen_geometry.right():
+            geo.setRight(screen_geometry.right() - 5)
+
+        self.original_geometry = geo
 
         # Set up the animation to expand to full screen
         self.animation.setStartValue(self.geometry())
         self.animation.setEndValue(screen_geometry)
-
-
-        #self.animation.finished.connect(self.update_page)
 
         # Start the animation
         self.animation.start()
@@ -419,18 +436,12 @@ class AbdhWindow(QMainWindow):
 
         # Set up the animation to shrink to the original size
         self.animation.setStartValue(self.geometry())
+        
         self.animation.setEndValue(self.original_geometry)
 
-        #self.animation.finished.connect(self.update_page)
         # Start the animation
         self.animation.start()
-
-        
-    def update_page(self):
-
-        w = self.stacked_widget.currentWidget()
-        self.stacked_widget.setCurrentWidgetAnimated(w,0)
-        
+       
         
     # fade-in effect animation
     def animate_fadeIn(self):
