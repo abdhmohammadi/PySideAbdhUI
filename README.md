@@ -1,6 +1,6 @@
 
 # PySideAbdhUI 
-v1.0.0
+v1.0.1
 
 **PySideAbdhUI** is a clean, reusable, and highly customizable UI component package built with [PySide6](https://doc.qt.io/qtforpython/). It is ideal for building professional and elegant desktop applications, especially those needing consistent styles, structured windows, enhanced widgets, and notification systems.
 

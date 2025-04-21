@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: PySideAbdhUI
-Version: 1.0.0
+Version: 1.0.1
 Summary: Customized Python GUI components based on PySide6
 Home-page: https://github.com/abdhmohammadi/PySideAbdhUI
 Author: Abdullah Mohammadi
@@ -15,7 +15,7 @@ Requires-Dist: PySide6
 
 
 # PySideAbdhUI 
-v1.0.0
+v1.0.1
 
 **PySideAbdhUI** is a clean, reusable, and highly customizable UI component package built with [PySide6](https://doc.qt.io/qtforpython/). It is ideal for building professional and elegant desktop applications, especially those needing consistent styles, structured windows, enhanced widgets, and notification systems.
 
