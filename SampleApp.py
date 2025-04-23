@@ -4,7 +4,7 @@ This app is a model based application, in development of the app
 
 import sys, os
 import PySideAbdhUI
-from PySideAbdhUI import Window
+from PySideAbdhUI import Window, StackedWidget
 from PySideAbdhUI.StyleManagers import QtStyleSheetManager
 from PySideAbdhUI.Notify import PopupNotifier
 
@@ -22,7 +22,7 @@ lbl_style = """QLabel
     font-size: 16px;               /* Adjust as needed */
     font-weight: normal;           /* Options: normal, bold */
     padding: 4px;                  /* Some spacing around the text */
-    border-bottom:2px solid #888888;                  
+    border-bottom:1px solid #88888866;                  
 }
 """
 class CLI:
@@ -108,7 +108,7 @@ class CLI:
         left_item.setChecked(True)
         left_item.setProperty('class','MenuItem')
         self.window.add_left_panel_item(left_item)
-        left_item.clicked.connect(lambda s= left_item:self.load_window_properties_page(s))
+        left_item.clicked.connect(lambda _, s= left_item:self.load_window_properties_page(s))
         self.load_window_properties_page(left_item)
         
         left_item = QPushButton('Widgets')
@@ -116,6 +116,8 @@ class CLI:
         left_item.setCheckable(True)
         left_item.setProperty('class','MenuItem')
         self.window.add_left_panel_item(left_item)
+        left_item.clicked.connect(lambda _,s= left_item:self.load_widgets_page(s))
+
         """
 
         left_item = QPushButton('Resource collection')
@@ -147,12 +149,74 @@ class CLI:
     def load_EduResourceEditor(self, sender:QPushButton): 
         
         self.uncheck_items(self.window.left_panel_layout)
-        #self.window.add_page(Pages.EducationalResourceEditor())
+        
         sender.setChecked(True)
+
+    def load_widgets_page(self, sender:QPushButton): 
+        
+        self.uncheck_items(self.window.left_panel_layout)
+        if sender: sender.setChecked(True)
+
+        w = QWidget()
+        layout = QGridLayout(w)
+        layout.setColumnStretch(2,1)
+        self.window.add_page(w)
+        
+        lbl = QLabel('WIDGETS')
+        lbl.setWordWrap(True)
+        lbl.setProperty('class', 'title')
+        lbl.setTextFormat(Qt.TextFormat.RichText)
+        layout.addWidget(lbl,0,0,alignment=Qt.AlignmentFlag.AlignTop)
+
+        s =  '<div style="line-height: 100%; font-size: 16px;">'
+        s += '<b>StackedWidget:</b> is one of advanced widgets that plays imporant rule as a container of other objects.</div>'
+        lbl = QLabel(s)
+        lbl.setWordWrap(True)
+        lbl.setTextFormat(Qt.TextFormat.RichText)
+        layout.addWidget(lbl,1,0,1,3,alignment=Qt.AlignmentFlag.AlignTop)
+
+        grid = QGridLayout()
+        layout.addLayout(grid,2,0, alignment=Qt.AlignmentFlag.AlignTop)
+
+        lbl = QLabel('Stacked Widget')
+        lbl.setProperty('class','title')
+        grid.addWidget(lbl,0,2)
+
+        stack = StackedWidget()
+        stack.setStyleSheet('border:1px solid #88888866; border-radius:8px;padding:5px')
+        layout.addWidget(stack,3,0,1,3)
+
+        lbl = QLabel('       Page 1')
+        lbl.setStyleSheet('border:none; background-color: brown;color:#ffffff;font-size:72pt;text-align: center;')        
+        stack.add_page(lbl)
+
+        lbl= QLabel('        Page 2')
+        lbl.setStyleSheet('border:none; background-color: green;color:#ffffff;font-size:72pt;text-align: center;')  
+        stack.add_page(lbl)
+
+        lbl= QLabel('Page 3')
+        lbl.setStyleSheet('border:none; background-color: lightblue;color:#000000;font-size:72pt;text-align: center;')  
+        stack.add_page(lbl)
+        
+        #stack.go_first()
+
+        btn = QPushButton('<')
+        btn.setProperty('class','grouped_min')
+        btn.clicked.connect(stack.go_back)
+        grid.addWidget(btn,0,0)
+        
+        btn = QPushButton('>')
+        btn.setProperty('class','grouped_min')
+        btn.clicked.connect(stack.go_next)
+        grid.addWidget(btn,0,1)
+
+        layout.setRowStretch(3,1)
 
     def load_window_properties_page(self, sender:QPushButton): 
         
         self.uncheck_items(self.window.left_panel_layout)
+        
+        if sender: sender.setChecked(True)
         
         w = QWidget()
         layout = QGridLayout(w)
@@ -168,7 +232,7 @@ class CLI:
         
         layout.addWidget(lbl,0,0,alignment=Qt.AlignmentFlag.AlignTop)
 
-        s =  '<div style="line-height: 200%; font-size: 16px;">'
+        s =  '<div style="line-height: 100%; font-size: 16px;">'
         s += 'The main window has a built-in function to apply custom themes. '
         s += 'You can also use <b>StyleManagers.QtStyleSheetManager</b> '
         s += 'To change the theme of the application. Practice now by clicking <b>"Change Style"</b> button from right panel of this page.</div>'
@@ -180,7 +244,7 @@ class CLI:
         layout.addWidget(lbl,1,0,alignment=Qt.AlignmentFlag.AlignTop)
         
         # ------------------------------------------------------------ #
-        s =  '<div style="line-height: 200%; font-size: 16px;">'
+        s =  '<div style="line-height: 100%; font-size: 16px;">'
         s +=  '• In the top-right, next to the control keys, there is a settings menu ⚙️. By clicking on it, a panel opens. '
         s += 'In it, the settings are located within the PySideAbdhUI page. The user can also set his application settings there. '
         s += 'if you want can hide settings button by <b>\'switch_settings_button(False)\'</b></div>'
@@ -191,7 +255,7 @@ class CLI:
         layout.addWidget(lbl,2,0,alignment=Qt.AlignmentFlag.AlignTop)
 
         # ------------------------------------------------------------ #
-        s =  '<div style="line-height: 200%; font-size: 16px;">'
+        s =  '<div style="line-height: 100%; font-size: 16px;">'
         s += '• The left panel is the main menu container for accessing the user\'s application components. '
         s += 'This section is supported by two function. One is for opening and closing the panel and the other '
         s += 'is for switching its overlay state. On the left panel click on ☰ to expand or close the panel, '
@@ -203,7 +267,7 @@ class CLI:
         layout.addWidget(lbl,3,0,alignment=Qt.AlignmentFlag.AlignTop)
         
         # ------------------------------------------------------------ #
-        s =  '<div style="line-height: 200%; font-size: 16px;">'
+        s =  '<div style="line-height: 100%; font-size: 16px;">'
         s += '• Navigation keys ⬅️ ➡️ and the application logo are available in the title bar. These keys can be hidden with <b>\'switch_navigations(False)\'</b>. '
         s += 'You can also use ss to place a custom logo in the left corner of the title bar.</div>'
         lbl = QLabel(s)
@@ -213,7 +277,7 @@ class CLI:
         layout.addWidget(lbl,4,0,alignment=Qt.AlignmentFlag.AlignTop)
 
         # ------------------------------------------------------------ #
-        s =  '<div style="line-height: 200%; font-size: 16px;">'
+        s =  '<div style="line-height: 100%; font-size: 16px;">'
         s += '• You can also use the existing notification system to provide appropriate notifications to the user. '
         s += 'This system is available throughout the package. You can easily enable this using <b>PopupNotifier.Notify(...)</b>.'
         s += 'Try now using \'Test Notification\' button.</div>'
@@ -233,7 +297,7 @@ class CLI:
         right_panel.addWidget(button)
 
         button = QPushButton('Test notification')
-        button.clicked.connect(lambda:PopupNotifier.Notify(self.window, message='👋 Hi, This is the PySideAbdhUI notification feature.'))
+        button.clicked.connect(lambda:PopupNotifier.Notify(self.window, message='👋 Hi, This is the PySideAbdhUI notification feature.',position='top-right'))
         right_panel.addWidget(button)
 
 
@@ -241,7 +305,6 @@ class CLI:
         layout.addLayout(right_panel,0,1,2,1)
 
         layout.setRowStretch(6,1)
-        if sender: sender.setChecked(True)
 
     
     def on_font_changed(self,sender:QComboBox):
@@ -262,7 +325,7 @@ class CLI:
 
     def Run(self):
         root = os.path.dirname(__file__) 
-        style_path = root + "\\PySideAbdhUI\\resources\\styles\\default-dark.qss"
+        style_path = "C:\\Users\\AbdhM\\AppData\\Local\\Abdh\\TeacherAssistant\\chrome-semi-dark.qss" #root + "\\PySideAbdhUI\\resources\\styles\\default-dark.qss"
         # Using QtStyleSheetManager to manage custom styles
         st.load_stylesheet(style_path)
     

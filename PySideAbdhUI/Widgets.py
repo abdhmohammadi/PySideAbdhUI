@@ -47,6 +47,8 @@ class StackedWidget(QStackedWidget):
     def setCurrentIndexAnimated(self, index):
 
         if index < 0 or index >= self.count() or index == self.currentIndex(): return
+        
+        if self.animating: return
 
         self.target_index = index
         current_widget = self.currentWidget()
@@ -63,7 +65,6 @@ class StackedWidget(QStackedWidget):
 
         self.animating = True
         current_widget = self.currentWidget()
-        current_widget.hide()
 
         size = self.size()
         width = size.width()
@@ -91,6 +92,8 @@ class StackedWidget(QStackedWidget):
         self.animation_group.addAnimation(anim_in)
         self.animation_group.finished.connect(self._on_animation_finished)
         self.animation_group.start()
+        current_widget.hide()
+
 
     def _on_animation_finished(self):
         
