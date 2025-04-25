@@ -1,0 +1,429 @@
+{
+    "themes": {
+        "default-dark": {
+            "Base Colors": {
+                "background": {
+                    "description": "Main window background",
+                    "color": "#121212"
+                },
+                "surface": {
+                    "description": "Card or panel backgrounds",
+                    "color": "#1E1E1E"
+                },
+                "surface-variant": {
+                    "description": "Secondary surfaces",
+                    "color": "#2C2C2C"
+                },
+                "border": {
+                    "description": "Border colors",
+                    "color": "#2F2F2F"
+                },
+                "hover": {
+                    "description": "Hover backgrounds",
+                    "color": "#2A2A2A"
+                }
+            },
+            "Text Colors": {
+                "text-primary": {
+                    "description": "Primary readable text",
+                    "color": "#FFFFFF"
+                },
+                "text-secondary": {
+                    "description": "Less prominent text",
+                    "color": "#BBBBBB"
+                },
+                "text-disabled": {
+                    "description": "Disabled/inactive text",
+                    "color": "#666666"
+                },
+                "text-inverse": {
+                    "description": "Text on light surfaces",
+                    "color": "#000000"
+                }
+            },
+            "Control Colors": {
+                "button": {
+                    "description": "Button background",
+                    "color": "#2D2D2D"
+                },
+                "button-hover": {
+                    "description": "On hover",
+                    "color": "#3A3A3A"
+                },
+                "button-pressed": {
+                    "description": "When pressed",
+                    "color": "#505050"
+                },
+                "button-text": {
+                    "description": "Text on buttons",
+                    "color": "#FFFFFF"
+                }
+            },
+            "Accent Colors": {
+                "accent": {
+                    "description": "Main highlight color",
+                    "color": "#0078D4"
+                },
+                "accent-light": {
+                    "description": "Hover or focus states",
+                    "color": "#1A85FF"
+                },
+                "accent-contrast": {
+                    "description": "Text/icon on accent background",
+                    "color": "#FFFFFF"
+                }
+            },
+            "Status Colors": {
+                "success": {
+                    "description": "Success messages",
+                    "color": "#4CAF50"
+                },
+                "warning": {
+                    "description": "Warnings",
+                    "color": "#FFC107"
+                },
+                "error": {
+                    "description": "Errors",
+                    "color": "#F44336"
+                },
+                "info": {
+                    "description": "Info messages",
+                    "color": "#2196F3"
+                }
+            },
+            "Special Effects": {
+                "shadow": {
+                    "description": "Drop shadow",
+                    "color": "rgba(0, 0, 0, 0.6)"
+                },
+                "overlay": {
+                    "description": "Modal backgrounds",
+                    "color": "rgba(0, 0, 0, 0.4)"
+                },
+                "focus-ring": {
+                    "description": "Focus outline",
+                    "color": "#1A73E8"
+                }
+            }
+        },
+        "default-light": {
+            "Base Colors": {
+                "background": {
+                    "description": "Main window background",
+                    "color": "#FFFFFF"
+                },
+                "surface": {
+                    "description": "Card or panel backgrounds",
+                    "color": "#F5F5F5"
+                },
+                "surface-variant": {
+                    "description": "Secondary surfaces",
+                    "color": "#EEEEEE"
+                },
+                "border": {
+                    "description": "Border colors",
+                    "color": "#DDDDDD"
+                },
+                "hover": {
+                    "description": "Hover backgrounds",
+                    "color": "#E0E0E0"
+                }
+            },
+            "Text Colors": {
+                "text-primary": {
+                    "description": "Primary readable text",
+                    "color": "#000000"
+                },
+                "text-secondary": {
+                    "description": "Less prominent text",
+                    "color": "#555555"
+                },
+                "text-disabled": {
+                    "description": "Disabled/inactive text",
+                    "color": "#AAAAAA"
+                },
+                "text-inverse": {
+                    "description": "Text on dark surfaces",
+                    "color": "#FFFFFF"
+                }
+            },
+            "Control Colors": {
+                "button": {
+                    "description": "Button background",
+                    "color": "#E0E0E0"
+                },
+                "button-hover": {
+                    "description": "On hover",
+                    "color": "#D5D5D5"
+                },
+                "button-pressed": {
+                    "description": "When pressed",
+                    "color": "#C0C0C0"
+                },
+                "button-text": {
+                    "description": "Text on buttons",
+                    "color": "#000000"
+                }
+            },
+            "Accent Colors": {
+                "accent": {
+                    "description": "Main highlight color",
+                    "color": "#0078D4"
+                },
+                "accent-light": {
+                    "description": "Hover or focus states",
+                    "color": "#005A9E"
+                },
+                "accent-contrast": {
+                    "description": "Text/icon on accent background",
+                    "color": "#FFFFFF"
+                }
+            },
+            "Status Colors": {
+                "success": {
+                    "description": "Success messages",
+                    "color": "#388E3C"
+                },
+                "warning": {
+                    "description": "Warnings",
+                    "color": "#FFA000"
+                },
+                "error": {
+                    "description": "Errors",
+                    "color": "#D32F2F"
+                },
+                "info": {
+                    "description": "Info messages",
+                    "color": "#1976D2"
+                }
+            },
+            "Special Effects": {
+                "shadow": {
+                    "description": "Drop shadow",
+                    "color": "rgba(0, 0, 0, 0.15)"
+                },
+                "overlay": {
+                    "description": "Modal backgrounds",
+                    "color": "rgba(0, 0, 0, 0.1)"
+                },
+                "focus-ring": {
+                    "description": "Focus outline",
+                    "color": "#1A73E8"
+                }
+            }
+        },
+        "windows 11-dark": {
+            "Base Colors": {
+                "background": {
+                    "description": "Main window background",
+                    "color": "#0F0F0F"
+                },
+                "surface": {
+                    "description": "Card or panel backgrounds",
+                    "color": "#1C1C1C"
+                },
+                "surface-variant": {
+                    "description": "Secondary surfaces",
+                    "color": "#2A2A2A"
+                },
+                "border": {
+                    "description": "Border colors",
+                    "color": "#333333"
+                },
+                "hover": {
+                    "description": "Hover backgrounds",
+                    "color": "#2E2E2E"
+                }
+            },
+            "Text Colors": {
+                "text-primary": {
+                    "description": "Primary readable text",
+                    "color": "#FFFFFF"
+                },
+                "text-secondary": {
+                    "description": "Less prominent text",
+                    "color": "#CCCCCC"
+                },
+                "text-disabled": {
+                    "description": "Disabled/inactive text",
+                    "color": "#777777"
+                },
+                "text-inverse": {
+                    "description": "Text on light surfaces",
+                    "color": "#000000"
+                }
+            },
+            "Control Colors": {
+                "button": {
+                    "description": "Button background",
+                    "color": "#2D2D2D"
+                },
+                "button-hover": {
+                    "description": "On hover",
+                    "color": "#3A3A3A"
+                },
+                "button-pressed": {
+                    "description": "When pressed",
+                    "color": "#505050"
+                },
+                "button-text": {
+                    "description": "Text on buttons",
+                    "color": "#FFFFFF"
+                }
+            },
+            "Accent Colors": {
+                "accent": {
+                    "description": "Main highlight color",
+                    "color": "#0080FF"
+                },
+                "accent-light": {
+                    "description": "Hover or focus states",
+                    "color": "#339DFF"
+                },
+                "accent-contrast": {
+                    "description": "Text/icon on accent background",
+                    "color": "#FFFFFF"
+                }
+            },
+            "Status Colors": {
+                "success": {
+                    "description": "Success messages",
+                    "color": "#28A745"
+                },
+                "warning": {
+                    "description": "Warnings",
+                    "color": "#FFD33D"
+                },
+                "error": {
+                    "description": "Errors",
+                    "color": "#D32F2F"
+                },
+                "info": {
+                    "description": "Info messages",
+                    "color": "#3793E0"
+                }
+            },
+            "Special Effects": {
+                "shadow": {
+                    "description": "Drop shadow",
+                    "color": "rgba(0, 0, 0, 0.55)"
+                },
+                "overlay": {
+                    "description": "Modal backgrounds",
+                    "color": "rgba(0, 0, 0, 0.45)"
+                },
+                "focus-ring": {
+                    "description": "Focus outline",
+                    "color": "#1A73E8"
+                }
+            }
+        },
+        "ubuntu-orange": {
+            "Base Colors": {
+                "background": {
+                    "description": "Main window background",
+                    "color": "#2C2C2C"
+                },
+                "surface": {
+                    "description": "Card or panel backgrounds",
+                    "color": "#353535"
+                },
+                "surface-variant": {
+                    "description": "Secondary surfaces",
+                    "color": "#444444"
+                },
+                "border": {
+                    "description": "Border colors",
+                    "color": "#555555"
+                },
+                "hover": {
+                    "description": "Hover backgrounds",
+                    "color": "#3A3A3A"
+                }
+            },
+            "Text Colors": {
+                "text-primary": {
+                    "description": "Primary readable text",
+                    "color": "#FFFFFF"
+                },
+                "text-secondary": {
+                    "description": "Less prominent text",
+                    "color": "#DDDDDD"
+                },
+                "text-disabled": {
+                    "description": "Disabled/inactive text",
+                    "color": "#888888"
+                },
+                "text-inverse": {
+                    "description": "Text on light surfaces",
+                    "color": "#000000"
+                }
+            },
+            "Control Colors": {
+                "button": {
+                    "description": "Button background",
+                    "color": "#FF5722"
+                },
+                "button-hover": {
+                    "description": "On hover",
+                    "color": "#FF7043"
+                },
+                "button-pressed": {
+                    "description": "When pressed",
+                    "color": "#FF8A65"
+                },
+                "button-text": {
+                    "description": "Text on buttons",
+                    "color": "#FFFFFF"
+                }
+            },
+            "Accent Colors": {
+                "accent": {
+                    "description": "Main highlight color",
+                    "color": "#FF9800"
+                },
+                "accent-light": {
+                    "description": "Hover or focus states",
+                    "color": "#FFB74D"
+                },
+                "accent-contrast": {
+                    "description": "Text/icon on accent background",
+                    "color": "#FFFFFF"
+                }
+            },
+            "Status Colors": {
+                "success": {
+                    "description": "Success messages",
+                    "color": "#4CAF50"
+                },
+                "warning": {
+                    "description": "Warnings",
+                    "color": "#FFC107"
+                },
+                "error": {
+                    "description": "Errors",
+                    "color": "#F44336"
+                },
+                "info": {
+                    "description": "Info messages",
+                    "color": "#2196F3"
+                }
+            },
+            "Special Effects": {
+                "shadow": {
+                    "description": "Drop shadow",
+                    "color": "rgba(0, 0, 0, 0.6)"
+                },
+                "overlay": {
+                    "description": "Modal backgrounds",
+                    "color": "rgba(0, 0, 0, 0.5)"
+                },
+                "focus-ring": {
+                    "description": "Focus outline",
+                    "color": "#FF9800"
+                }
+            }
+        }
+    },
+    "active-theme": "ubuntu-orange"
+}

@@ -129,8 +129,8 @@ class Separator(QFrame):
         if orientation == 'horizontal': self.setFrameShape(QFrame.Shape.HLine)
         else: self.setFrameShape(QFrame.Shape.VLine)
         
-        self.setFrameShadow(QFrame.Plain)  # No 3D effect
-        self.setLineWidth(1)               # Line thickness
+        self.setFrameShadow(QFrame.Shadow.Plain)  # No 3D effect
+        self.setLineWidth(1)              
         self.setMidLineWidth(0)
         self.setStyleSheet(f"color: {color}; background-color: {color}; max-height: {stroke}px;")
         

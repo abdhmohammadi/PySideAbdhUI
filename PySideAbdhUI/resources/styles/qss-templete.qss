@@ -1,0 +1,16 @@
+/* 
+Managed: this templete is a bundle with Color-Roles.json
+*/
+
+QMainWindow 
+{
+    background-color: --base-background--;
+}
+
+QWidget 
+{
+    background-color: --base-background--;
+    color: --text-secondary--;
+    border: none;
+    border-radius: 8px;
+}
