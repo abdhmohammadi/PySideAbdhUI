@@ -304,12 +304,14 @@ class CLI:
         left_item.setCheckable(True)
         left_item.setProperty('class','MenuItem')
         self.window.add_left_panel_item(left_item)
-        left_item.clicked.connect(lambda _,s= left_item:self.load_theme_editor())
+        left_item.clicked.connect(lambda _,s= left_item:self.load_theme_editor(s))
 
         self.window.left_panel_layout.addStretch(1)
         
-    def load_theme_editor(self):
-        
+    def load_theme_editor(self, sender:QPushButton):
+        self.uncheck_items(self.window.left_panel_layout)
+        sender.setChecked(True)
+
         color_roles_path ="PySideAbdhUI/resources/styles/color-roles.json"
         
         if not os.path.exists(color_roles_path):
@@ -334,15 +336,11 @@ class CLI:
 
     def toggle_direction(self, direction:Qt.LayoutDirection): self.window.set_direction(direction)
         
-    def load_EduResourceEditor(self, sender:QPushButton): 
-        
-        self.uncheck_items(self.window.left_panel_layout)
-        
-        sender.setChecked(True)
 
     def load_widgets_page(self, sender:QPushButton): 
         
         self.uncheck_items(self.window.left_panel_layout)
+
         if sender: sender.setChecked(True)
 
         w = QWidget()
