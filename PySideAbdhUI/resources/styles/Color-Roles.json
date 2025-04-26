@@ -1,114 +1,22 @@
 {
     "themes": {
-        "default-dark": {
-            "Base Colors": {
-                "background": {
-                    "description": "Main window background",
-                    "color": "#121212"
-                },
-                "surface": {
-                    "description": "Card or panel backgrounds",
-                    "color": "#1E1E1E"
-                },
-                "surface-variant": {
-                    "description": "Secondary surfaces",
-                    "color": "#2C2C2C"
-                },
-                "border": {
-                    "description": "Border colors",
-                    "color": "#2F2F2F"
-                },
-                "hover": {
-                    "description": "Hover backgrounds",
-                    "color": "#2A2A2A"
-                }
-            },
-            "Text Colors": {
-                "text-primary": {
-                    "description": "Primary readable text",
-                    "color": "#FFFFFF"
-                },
-                "text-secondary": {
-                    "description": "Less prominent text",
-                    "color": "#BBBBBB"
-                },
-                "text-disabled": {
-                    "description": "Disabled/inactive text",
-                    "color": "#666666"
-                },
-                "text-inverse": {
-                    "description": "Text on light surfaces",
-                    "color": "#000000"
-                }
-            },
-            "Control Colors": {
-                "button": {
-                    "description": "Button background",
-                    "color": "#2D2D2D"
-                },
-                "button-hover": {
-                    "description": "On hover",
-                    "color": "#3A3A3A"
-                },
-                "button-pressed": {
-                    "description": "When pressed",
-                    "color": "#505050"
-                },
-                "button-text": {
-                    "description": "Text on buttons",
-                    "color": "#FFFFFF"
-                }
-            },
+        "default-light": {
             "Accent Colors": {
                 "accent": {
-                    "description": "Main highlight color",
+                    "description": "Primary accent (e.g. focus border on active input)",
                     "color": "#0078D4"
                 },
                 "accent-light": {
-                    "description": "Hover or focus states",
-                    "color": "#1A85FF"
+                    "description": "Hover state for inputs/buttons",
+                    "color": "#005A9E"
                 },
                 "accent-contrast": {
-                    "description": "Text/icon on accent background",
+                    "description": "Text/icons on accent background (e.g. input text on colored buttons)",
                     "color": "#FFFFFF"
                 }
             },
-            "Status Colors": {
-                "success": {
-                    "description": "Success messages",
-                    "color": "#4CAF50"
-                },
-                "warning": {
-                    "description": "Warnings",
-                    "color": "#FFC107"
-                },
-                "error": {
-                    "description": "Errors",
-                    "color": "#F44336"
-                },
-                "info": {
-                    "description": "Info messages",
-                    "color": "#2196F3"
-                }
-            },
-            "Special Effects": {
-                "shadow": {
-                    "description": "Drop shadow",
-                    "color": "rgba(0, 0, 0, 0.6)"
-                },
-                "overlay": {
-                    "description": "Modal backgrounds",
-                    "color": "rgba(0, 0, 0, 0.4)"
-                },
-                "focus-ring": {
-                    "description": "Focus outline",
-                    "color": "#1A73E8"
-                }
-            }
-        },
-        "default-light": {
             "Base Colors": {
-                "background": {
+                "base-background": {
                     "description": "Main window background",
                     "color": "#FFFFFF"
                 },
@@ -147,8 +55,22 @@
                     "color": "#FFFFFF"
                 }
             },
+            "Input Fields": {
+                "input-background": {
+                    "description": "Background for text inputs like QLineEdit, QTextEdit",
+                    "color": "#FFFFFF"
+                },
+                "input-border": {
+                    "description": "Border for focused or hovered inputs",
+                    "color": "#CCCCCC"
+                },
+                "input-placeholder": {
+                    "description": "Placeholder text color",
+                    "color": "#888888"
+                }
+            },
             "Control Colors": {
-                "button": {
+                "button-background": {
                     "description": "Button background",
                     "color": "#E0E0E0"
                 },
@@ -163,20 +85,26 @@
                 "button-text": {
                     "description": "Text on buttons",
                     "color": "#000000"
-                }
-            },
-            "Accent Colors": {
-                "accent": {
-                    "description": "Main highlight color",
-                    "color": "#0078D4"
                 },
-                "accent-light": {
-                    "description": "Hover or focus states",
-                    "color": "#005A9E"
+                "input-disabled-background": {
+                    "description": "Background color for disabled input fields",
+                    "color": "#F0F0F0"
                 },
-                "accent-contrast": {
-                    "description": "Text/icon on accent background",
-                    "color": "#FFFFFF"
+                "input-disabled-text": {
+                    "description": "Text color in disabled input fields",
+                    "color": "#AAAAAA"
+                },
+                "button-disabled": {
+                    "description": "Disabled button background",
+                    "color": "#E0E0E0"
+                },
+                "button-disabled-text": {
+                    "description": "Text on disabled buttons",
+                    "color": "#AAAAAA"
+                },
+                "disabled-border": {
+                    "description": "Border color for disabled inputs and buttons",
+                    "color": "#CCCCCC"
                 }
             },
             "Status Colors": {
@@ -212,115 +140,9 @@
                 }
             }
         },
-        "windows 11-dark": {
-            "Base Colors": {
-                "background": {
-                    "description": "Main window background",
-                    "color": "#0F0F0F"
-                },
-                "surface": {
-                    "description": "Card or panel backgrounds",
-                    "color": "#1C1C1C"
-                },
-                "surface-variant": {
-                    "description": "Secondary surfaces",
-                    "color": "#2A2A2A"
-                },
-                "border": {
-                    "description": "Border colors",
-                    "color": "#333333"
-                },
-                "hover": {
-                    "description": "Hover backgrounds",
-                    "color": "#2E2E2E"
-                }
-            },
-            "Text Colors": {
-                "text-primary": {
-                    "description": "Primary readable text",
-                    "color": "#FFFFFF"
-                },
-                "text-secondary": {
-                    "description": "Less prominent text",
-                    "color": "#CCCCCC"
-                },
-                "text-disabled": {
-                    "description": "Disabled/inactive text",
-                    "color": "#777777"
-                },
-                "text-inverse": {
-                    "description": "Text on light surfaces",
-                    "color": "#000000"
-                }
-            },
-            "Control Colors": {
-                "button": {
-                    "description": "Button background",
-                    "color": "#2D2D2D"
-                },
-                "button-hover": {
-                    "description": "On hover",
-                    "color": "#3A3A3A"
-                },
-                "button-pressed": {
-                    "description": "When pressed",
-                    "color": "#505050"
-                },
-                "button-text": {
-                    "description": "Text on buttons",
-                    "color": "#FFFFFF"
-                }
-            },
-            "Accent Colors": {
-                "accent": {
-                    "description": "Main highlight color",
-                    "color": "#0080FF"
-                },
-                "accent-light": {
-                    "description": "Hover or focus states",
-                    "color": "#339DFF"
-                },
-                "accent-contrast": {
-                    "description": "Text/icon on accent background",
-                    "color": "#FFFFFF"
-                }
-            },
-            "Status Colors": {
-                "success": {
-                    "description": "Success messages",
-                    "color": "#28A745"
-                },
-                "warning": {
-                    "description": "Warnings",
-                    "color": "#FFD33D"
-                },
-                "error": {
-                    "description": "Errors",
-                    "color": "#D32F2F"
-                },
-                "info": {
-                    "description": "Info messages",
-                    "color": "#3793E0"
-                }
-            },
-            "Special Effects": {
-                "shadow": {
-                    "description": "Drop shadow",
-                    "color": "rgba(0, 0, 0, 0.55)"
-                },
-                "overlay": {
-                    "description": "Modal backgrounds",
-                    "color": "rgba(0, 0, 0, 0.45)"
-                },
-                "focus-ring": {
-                    "description": "Focus outline",
-                    "color": "#1A73E8"
-                }
-            }
-        },
         "ubuntu-orange": {
             "Base Colors": {
-                "background": {
+                "base-background": {
                     "description": "Main window background",
                     "color": "#2C2C2C"
                 },
@@ -359,8 +181,22 @@
                     "color": "#000000"
                 }
             },
+            "Input Fields": {
+                "input-background": {
+                    "description": "Background for text inputs like QLineEdit, QTextEdit",
+                    "color": "#353535"
+                },
+                "input-border": {
+                    "description": "Border for focused or hovered inputs",
+                    "color": "#FF7800"
+                },
+                "input-placeholder": {
+                    "description": "Placeholder text color",
+                    "color": "#BBBBBB"
+                }
+            },
             "Control Colors": {
-                "button": {
+                "button-background": {
                     "description": "Button background",
                     "color": "#FF5722"
                 },
@@ -375,6 +211,26 @@
                 "button-text": {
                     "description": "Text on buttons",
                     "color": "#FFFFFF"
+                },
+                "input-disabled-background": {
+                    "description": "Background color for disabled input fields",
+                    "color": "#2E2A28"
+                },
+                "input-disabled-text": {
+                    "description": "Text color in disabled input fields",
+                    "color": "#8E8C89"
+                },
+                "button-disabled": {
+                    "description": "Disabled button background",
+                    "color": "#3A3634"
+                },
+                "button-disabled-text": {
+                    "description": "Text on disabled buttons",
+                    "color": "#8E8C89"
+                },
+                "disabled-border": {
+                    "description": "Border color for disabled inputs and buttons",
+                    "color": "#4C4744"
                 }
             },
             "Accent Colors": {
@@ -421,6 +277,140 @@
                 "focus-ring": {
                     "description": "Focus outline",
                     "color": "#FF9800"
+                }
+            }
+        },
+        "windows11-dark": {
+            "Base Colors": {
+                "base-background": {
+                    "description": "Main window background",
+                    "color": "#0B0B0C"
+                },
+                "surface": {
+                    "description": "Card or panel backgrounds",
+                    "color": "#1E1E1E"
+                },
+                "surface-variant": {
+                    "description": "Secondary surfaces",
+                    "color": "#2A2A2A"
+                },
+                "border": {
+                    "description": "Border colors",
+                    "color": "#3A3A3A"
+                },
+                "hover": {
+                    "description": "Hover backgrounds",
+                    "color": "#2F2F2F"
+                }
+            },
+            "Text Colors": {
+                "text-primary": {
+                    "description": "Primary readable text",
+                    "color": "#F1F1F1"
+                },
+                "text-secondary": {
+                    "description": "Less prominent text",
+                    "color": "#C4C4C4"
+                },
+                "text-disabled": {
+                    "description": "Disabled/inactive text",
+                    "color": "#6C6C6C"
+                },
+                "text-inverse": {
+                    "description": "Text on light surfaces",
+                    "color": "#000000"
+                }
+            },
+            "Control Colors": {
+                "button": {
+                    "description": "Button background",
+                    "color": "#2C2C2C"
+                },
+                "button-hover": {
+                    "description": "On hover",
+                    "color": "#383838"
+                },
+                "button-pressed": {
+                    "description": "When pressed",
+                    "color": "#4A4A4A"
+                },
+                "button-text": {
+                    "description": "Text on buttons",
+                    "color": "#F1F1F1"
+                },
+                "button-disabled": {
+                    "description": "Disabled button background",
+                    "color": "#2B2B2B"
+                },
+                "button-disabled-text": {
+                    "description": "Text on disabled buttons",
+                    "color": "#777777"
+                },
+                "button-border": {
+                    "description": "Border color for active buttons",
+                    "color": "#3A3A3A"
+                },
+                "disabled-border": {
+                    "description": "Border color for disabled inputs and buttons",
+                    "color": "#2F2F2F"
+                },
+                "input-background": {
+                    "description": "Background color for input fields (QLineEdit, QTextEdit, etc.)",
+                    "color": "#1B1B1C"
+                },
+                "input-disabled-background": {
+                    "description": "Background color for disabled input fields",
+                    "color": "#2B2B2B"
+                },
+                "input-disabled-text": {
+                    "description": "Text color in disabled input fields",
+                    "color": "#777777"
+                }
+            },
+            "Accent Colors": {
+                "accent": {
+                    "description": "Main highlight color",
+                    "color": "#0A84FF"
+                },
+                "accent-light": {
+                    "description": "Hover or focus states",
+                    "color": "#339CFF"
+                },
+                "accent-contrast": {
+                    "description": "Text/icon on accent background",
+                    "color": "#FFFFFF"
+                }
+            },
+            "Status Colors": {
+                "success": {
+                    "description": "Success messages",
+                    "color": "#48C78E"
+                },
+                "warning": {
+                    "description": "Warnings",
+                    "color": "#F1C40F"
+                },
+                "error": {
+                    "description": "Errors",
+                    "color": "#E74C3C"
+                },
+                "info": {
+                    "description": "Info messages",
+                    "color": "#3498DB"
+                }
+            },
+            "Special Effects": {
+                "shadow": {
+                    "description": "Drop shadow",
+                    "color": "rgba(0, 0, 0, 0.6)"
+                },
+                "overlay": {
+                    "description": "Modal backgrounds",
+                    "color": "rgba(0, 0, 0, 0.4)"
+                },
+                "focus-ring": {
+                    "description": "Focus outline",
+                    "color": "#0078D4"
                 }
             }
         }

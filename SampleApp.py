@@ -4,73 +4,24 @@ This app is a model based application, in development of the app
 import json
 import sys, os
 import PySideAbdhUI
-from PySideAbdhUI import Window, StackedWidget, Separator
-from PySideAbdhUI.StyleManagers import QtStyleSheetManager
+from PySideAbdhUI import Window, StackedWidget, utils
 from PySideAbdhUI.Notify import PopupNotifier
 
 # PySide6 modules
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QIcon, QFontDatabase, QColor
-from PySide6.QtWidgets import (QApplication, QPushButton, QMessageBox, QFileDialog, QLabel, QGridLayout,
+from PySide6.QtWidgets import (QApplication, QPushButton, QMessageBox, QLabel, QGridLayout,
                                QComboBox, QRadioButton, QHBoxLayout, QVBoxLayout, QWidget,
-                               QColorDialog, QScrollArea, QFormLayout, QLineEdit)
-
-st =  QtStyleSheetManager()
-
-lbl_style = """QLabel 
-{
-    background-color: transparent; /* Transparent so it blends with parent */
-    font-size: 16px;               /* Adjust as needed */
-    font-weight: normal;           /* Options: normal, bold */
-    padding: 4px;                  /* Some spacing around the text */
-    border-bottom:1px solid #88888866;                  
-}
-"""
+                               QColorDialog, QScrollArea, QLineEdit)
 
 
-class ThemeManager:
-    def __init__(self, json_path):
-        self.json_path = json_path
-        self.data = self._load()
-
-    def _load(self):
-        try:
-            with open(self.json_path, "r", encoding="utf-8-sig") as f:
-                return json.load(f)
-        except Exception as e:
-            print(f"Error loading theme JSON: {e}")
-            return {"active-theme": "", "themes": {}}
-
-    def save(self):
-        with open(self.json_path, "w", encoding="utf-8") as f:
-            json.dump(self.data, f, indent=4)
-
-    def get_current_theme_name(self):
-        return self.data.get("active-theme", "")
-
-    def get_current_theme(self):
-        name = self.get_current_theme_name()
-        return self.data.get("themes", {}).get(name, {})
-
-    def switch_theme(self, new_theme_name):
-        if new_theme_name in self.data.get("themes", {}):
-            self.data["active-theme"] = new_theme_name
-            self.save()
-            return True
-        return False
-
-    def get_color(self, role_category, role_name):
-        theme = self.get_current_theme()
-        return theme.get(role_category, {}).get(role_name, {}).get("color")
-
-    def get_all_themes(self):
-        return list(self.data.get("themes", {}).keys())
-
+theme = utils.ThemeManager()
 
 class ThemeEditor(QWidget):
-    def __init__(self, theme_json_path):
+    def __init__(self):
+        
         super().__init__()
-        self.theme_manager = ThemeManager(theme_json_path)
+
         self.inputs = {}
 
         hlayout = QHBoxLayout()
@@ -86,15 +37,11 @@ class ThemeEditor(QWidget):
         hlayout.addStretch(1)
 
         self.theme_selector = QComboBox()
-        self.theme_selector.addItems(self.theme_manager.get_all_themes())
-        self.theme_selector.setCurrentText(self.theme_manager.get_current_theme_name())
+        self.theme_selector.addItems(theme.get_all_themes())
+        self.theme_selector.setCurrentText(theme.get_current_theme_name())
         self.theme_selector.currentTextChanged.connect(self.on_theme_switch)
         hlayout.addWidget(QLabel('Theme:'))
         hlayout.addWidget(self.theme_selector)
-
-        generate_btn = QPushButton("💾 Generate QSS")
-        generate_btn.clicked.connect(self.generate_qss)
-        hlayout.addWidget(generate_btn)
 
         layout = QVBoxLayout(self)
         layout.setSpacing(3)
@@ -107,13 +54,14 @@ class ThemeEditor(QWidget):
         scroll.setWidget(content_widget)
         scroll.setWidgetResizable(True)
         layout.addWidget(scroll)
+        theme.apply_theme(QApplication.instance(),theme.get_current_theme_name())
 
     def build_theme_ui(self, grid_layout: QGridLayout):
         self.inputs = {}  # Reset inputs dict on rebuild
-        theme = self.theme_manager.get_current_theme()
+        current_theme = theme.get_current_theme()
         row = 1
 
-        for category, colors in theme.items():
+        for category, colors in current_theme.items():
             category_label = QLabel(f"<u><b>{category}</b></u>")
             category_label.setProperty('class', 'subtitle')
             grid_layout.addWidget(category_label, row, 0, 1, 1, Qt.AlignmentFlag.AlignLeft)
@@ -137,6 +85,7 @@ class ThemeEditor(QWidget):
                 # Editable color field
                 editor = QLineEdit(color_hex)
                 editor.setObjectName(color_key)
+                editor.setFixedWidth(100)
                 self.inputs[color_key] = editor
 
                 # Color preview
@@ -147,10 +96,11 @@ class ThemeEditor(QWidget):
                 # Picker button
                 button = QPushButton("🎨")
                 button.setProperty('class', 'mini')
+                button.setFixedWidth(24)
                 button.clicked.connect(self.make_picker(editor, preview))
 
                 # Add to layout
-                grid_layout.addWidget(label, row, order + 0)
+                grid_layout.addWidget(label, row, order + 0,alignment=Qt.AlignmentFlag.AlignRight)
                 grid_layout.addWidget(editor, row, order + 1)
                 grid_layout.addWidget(preview, row, order + 2)
                 grid_layout.addWidget(button, row, order + 3)
@@ -180,11 +130,16 @@ class ThemeEditor(QWidget):
                 preview_label.setStyleSheet(f"background-color: {hex_color}; border: 1px solid #888;")
         return pick_color
 
+
     def on_theme_switch(self, theme_name):
-        if self.theme_manager.switch_theme(theme_name):
+
+        if theme.switch_theme(theme_name):
             self.clear_layout(self.grid_layout)
             self.build_theme_ui(self.grid_layout)
-            # self.theme_selector.setCurrentText(theme_name)  # Don't set again here!
+            self.theme_selector.setCurrentText(theme_name)
+
+            theme.apply_theme(QApplication.instance(),theme_name)
+
 
     def clear_layout(self, layout):
         while layout.count():
@@ -195,15 +150,33 @@ class ThemeEditor(QWidget):
                 widget.deleteLater()
         QApplication.processEvents()
 
-    def generate_qss(self):
-        qss = ""
-        for key, input_field in self.inputs.items():
-            qss += f"* {{ --{key}: {input_field.text()}; }}\n"
 
-        file_path, _ = QFileDialog.getSaveFileName(self, "Save QSS File", "theme.qss", "QSS Files (*.qss)")
-        if file_path:
-            with open(file_path, "w") as f:
-                f.write(qss)
+def apply_current_theme_to_app(app: QApplication, qss_template_path: str,theme_name='default-dark'):
+        
+        theme.switch_theme(theme_name)
+        theme_ = theme.get_current_theme()
+    
+        if not theme_:
+            print(f"[ERROR] Theme '{theme_name}' not found.")
+            return
+
+        # Load QSS template with placeholders
+        try:
+            with open(qss_template_path, "r", encoding="utf-8") as f: qss_template = f.read()
+        except Exception as e:
+            print(f"[ERROR] Failed to read QSS template: {e}")
+            return
+
+        # Replace placeholders using theme values
+        for category, roles in theme_.items():
+            for role_name, role_info in roles.items():
+                placeholder = f"--{role_name}--"
+                color = role_info.get("color", "")
+                qss_template = qss_template.replace(placeholder, color)
+
+        # Apply stylesheet to app
+        app.setStyleSheet(qss_template)
+        print(f"[INFO] Applied theme '{theme_name}' to app.")
 
 class CLI:
 
@@ -212,27 +185,7 @@ class CLI:
         self.app = QApplication(sys.argv)
 
         self.window = Window.AbdhWindow()
-
-    def apply_style(self):
-        # default style sheets location is in the: '/resourrces/styles/<folder with style name>'
-        # this folder contains two qss file named classes.qss and global.qss
-        # global.qss stylishes the widgets generally and classes.qss was defined for spicial effects
-        # When a style is selected, the app creates a qss file in the 'LOCALAPPDATA' with file name
-        # '<folder with style name>.qss' then merges these files, writes  all in the created file.
-        # the uses this style file to appy effects.
-        dialog = QFileDialog(self.window,directory = '/resources/styles')
-        dialog.setOption(QFileDialog.Option.ShowDirsOnly)
-        #dialog.setFileMode(QFileDialog.FileMode.Directory)
-       
-        if not dialog.exec() == QFileDialog.DialogCode.Accepted: return
-        
-        fileName = dialog.selectedFiles()
-
-        if fileName:
-            st.load_stylesheet(fileName[0])
-
-            self.app.setStyleSheet(st.stylesheet)
-
+ 
     # Creates a vertical panel on the right edge of the mian window
     # This panel is used to settings porpose
     def create_settings_pane(self):
@@ -271,40 +224,54 @@ class CLI:
 
         # There are a number of custom styles can be applied to the UI.
         # Changing it will affects all UI objects of the application.
-        btn = QPushButton(text='CHANGE STYLE')
-        self.window.add_right_panel_item(btn)
-        #btn.setObjectName('MenuItem')
-        btn.clicked.connect(self.apply_style)
+        theme_selector = QComboBox()
+        theme_selector.addItems(theme.get_all_themes())
+        theme_selector.setCurrentText(theme.get_current_theme_name())
+        theme_selector.currentTextChanged.connect(lambda _, sender=theme_selector:self.on_theme_switch(sender=sender))
+        self.window.add_right_panel_item(theme_selector)
 
         github = QLabel('\n https://github.com/abdhmohammadi/')
         self.window.add_right_panel_item(github)
         github.setProperty('class','hyperlink')          
 
+    def on_theme_switch(self,sender:QComboBox):
+
+        theme_name = sender.currentText()
+        
+        print(f'theme: {theme_name}')
+
+        if theme.switch_theme(theme_name):
+            template = PySideAbdhUI.get_styles_template()
+
+            print(f'theme resource: {template}')
+            theme.apply_theme(QApplication.instance(),theme_name)
+            # Apply theme immediately
+
 
     def create_left_pane(self):
-        # Init left pane
-        left_item = QPushButton('Window properties')
-        left_item.setIcon(QIcon('F:\\Projects\\Python\\icons\\shapes.svg'))
-        left_item.setCheckable(True)
-        left_item.setChecked(True)
-        left_item.setProperty('class','MenuItem')
-        self.window.add_left_panel_item(left_item)
-        left_item.clicked.connect(lambda _, s= left_item:self.load_window_properties_page(s))
-        self.load_window_properties_page(left_item)
-        
-        left_item = QPushButton('Widgets')
-        left_item.setIcon(QIcon('F:\\Projects\\Python\\icons\\shapes.svg'))
-        left_item.setCheckable(True)
-        left_item.setProperty('class','MenuItem')
-        self.window.add_left_panel_item(left_item)
-        left_item.clicked.connect(lambda _,s= left_item:self.load_widgets_page(s))
-
         left_item = QPushButton('Theme Editor')
         left_item.setIcon(QIcon('F:\\Projects\\Python\\icons\\shapes.svg'))
         left_item.setCheckable(True)
         left_item.setProperty('class','MenuItem')
         self.window.add_left_panel_item(left_item)
         left_item.clicked.connect(lambda _,s= left_item:self.load_theme_editor(s))
+        self.load_theme_editor(left_item)
+
+        # Init left pane
+        left_item = QPushButton('Window properties')
+        left_item.setIcon(QIcon('F:\\Projects\\Python\\icons\\shapes.svg'))
+        left_item.setCheckable(True)
+        left_item.setChecked(False)
+        left_item.setProperty('class','MenuItem')
+        self.window.add_left_panel_item(left_item)
+        left_item.clicked.connect(lambda _, s= left_item:self.load_window_properties_page(s))
+        
+        left_item = QPushButton('Navigation')
+        left_item.setIcon(QIcon('F:\\Projects\\Python\\icons\\shapes.svg'))
+        left_item.setCheckable(True)
+        left_item.setProperty('class','MenuItem')
+        self.window.add_left_panel_item(left_item)
+        left_item.clicked.connect(lambda _,s= left_item:self.load_widgets_page(s))
 
         self.window.left_panel_layout.addStretch(1)
         
@@ -317,12 +284,8 @@ class CLI:
         if not os.path.exists(color_roles_path):
             QMessageBox.warning(self.window,'Error','Color roles not found')
             return 
-        
-        #with open(color_roles_path, "r") as f:
-            
-        #    theme_json =  json.load(f)
-            
-        editor = ThemeEditor(color_roles_path)
+                    
+        editor = ThemeEditor()
             
         self.window.add_page(editor)
         
@@ -416,17 +379,6 @@ class CLI:
         
         grid_layout.addWidget(lbl,0,0,alignment=Qt.AlignmentFlag.AlignTop)
 
-        s =  '<div style="line-height: 100%; font-size: 16px;">'
-        s += 'The main window has a built-in function to apply custom themes. '
-        s += 'You can also use <b>StyleManagers.QtStyleSheetManager</b> '
-        s += 'To change the theme of the application. Practice now by clicking <b>"Change Style"</b> button from right panel of this page.</div>'
-        lbl = QLabel(s)
-        lbl.setWordWrap(True)
-        #lbl.setStyleSheet(lbl_style)
-        lbl.setTextFormat(Qt.TextFormat.RichText)
-        
-        grid_layout.addWidget(lbl,1,0,alignment=Qt.AlignmentFlag.AlignTop)
-        
         # ------------------------------------------------------------ #
         s =  '<div style="line-height: 100%; font-size: 16px;">'
         s +=  '• In the top-right, next to the control keys, there is a settings menu ⚙️. By clicking on it, a panel opens. '
@@ -472,9 +424,6 @@ class CLI:
         grid_layout.addWidget(lbl,5,0,alignment=Qt.AlignmentFlag.AlignTop)
 
         right_panel = QVBoxLayout()
-        button = QPushButton('Change Style')
-        button.clicked.connect(self.apply_style)
-        right_panel.addWidget(button)
 
         button = QPushButton('Open Settings')
         button.clicked.connect(self.window.open_settings)
@@ -495,29 +444,29 @@ class CLI:
         # Get the text of the selected item 
         selected_text = sender.itemText(sender.currentIndex())
         
-        st.add_property_to_widget('QWidget','font-family',selected_text)
-        st.add_property_to_widget('QWidget','font-size',12)
+        #st.add_property_to_widget('QWidget','font-family',selected_text)
+        #st.add_property_to_widget('QWidget','font-size',12)
         
         settings_list = [('family',selected_text),('size',12)]
         # Create a dictionary with the list elements as key-value pairs under 'connection'
         #settings = {"font": dict(settings_list)}
         #settings_manager.write(settings)
 
-        self.app.setStyleSheet(st.stylesheet)
-
+        #self.app.setStyleSheet(st.stylesheet)
 
 
     def Run(self):
-        root = os.path.dirname(__file__) 
-        style_path = "C:\\Users\\AbdhM\\AppData\\Local\\Abdh\\TeacherAssistant\\default-dark.qss" #root + "\\PySideAbdhUI\\resources\\styles\\default-dark.qss"
+        root = os.path.dirname(__file__)
+        
+        #style_path = PySideAbdhUI.utils.get_styles_template() # "C:\\Users\\AbdhM\\AppData\\Local\\Abdh\\TeacherAssistant\\default-dark.qss" #root + "\\PySideAbdhUI\\resources\\styles\\default-dark.qss"
         # Using QtStyleSheetManager to manage custom styles
-        st.load_stylesheet(style_path)
+        #st.load_stylesheet(style_path)
     
-        check, value = st.check_accent_color_placeholder()
+        #check, value = st.check_accent_color_placeholder()
                     
-        if check: st.replace_placeholder(value)
+        #if check: st.replace_placeholder(value)
         # Apply stylesheet on the application
-        self.app.setStyleSheet(st.stylesheet)
+        #self.app.setStyleSheet(st.stylesheet)
         
         # Our custom ICON is available in application_path + "/resources/icons/
         self.app.setWindowIcon(QIcon(root + '\\PySideAbdhUI\\resources\\png\\app-icon.png'))

@@ -9,7 +9,7 @@ class StackedWidget(QStackedWidget):
         self.animation_duration = 400
         self.animating = False
         self.target_index = 0
-
+        self.setProperty('class', 'stack')
         # Set a solid background to prevent flickering
         self.setAutoFillBackground(True)
         palette = self.palette()
