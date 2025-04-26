@@ -75,6 +75,7 @@ class AbdhWindow(QMainWindow):
 
         # Main widget and layout
         self.main_widget = QWidget(self)
+        self.main_widget.setProperty('class','background')
         self.main_widget.setLayoutDirection(direction)
 
         self.main_widget.setContentsMargins(0,0,0,0)
@@ -135,11 +136,8 @@ class AbdhWindow(QMainWindow):
         
         # Stacked widget for pages
         self.stacked_widget = StackedWidget()
-        self.stacked_widget.setContentsMargins(0,0,0,0)
         self.stacked_widget.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
         # Set an object name for the parent widget
-        #self.stacked_widget.setObjectName("parentWidget")
-        #self.stacked_widget.setStyleSheet('background-color:brown;border: 2px solid black;')
         self.toggle_button.clicked.connect(lambda _, frame= self.left_panel, stack= self.stacked_widget: self.animate_content(frame, stack))
 
         # Custom title bar

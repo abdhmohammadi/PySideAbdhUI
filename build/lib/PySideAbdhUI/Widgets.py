@@ -9,7 +9,7 @@ class StackedWidget(QStackedWidget):
         self.animation_duration = 400
         self.animating = False
         self.target_index = 0
-
+        self.setProperty('class', 'stack')
         # Set a solid background to prevent flickering
         self.setAutoFillBackground(True)
         palette = self.palette()
@@ -47,6 +47,8 @@ class StackedWidget(QStackedWidget):
     def setCurrentIndexAnimated(self, index):
 
         if index < 0 or index >= self.count() or index == self.currentIndex(): return
+        
+        if self.animating: return
 
         self.target_index = index
         current_widget = self.currentWidget()
@@ -63,7 +65,6 @@ class StackedWidget(QStackedWidget):
 
         self.animating = True
         current_widget = self.currentWidget()
-        current_widget.hide()
 
         size = self.size()
         width = size.width()
@@ -91,6 +92,8 @@ class StackedWidget(QStackedWidget):
         self.animation_group.addAnimation(anim_in)
         self.animation_group.finished.connect(self._on_animation_finished)
         self.animation_group.start()
+        current_widget.hide()
+
 
     def _on_animation_finished(self):
         
@@ -126,8 +129,8 @@ class Separator(QFrame):
         if orientation == 'horizontal': self.setFrameShape(QFrame.Shape.HLine)
         else: self.setFrameShape(QFrame.Shape.VLine)
         
-        self.setFrameShadow(QFrame.Plain)  # No 3D effect
-        self.setLineWidth(1)               # Line thickness
+        self.setFrameShadow(QFrame.Shadow.Plain)  # No 3D effect
+        self.setLineWidth(1)              
         self.setMidLineWidth(0)
         self.setStyleSheet(f"color: {color}; background-color: {color}; max-height: {stroke}px;")
         

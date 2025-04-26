@@ -1,0 +1,235 @@
+
+
+/* Tab Widget */
+QTabWidget::pane 
+{
+    border: 1px solid #3d3d3d;
+    background-color: #1a1a1a;
+}
+
+QTabBar::tab 
+{
+    background-color: #2d2d2d;
+    color: #ffffff;
+    padding: 8px 15px;
+    border: 1px solid #3d3d3d;
+    border-bottom: none;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+
+QTabBar::tab:selected 
+{
+    background-color: #1a73e8;
+    border-bottom: none;
+}
+
+QTabBar::tab:hover:!selected 
+{
+    background-color: #3d3d3d;
+}
+
+/* Menu Bar */
+QMenuBar 
+{
+    background-color: #1a1a1a;
+    color: #ffffff;
+}
+
+QMenuBar::item 
+{
+    background-color: transparent;
+    padding: 5px 10px;
+}
+
+QMenuBar::item:selected 
+{
+    background-color: #3d3d3d;
+    border: 2px solid #1a73e8;
+    border-radius: 8px;
+}
+
+QMenu
+{
+    background-color: #1a1a1a;
+    color:#ffffff;
+    border: 1px solid #1a73e8;
+    padding: 1px;
+    border-radius: 8px;
+}
+QMenu::icon 
+{
+    padding-left: 8px;         /* This adds margin to the icon itself */
+    padding-right: 8px;        /* Adds space between icon and text */
+}
+QMenu::item 
+{
+    border-radius: 4px;
+    padding-left: 16px;        /* Total left padding: space for icon + extra margin */
+    padding-right:16px;
+    padding-top:8px;
+    padding-bottom:8px;
+
+}
+
+QMenu::item:selected 
+{
+    background-color: #3d3d3d;
+}
+
+/* Menu of QPushButtons */
+QMenu QPushButton
+{
+    background-color: #1a1a1a;
+    color: #ffffff;
+    border: none;
+    padding: 8px 15px;
+    text-align: left;
+    width: 100%;
+    border-radius: 4px;
+}
+
+
+
+QMenu QPushButton:hover 
+{
+    background-color: #353535;
+}
+
+QMenu QPushButton:pressed 
+{
+    background-color: #1a1a1a;
+}
+
+QMenu QPushButton:checked 
+{
+    background-color: #353535;
+}
+
+QMenu QPushButton:disabled 
+{
+    color: #5f6368;
+    opacity: 0.7;
+}
+
+/* Status Bar */
+QStatusBar {
+    background-color: #2b2b2b;
+    color: #ffffff;
+}
+
+/* Toolbar */
+QToolBar {
+    background-color: #2b2b2b;
+    border: none;
+}
+
+QToolBar::separator {
+    background-color: #3b3b3b;
+}
+
+/* Spin Box */
+QSpinBox {
+    background-color: #3b3b3b;
+    color: #ffffff;
+    border: 1px solid #4b4b4b;
+    padding: 8px;
+    border-radius: 4px;
+}
+
+QSpinBox::up-button,
+QSpinBox::down-button {
+    background-color: #4b4b4b;
+    border: none;
+    border-radius: 2px;
+}
+
+QSpinBox::up-button:hover,
+QSpinBox::down-button:hover {
+    background-color: #5b5b5b;
+}
+
+
+/* Tree Widget */
+QTreeWidget {
+    background-color: #2d2d2d;
+    color: #ffffff;
+    border: 1px solid #4d4d4d;
+    border-radius: 4px;
+}
+
+QTreeWidget::item 
+{
+    padding: 8px;
+}
+
+QTreeWidget::item:selected {
+    background-color: #3d3d3d;
+}
+
+/* Splitter */
+QSplitter::handle {
+    background-color: #4b4b4b;
+}
+
+QSplitter::handle:horizontal {
+    width: 1px;
+}
+
+QSplitter::handle:vertical {
+    height: 1px;
+}
+
+/* Dock Widget */
+QDockWidget 
+{
+    background-color: #2b2b2b;
+    border: 2px solid #1a73e8;
+    border-radius: 4px;
+}
+
+QDockWidget::title {
+    background-color: #3b3b3b;
+    color: #ffffff;
+    border-bottom: 2px solid #1a73e8;
+}
+
+/* Dialog */
+QDialog 
+{
+    background-color: #2b2b2b;
+    border: 0px solid #4a9eff;
+    border-radius: 4px;
+}
+
+/* File Dialog */
+QFileDialog 
+{
+    background-color: #2b2b2b;
+    border: 2px solid #1a73e8;
+    border-radius: 4px;
+}
+
+QFileDialog QListView,
+QFileDialog QTreeView 
+{
+    background-color: #3b3b3b;
+    color: #ffffff;
+    border: 2px solid #1a73e8;
+    border-radius: 4px;
+}
+
+QFileDialog QComboBox {
+    background-color: #3b3b3b;
+    color: #ffffff;
+    border: 2px solid #1a73e8;
+    border-radius: 4px;
+}
+
+/* Message Box */
+QMessageBox 
+{
+    background-color: #2b2b2b;
+    border: 0px solid transparent;
+    border-radius: 8px;
+}

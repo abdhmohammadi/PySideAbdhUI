@@ -17,6 +17,7 @@ PySideAbdhUI.egg-info/requires.txt
 PySideAbdhUI.egg-info/top_level.txt
 PySideAbdhUI/resources/icons/svg/arrow-left.svg
 PySideAbdhUI/resources/icons/svg/arrow-right.svg
+PySideAbdhUI/resources/icons/svg/chevron-down.svg
 PySideAbdhUI/resources/icons/svg/double-square.svg
 PySideAbdhUI/resources/icons/svg/menu.svg
 PySideAbdhUI/resources/icons/svg/minus.svg
@@ -24,5 +25,7 @@ PySideAbdhUI/resources/icons/svg/pin.svg
 PySideAbdhUI/resources/icons/svg/settings.svg
 PySideAbdhUI/resources/icons/svg/square.svg
 PySideAbdhUI/resources/icons/svg/x.svg
+PySideAbdhUI/resources/styles/default-dark copy.qss
 PySideAbdhUI/resources/styles/default-dark.qss
 PySideAbdhUI/resources/styles/default-light.qss
+PySideAbdhUI/resources/styles/qss-template.qss
