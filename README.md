@@ -89,16 +89,15 @@ PySideAbdhUI/
 Here’s a quick Python example showing how to use PySideAbdhUI components in your app:
 
 ```python
-from PySideAbdhUI import PopupNotifier
-from PySideAbdhUI import StyleManagers as sm
+from PySideAbdhUI import PopupNotifier, utils
 from PySide6.QtWidgets import QApplication, Window
 
 app = QApplication([])
 
 # Load and apply custom style
-style_manager = sm.QtStyleSheetManager()
-style_manager.load_stylesheet(style_path)
-app.setStyleSheet(style_manager.stylesheet)
+theme = utils.ThemeManager()
+
+theme.apply_theme(QApplication.instance(),theme.get_current_theme_name())
 window = Window.AbdhWindow()
 window.initUI(app_title= 'AbdhUI Application', title_logo_path= state.application_path + "/resources/icons/png/app-icon.png")    
 window.show()
