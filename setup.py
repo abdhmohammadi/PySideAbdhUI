@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="PySideAbdhUI",
-    version="1.0.1",
+    version="1.0.4",
     author="Abdullah Mohammadi",
     author_email="abdhmohammady@gmaile.com",
     description="Customized Python GUI components based on PySide6",

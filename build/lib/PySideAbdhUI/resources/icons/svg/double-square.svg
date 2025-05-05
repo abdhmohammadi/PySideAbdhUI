@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24">
-  <!-- Top edge -->
-  <rect x="6" y="2" width="16" height="2" fill="#888888" stroke="none"/>
-  <!-- Left edge -->
-  <rect x="20" y="2" width="2" height="16" fill="#888888" stroke="none" />
-  
-  <!-- Front square -->
-  <rect x="3" y="7" width="14" height="14" fill="none" stroke="#888888" stroke-width="2"/>
-</svg>

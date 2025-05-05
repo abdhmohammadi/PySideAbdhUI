@@ -5,7 +5,7 @@ This package provides a collection of PySide6 components with bundled resources,
 such as icons and styles, that are easily accessible after installation.
 """
 
-__version__ = "1.0.0"
+__version__ = "1.0.2"
 
 # Import primary submodules so that they are available when the package is imported.
 from .CardGridView import *

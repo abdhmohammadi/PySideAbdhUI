@@ -66,16 +66,15 @@ class AbdhWindow(QMainWindow):
         self.initalized = False
 
     def initUI(self,app_title:str='PySideAbdhUI Application', 
-               style_sheet=None, title_logo_path=None, 
-               direction=Qt.LayoutDirection.LeftToRight):
+               style_sheet=None, title_logo_path=None, direction=Qt.LayoutDirection.LeftToRight):
         
-        if style_sheet: self.setStyleSheet(style_sheet)
+        #if style_sheet: self.setStyleSheet(style_sheet)
 
         self.setWindowTitle(app_title)
-
+        #self.setObjectName('window')
         # Main widget and layout
         self.main_widget = QWidget(self)
-        self.main_widget.setProperty('class','background')
+        self.main_widget.setProperty('class','window-background-layer')
         self.main_widget.setLayoutDirection(direction)
 
         self.main_widget.setContentsMargins(0,0,0,0)
@@ -89,7 +88,7 @@ class AbdhWindow(QMainWindow):
         self.left_panel = QFrame(self)
         
         # Uses object name property to correspond the named stylesheet in qss file
-        self.left_panel.setObjectName('LeftPaneFrame')
+        self.left_panel.setProperty('class','left-sidebar-background-layer')
         self.left_panel.setFrameShape(QFrame.Shape.StyledPanel)
         self.left_panel.setFixedWidth(self.pane_width)
         self.left_panel.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
@@ -104,7 +103,7 @@ class AbdhWindow(QMainWindow):
         #Right panel, location -->[0,2], stretched in 3 rows
         self.right_panel = QFrame(self)
         # Uses object name property to correspond the named stylesheet in qss file
-        self.right_panel.setObjectName('RightPaneFrame')
+        self.right_panel.setProperty('class','right-sidebar-background-layer')
         self.right_panel.setFrameShape(QFrame.Shape.StyledPanel)
         self.right_panel.setMinimumWidth(0)   # Start with zero width
         self.right_panel.setMaximumWidth(0)   # Also limit max width when collapsed
@@ -371,8 +370,7 @@ class AbdhWindow(QMainWindow):
         self.forward_button.setVisible(can_go_forward)
 
 
-    def add_right_panel_item(self,item:QWidget): 
-        self.right_panel_layout.insertWidget(self.right_panel_layout.count()-1, item)
+    def add_right_panel_item(self,item:QWidget): self.right_panel_layout.insertWidget(self.right_panel_layout.count()-1, item)
         
 
     def add_left_panel_item(self,item:QWidget): self.left_panel_layout.addWidget(item)
@@ -586,7 +584,9 @@ class AbdhWindow(QMainWindow):
                 self.resize_window(event)
             else:
                 if self.drag_start_position:
-                    self.move(event.globalPosition().toPoint() - self.drag_start_position)
+                    geo = self.titlebar.geometry()
+                    if self.drag_start_position.y()< geo.bottomRight().y():
+                        self.move(event.globalPosition().toPoint() - self.drag_start_position)
             event.accept()
 
         super().mouseMoveEvent(event)

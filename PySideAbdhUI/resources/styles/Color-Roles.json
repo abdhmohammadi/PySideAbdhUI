@@ -1,20 +1,7 @@
 {
+    "active-theme": "material-dark",
     "themes": {
         "default-light": {
-            "Accent Colors": {
-                "accent": {
-                    "description": "Primary accent (e.g. focus border on active input)",
-                    "color": "#0078D4"
-                },
-                "accent-light": {
-                    "description": "Hover state for inputs/buttons",
-                    "color": "#005A9E"
-                },
-                "accent-contrast": {
-                    "description": "Text/icons on accent background (e.g. input text on colored buttons)",
-                    "color": "#FFFFFF"
-                }
-            },
             "Base Colors": {
                 "base-background": {
                     "description": "Main window background",
@@ -37,14 +24,28 @@
                     "color": "#E0E0E0"
                 }
             },
+            "Accent Colors": {
+                "accent": {
+                    "description": "Primary accent (e.g. focus border on active input)",
+                    "color": "#3586ff"
+                },
+                "accent-light": {
+                    "description": "Hover state for inputs/buttons",
+                    "color": "#3db8dd"
+                },
+                "accent-contrast": {
+                    "description": "Text/icons on accent background (e.g. input text on colored buttons)",
+                    "color": "#222222"
+                }
+            },
             "Text Colors": {
                 "text-primary": {
                     "description": "Primary readable text",
-                    "color": "#000000"
+                    "color": "#222222"
                 },
                 "text-secondary": {
                     "description": "Less prominent text",
-                    "color": "#555555"
+                    "color": "#595959"
                 },
                 "text-disabled": {
                     "description": "Disabled/inactive text",
@@ -72,19 +73,19 @@
             "Control Colors": {
                 "button-background": {
                     "description": "Button background",
-                    "color": "#E0E0E0"
+                    "color": "#E8E8E8"
                 },
                 "button-hover": {
                     "description": "On hover",
-                    "color": "#D5D5D5"
+                    "color": "#DDDDDD"
                 },
                 "button-pressed": {
                     "description": "When pressed",
-                    "color": "#C0C0C0"
+                    "color": "#CCCCCC"
                 },
                 "button-text": {
                     "description": "Text on buttons",
-                    "color": "#000000"
+                    "color": "#222222"
                 },
                 "input-disabled-background": {
                     "description": "Background color for disabled input fields",
@@ -110,173 +111,271 @@
             "Status Colors": {
                 "success": {
                     "description": "Success messages",
-                    "color": "#388E3C"
-                },
-                "warning": {
-                    "description": "Warnings",
-                    "color": "#FFA000"
-                },
-                "error": {
-                    "description": "Errors",
-                    "color": "#D32F2F"
-                },
-                "info": {
-                    "description": "Info messages",
-                    "color": "#1976D2"
-                }
-            },
-            "Special Effects": {
-                "shadow": {
-                    "description": "Drop shadow",
-                    "color": "rgba(0, 0, 0, 0.15)"
-                },
-                "overlay": {
-                    "description": "Modal backgrounds",
-                    "color": "rgba(0, 0, 0, 0.1)"
-                },
-                "focus-ring": {
-                    "description": "Focus outline",
-                    "color": "#1A73E8"
-                }
-            }
-        },
-        "ubuntu-orange": {
-            "Base Colors": {
-                "base-background": {
-                    "description": "Main window background",
-                    "color": "#2C2C2C"
-                },
-                "surface": {
-                    "description": "Card or panel backgrounds",
-                    "color": "#353535"
-                },
-                "surface-variant": {
-                    "description": "Secondary surfaces",
-                    "color": "#444444"
-                },
-                "border": {
-                    "description": "Border colors",
-                    "color": "#555555"
-                },
-                "hover": {
-                    "description": "Hover backgrounds",
-                    "color": "#3A3A3A"
-                }
-            },
-            "Text Colors": {
-                "text-primary": {
-                    "description": "Primary readable text",
-                    "color": "#FFFFFF"
-                },
-                "text-secondary": {
-                    "description": "Less prominent text",
-                    "color": "#DDDDDD"
-                },
-                "text-disabled": {
-                    "description": "Disabled/inactive text",
-                    "color": "#888888"
-                },
-                "text-inverse": {
-                    "description": "Text on light surfaces",
-                    "color": "#000000"
-                }
-            },
-            "Input Fields": {
-                "input-background": {
-                    "description": "Background for text inputs like QLineEdit, QTextEdit",
-                    "color": "#353535"
-                },
-                "input-border": {
-                    "description": "Border for focused or hovered inputs",
-                    "color": "#FF7800"
-                },
-                "input-placeholder": {
-                    "description": "Placeholder text color",
-                    "color": "#BBBBBB"
-                }
-            },
-            "Control Colors": {
-                "button-background": {
-                    "description": "Button background",
-                    "color": "#FF5722"
-                },
-                "button-hover": {
-                    "description": "On hover",
-                    "color": "#FF7043"
-                },
-                "button-pressed": {
-                    "description": "When pressed",
-                    "color": "#FF8A65"
-                },
-                "button-text": {
-                    "description": "Text on buttons",
-                    "color": "#FFFFFF"
-                },
-                "input-disabled-background": {
-                    "description": "Background color for disabled input fields",
-                    "color": "#2E2A28"
-                },
-                "input-disabled-text": {
-                    "description": "Text color in disabled input fields",
-                    "color": "#8E8C89"
-                },
-                "button-disabled": {
-                    "description": "Disabled button background",
-                    "color": "#3A3634"
-                },
-                "button-disabled-text": {
-                    "description": "Text on disabled buttons",
-                    "color": "#8E8C89"
-                },
-                "disabled-border": {
-                    "description": "Border color for disabled inputs and buttons",
-                    "color": "#4C4744"
-                }
-            },
-            "Accent Colors": {
-                "accent": {
-                    "description": "Main highlight color",
-                    "color": "#FF9800"
-                },
-                "accent-light": {
-                    "description": "Hover or focus states",
-                    "color": "#FFB74D"
-                },
-                "accent-contrast": {
-                    "description": "Text/icon on accent background",
-                    "color": "#FFFFFF"
-                }
-            },
-            "Status Colors": {
-                "success": {
-                    "description": "Success messages",
                     "color": "#4CAF50"
                 },
                 "warning": {
                     "description": "Warnings",
-                    "color": "#FFC107"
+                    "color": "#FB8C00"
                 },
                 "error": {
                     "description": "Errors",
-                    "color": "#F44336"
+                    "color": "#E53935"
                 },
                 "info": {
                     "description": "Info messages",
-                    "color": "#2196F3"
+                    "color": "#1E88E5"
                 }
             },
             "Special Effects": {
                 "shadow": {
                     "description": "Drop shadow",
-                    "color": "rgba(0, 0, 0, 0.6)"
+                    "color": "rgba(0, 0, 0, 0.12)"
                 },
                 "overlay": {
                     "description": "Modal backgrounds",
-                    "color": "rgba(0, 0, 0, 0.5)"
+                    "color": "rgba(0, 0, 0, 0.08)"
                 },
                 "focus-ring": {
                     "description": "Focus outline",
-                    "color": "#FF9800"
+                    "color": "#4285F4"
+                }
+            }
+        },
+        "sky-light": {
+            "Base Colors": {
+                "base-background": {
+                    "description": "Main background (cloudy sky)",
+                    "color": "#E8F2FA"
+                },
+                "surface": {
+                    "description": "Primary surfaces (stratocumulus)",
+                    "color": "#F0F5FC"
+                },
+                "surface-variant": {
+                    "description": "Secondary surfaces (altocumulus)",
+                    "color": "#E6ECF5"
+                },
+                "border": {
+                    "description": "Borders (sky contours)",
+                    "color": "#C6D3E2"
+                },
+                "hover": {
+                    "description": "Hover state (sun through clouds)",
+                    "color": "#D8E4F2"
+                }
+            },
+            "Accent Colors": {
+                "accent": {
+                    "description": "Primary accent (cerulean)",
+                    "color": "#2B7DE9"
+                },
+                "accent-light": {
+                    "description": "Hover state (sky reflection)",
+                    "color": "#6DAEFF"
+                },
+                "accent-contrast": {
+                    "description": "Text on accent (cloud highlight)",
+                    "color": "#FFFFFF"
+                }
+            },
+            "Text Colors": {
+                "text-primary": {
+                    "description": "Primary text (storm cloud)",
+                    "color": "#1C2E4A"
+                },
+                "text-secondary": {
+                    "description": "Secondary text (distant squall)",
+                    "color": "#52617A"
+                },
+                "text-disabled": {
+                    "description": "Disabled text (light fog)",
+                    "color": "#8F9BB3"
+                },
+                "text-inverse": {
+                    "description": "Inverse text (cumulus bright)",
+                    "color": "#FFFFFF"
+                }
+            },
+            "Input Fields": {
+                "input-background": {
+                    "description": "Input field (broken cloud)",
+                    "color": "#F8FAFF"
+                },
+                "input-border": {
+                    "description": "Active border (sky gradient)",
+                    "color": "#AEC6E0"
+                },
+                "input-placeholder": {
+                    "description": "Placeholder (morning mist)",
+                    "color": "#9AA8BC"
+                }
+            },
+            "Control Colors": {
+                "button-background": {
+                    "description": "Button base (sky wash)",
+                    "color": "#DAE7F8"
+                },
+                "button-hover": {
+                    "description": "Hover state (cloud shadow)",
+                    "color": "#C1D4ED"
+                },
+                "button-pressed": {
+                    "description": "Pressed state (deep stratus)",
+                    "color": "#A8C0E0"
+                }
+            },
+            "Special Effects": {
+                "shadow": {
+                    "description": "Cumulonimbus shadow",
+                    "color": "rgba(28, 46, 74, 0.12)"
+                },
+                "overlay": {
+                    "description": "High cirrus overlay",
+                    "color": "rgba(232, 242, 250, 0.82)"
+                },
+                "focus-ring": {
+                    "description": "Contrail highlight",
+                    "color": "#8CC0FF"
+                }
+            }
+        },
+        "deep-sky": {
+            "Base Colors": {
+                "base-background": {
+                    "description": "Main window background (night sky)",
+                    "color": "#0A1929"
+                },
+                "surface": {
+                    "description": "Card/panel backgrounds (deep space)",
+                    "color": "#1E293B"
+                },
+                "surface-variant": {
+                    "description": "Secondary surfaces (nebula layer)",
+                    "color": "#2D3A4D"
+                },
+                "border": {
+                    "description": "Border colors (star dust)",
+                    "color": "#3C4D63"
+                },
+                "hover": {
+                    "description": "Hover backgrounds (aurora glow)",
+                    "color": "#2A3B52"
+                }
+            },
+            "Accent Colors": {
+                "accent": {
+                    "description": "Primary accent (celestial blue)",
+                    "color": "#2d43d0"
+                },
+                "accent-light": {
+                    "description": "Hover state (northern lights)",
+                    "color": "#324de7"
+                },
+                "accent-contrast": {
+                    "description": "Text on accent (moonlight)",
+                    "color": "#E0F4FF"
+                }
+            },
+            "Text Colors": {
+                "text-primary": {
+                    "description": "Primary text (starlight)",
+                    "color": "#E3EDF7"
+                },
+                "text-secondary": {
+                    "description": "Secondary text (twilight)",
+                    "color": "#94A3B8"
+                },
+                "text-disabled": {
+                    "description": "Disabled text (distant stars)",
+                    "color": "#5C6D7A"
+                },
+                "text-inverse": {
+                    "description": "Text on light surfaces",
+                    "color": "#0A1929"
+                }
+            },
+            "Input Fields": {
+                "input-background": {
+                    "description": "Input background (dark matter)",
+                    "color": "#1E293B"
+                },
+                "input-border": {
+                    "description": "Input border (meteor trail)",
+                    "color": "#3C4D63"
+                },
+                "input-placeholder": {
+                    "description": "Placeholder (interstellar dust)",
+                    "color": "#64748B"
+                }
+            },
+            "Control Colors": {
+                "button-background": {
+                    "description": "Button background (cosmic void)",
+                    "color": "#2D3A4D"
+                },
+                "button-hover": {
+                    "description": "Hover state (black hole accretion)",
+                    "color": "#3C4D63"
+                },
+                "button-pressed": {
+                    "description": "Pressed state (neutron star)",
+                    "color": "#4B5D75"
+                },
+                "button-text": {
+                    "description": "Button text (polaris)",
+                    "color": "#E3EDF7"
+                },
+                "input-disabled-background": {
+                    "description": "Disabled input (dark nebula)",
+                    "color": "#1A242F"
+                },
+                "input-disabled-text": {
+                    "description": "Disabled text (occulted star)",
+                    "color": "#4A5568"
+                },
+                "button-disabled": {
+                    "description": "Disabled button (event horizon)",
+                    "color": "#2A3647"
+                },
+                "button-disabled-text": {
+                    "description": "Disabled button text (eclipse)",
+                    "color": "#5C6D7A"
+                },
+                "disabled-border": {
+                    "description": "Disabled border (dark matter)",
+                    "color": "#2D3A4D"
+                }
+            },
+            "Status Colors": {
+                "success": {
+                    "description": "Success (quasar green)",
+                    "color": "#2ECC71"
+                },
+                "warning": {
+                    "description": "Warning (supernova orange)",
+                    "color": "#FF9F43"
+                },
+                "error": {
+                    "description": "Error (red giant)",
+                    "color": "#FF6B6B"
+                },
+                "info": {
+                    "description": "Info (pulsar blue)",
+                    "color": "#54A0FF"
+                }
+            },
+            "Special Effects": {
+                "shadow": {
+                    "description": "Shadow (cosmic dust cloud)",
+                    "color": "rgba(4, 12, 24, 0.24)"
+                },
+                "overlay": {
+                    "description": "Overlay (solar corona)",
+                    "color": "rgba(10, 25, 41, 0.88)"
+                },
+                "focus-ring": {
+                    "description": "Focus (ion trail)",
+                    "color": "#2EC4E6"
                 }
             }
         },
@@ -288,11 +387,11 @@
                 },
                 "surface": {
                     "description": "Card or panel backgrounds",
-                    "color": "#1E1E1E"
+                    "color": "#1C1C1C"
                 },
                 "surface-variant": {
                     "description": "Secondary surfaces",
-                    "color": "#2A2A2A"
+                    "color": "#292929"
                 },
                 "border": {
                     "description": "Border colors",
@@ -300,7 +399,21 @@
                 },
                 "hover": {
                     "description": "Hover backgrounds",
-                    "color": "#2F2F2F"
+                    "color": "#2E2E2E"
+                }
+            },
+            "Accent Colors": {
+                "accent": {
+                    "description": "Main highlight color",
+                    "color": "#0c4ce0"
+                },
+                "accent-light": {
+                    "description": "Hover or focus states",
+                    "color": "#156fff"
+                },
+                "accent-contrast": {
+                    "description": "Text/icon on accent background",
+                    "color": "#FFFFFF"
                 }
             },
             "Text Colors": {
@@ -321,8 +434,22 @@
                     "color": "#000000"
                 }
             },
+            "Input Fields": {
+                "input-background": {
+                    "description": "Background for text inputs like QLineEdit, QTextEdit",
+                    "color": "#2A2A2A"
+                },
+                "input-border": {
+                    "description": "Border for focused or hovered inputs",
+                    "color": "#4A4A4A"
+                },
+                "input-placeholder": {
+                    "description": "Placeholder text color",
+                    "color": "#AAAAAA"
+                }
+            },
             "Control Colors": {
-                "button": {
+                "button-background": {
                     "description": "Button background",
                     "color": "#2C2C2C"
                 },
@@ -367,20 +494,6 @@
                     "color": "#777777"
                 }
             },
-            "Accent Colors": {
-                "accent": {
-                    "description": "Main highlight color",
-                    "color": "#0A84FF"
-                },
-                "accent-light": {
-                    "description": "Hover or focus states",
-                    "color": "#339CFF"
-                },
-                "accent-contrast": {
-                    "description": "Text/icon on accent background",
-                    "color": "#FFFFFF"
-                }
-            },
             "Status Colors": {
                 "success": {
                     "description": "Success messages",
@@ -413,7 +526,290 @@
                     "color": "#0078D4"
                 }
             }
+        },
+        "ubuntu-orange": {
+            "Base Colors": {
+                "base-background": {
+                    "description": "Main window background",
+                    "color": "#2C2C2C"
+                },
+                "surface": {
+                    "description": "Card or panel backgrounds",
+                    "color": "#353535"
+                },
+                "surface-variant": {
+                    "description": "Secondary surfaces",
+                    "color": "#444444"
+                },
+                "border": {
+                    "description": "Border colors",
+                    "color": "#555555"
+                },
+                "hover": {
+                    "description": "Hover backgrounds",
+                    "color": "#3A3A3A"
+                }
+            },
+            "Accent Colors": {
+                "accent": {
+                    "description": "Main highlight color",
+                    "color": "#FF9800"
+                },
+                "accent-light": {
+                    "description": "Hover or focus states",
+                    "color": "#ffa01c"
+                },
+                "accent-contrast": {
+                    "description": "Text/icon on accent background",
+                    "color": "#222222"
+                }
+            },
+            "Text Colors": {
+                "text-primary": {
+                    "description": "Primary readable text",
+                    "color": "#FFFFFF"
+                },
+                "text-secondary": {
+                    "description": "Less prominent text",
+                    "color": "#DDDDDD"
+                },
+                "text-disabled": {
+                    "description": "Disabled/inactive text",
+                    "color": "#888888"
+                },
+                "text-inverse": {
+                    "description": "Text on light surfaces",
+                    "color": "#000000"
+                }
+            },
+            "Input Fields": {
+                "input-background": {
+                    "description": "Background for text inputs like QLineEdit, QTextEdit",
+                    "color": "#353535"
+                },
+                "input-border": {
+                    "description": "Border for focused or hovered inputs",
+                    "color": "#FF7800"
+                },
+                "input-placeholder": {
+                    "description": "Placeholder text color",
+                    "color": "#BBBBBB"
+                }
+            },
+            "Control Colors": {
+                "button-background": {
+                    "description": "Button background",
+                    "color": "#444444"
+                },
+                "button-hover": {
+                    "description": "On hover",
+                    "color": "#FF7043"
+                },
+                "button-pressed": {
+                    "description": "When pressed",
+                    "color": "#FF8A65"
+                },
+                "button-text": {
+                    "description": "Text on buttons",
+                    "color": "#FFFFFF"
+                },
+                "input-disabled-background": {
+                    "description": "Background color for disabled input fields",
+                    "color": "#2E2A28"
+                },
+                "input-disabled-text": {
+                    "description": "Text color in disabled input fields",
+                    "color": "#8E8C89"
+                },
+                "button-disabled": {
+                    "description": "Disabled button background",
+                    "color": "#3A3634"
+                },
+                "button-disabled-text": {
+                    "description": "Text on disabled buttons",
+                    "color": "#8E8C89"
+                },
+                "disabled-border": {
+                    "description": "Border color for disabled inputs and buttons",
+                    "color": "#4C4744"
+                }
+            },
+            "Status Colors": {
+                "success": {
+                    "description": "Success messages",
+                    "color": "#4CAF50"
+                },
+                "warning": {
+                    "description": "Warnings",
+                    "color": "#FFC107"
+                },
+                "error": {
+                    "description": "Errors",
+                    "color": "#F44336"
+                },
+                "info": {
+                    "description": "Info messages",
+                    "color": "#2196F3"
+                }
+            },
+            "Special Effects": {
+                "shadow": {
+                    "description": "Drop shadow",
+                    "color": "rgba(0, 0, 0, 0.6)"
+                },
+                "overlay": {
+                    "description": "Modal backgrounds",
+                    "color": "rgba(0, 0, 0, 0.5)"
+                },
+                "focus-ring": {
+                    "description": "Focus outline",
+                    "color": "#FF9800"
+                }
+            }
+        },
+        "material-dark": {
+            "Base Colors": {
+                "base-background": {
+                    "description": "Main window background",
+                    "color": "#121212"
+                },
+                "surface": {
+                    "description": "Card or panel backgrounds",
+                    "color": "#1E1E1E"
+                },
+                "surface-variant": {
+                    "description": "Secondary surfaces",
+                    "color": "#2C2C2C"
+                },
+                "border": {
+                    "description": "Border colors",
+                    "color": "#3E3E3E"
+                },
+                "hover": {
+                    "description": "Hover backgrounds",
+                    "color": "#2A2A2A"
+                }
+            },
+            "Accent Colors": {
+                "accent": {
+                    "description": "Main highlight color",
+                    "color": "#7907AA"
+                },
+                "accent-light": {
+                    "description": "Hover or focus states",
+                    "color": "#9700e8"
+                },
+                "accent-contrast": {
+                    "description": "Text/icon on accent background",
+                    "color": "#000000"
+                }
+            },
+            "Text Colors": {
+                "text-primary": {
+                    "description": "Primary readable text",
+                    "color": "#FFFFFF"
+                },
+                "text-secondary": {
+                    "description": "Less prominent text",
+                    "color": "#B3B3B3"
+                },
+                "text-disabled": {
+                    "description": "Disabled/inactive text",
+                    "color": "#6F6F6F"
+                },
+                "text-inverse": {
+                    "description": "Text on light surfaces",
+                    "color": "#000000"
+                }
+            },
+            "Input Fields": {
+                "input-background": {
+                    "description": "Background for text inputs like QLineEdit, QTextEdit",
+                    "color": "#1E1E1E"
+                },
+                "input-border": {
+                    "description": "Border for focused or hovered inputs",
+                    "color": "#5A5A5A"
+                },
+                "input-placeholder": {
+                    "description": "Placeholder text color",
+                    "color": "#A3A3A3"
+                }
+            },
+            "Control Colors": {
+                "button-background": {
+                    "description": "Button background",
+                    "color": "#2C2C2C"
+                },
+                "button-hover": {
+                    "description": "On hover",
+                    "color": "#3A3A3A"
+                },
+                "button-pressed": {
+                    "description": "When pressed",
+                    "color": "#4A4A4A"
+                },
+                "button-text": {
+                    "description": "Text on buttons",
+                    "color": "#FFFFFF"
+                },
+                "button-disabled": {
+                    "description": "Disabled button background",
+                    "color": "#2B2B2B"
+                },
+                "button-disabled-text": {
+                    "description": "Text on disabled buttons",
+                    "color": "#777777"
+                },
+                "button-border": {
+                    "description": "Border color for active buttons",
+                    "color": "#5E5E5E"
+                },
+                "disabled-border": {
+                    "description": "Border color for disabled inputs and buttons",
+                    "color": "#3F3F3F"
+                },
+                "input-disabled-background": {
+                    "description": "Background color for disabled input fields",
+                    "color": "#2B2B2B"
+                },
+                "input-disabled-text": {
+                    "description": "Text color in disabled input fields",
+                    "color": "#777777"
+                }
+            },
+            "Status Colors": {
+                "success": {
+                    "description": "Success messages",
+                    "color": "#03DAC6"
+                },
+                "warning": {
+                    "description": "Warnings",
+                    "color": "#FBC02D"
+                },
+                "error": {
+                    "description": "Errors",
+                    "color": "#CF6679"
+                },
+                "info": {
+                    "description": "Info messages",
+                    "color": "#2196F3"
+                }
+            },
+            "Special Effects": {
+                "shadow": {
+                    "description": "Drop shadow",
+                    "color": "rgba(0, 0, 0, 0.6)"
+                },
+                "overlay": {
+                    "description": "Modal backgrounds",
+                    "color": "rgba(0, 0, 0, 0.5)"
+                },
+                "focus-ring": {
+                    "description": "Focus outline",
+                    "color": "#03DAC5"
+                }
+            }
         }
-    },
-    "active-theme": "ubuntu-orange"
+    }
 }

@@ -1,6 +1,7 @@
 import unittest
+import os
 from pathlib import Path
-from PySideAbdhUI import get_icon,get_stylesheet,get_resource_path
+from PySideAbdhUI import get_resource_path, get_styles_template, get_color_roles
 
 class TestResourceAccess(unittest.TestCase):
    
@@ -12,7 +13,7 @@ class TestResourceAccess(unittest.TestCase):
         PySideAbdhUI/resources/icons/svg before running this test.
         """
         package = "PySideAbdhUI.resources.icons.svg"
-        resource_name = "settings.svg"  # Ensure this file exists for the test
+        resource_name = "settings"  # Ensure this file exists for the test
         
         # Attempt to retrieve the resource path
         resource_path = get_resource_path(package, resource_name)
@@ -22,7 +23,7 @@ class TestResourceAccess(unittest.TestCase):
         # Verify that the resource file exists at that path
         self.assertTrue(resource_path.exists(), f"Resource file '{resource_name}' does not exist at {resource_path}.")
     
-    def test_get_style_resource(self):
+    def test_get_style_template(self):
         """
         Tests the get_resource_path function for retrieving a style resource.
         
@@ -30,19 +31,29 @@ class TestResourceAccess(unittest.TestCase):
         PySideAbdhUI/resources/styles before running this test.
         """
         package = "PySideAbdhUI.resources.styles"
-        resource_name = "default-dark.qss"  # Ensure this file exists for the test
         
         # Attempt to retrieve the resource path
-        resource_path = get_resource_path(package, resource_name)
-        
+        resource_path = get_styles_template(package)
         # Check that the returned object is a pathlib.Path instance
-        self.assertIsInstance(resource_path, Path, "Expected a pathlib.Path instance.")
+        self.assertIsInstance(resource_path, str, "Expected a string.")
         # Verify that the resource file exists at that path
-        self.assertTrue(resource_path.exists(), f"Resource file '{resource_name}' does not exist at {resource_path}.")
+        self.assertTrue(os.path.exists(resource_path)== True, f"qss-template.qss does not exist at {resource_path}.")
+
+    def test_get_color_roles(self):
+      
+        package = "PySideAbdhUI.resources.styles"
+        
+        # Attempt to retrieve the resource path
+        resource_path = get_color_roles(package)
+        # Check that the returned object is a pathlib.Path instance
+        self.assertIsInstance(resource_path, str, "Expected a string.")
+        # Verify that the resource file exists at that path
+        self.assertTrue(os.path.exists(resource_path)== True, f"Resource file colr-roles.json does not exist at {resource_path}.")
+
 
 if __name__ == "__main__":
     
     unittest.main()
 
 # BIULD: python setup.py sdist bdist_wheel
-# INSTALL: pip install path\to\dist\PySideAbdhUI-1.0.0-py3-none-any.whl
+# INSTALL: pip install path\to\dist\PySideAbdhUI-1.0.1-py3-none-any.whl

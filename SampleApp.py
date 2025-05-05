@@ -85,13 +85,13 @@ class ThemeEditor(QWidget):
                 # Editable color field
                 editor = QLineEdit(color_hex)
                 editor.setObjectName(color_key)
-                editor.setFixedWidth(100)
+                editor.setFixedWidth(120)
                 self.inputs[color_key] = editor
 
                 # Color preview
                 preview = QLabel()
-                preview.setFixedSize(24, 24)
-                preview.setStyleSheet(f"background-color: {color_hex}; border: 1px solid #888;")
+                preview.setFixedSize(27, 27)
+                preview.setStyleSheet(f"background-color: {color_hex}; border: 1px solid #888888;")
 
                 # Picker button
                 button = QPushButton("🎨")
@@ -141,7 +141,7 @@ class ThemeEditor(QWidget):
             theme.apply_theme(QApplication.instance(),theme_name)
 
 
-    def clear_layout(self, layout):
+    def clear_layout(self, layout:QGridLayout):
         while layout.count():
             item = layout.takeAt(0)
             widget = item.widget()
@@ -149,34 +149,6 @@ class ThemeEditor(QWidget):
                 widget.setParent(None)
                 widget.deleteLater()
         QApplication.processEvents()
-
-
-def apply_current_theme_to_app(app: QApplication, qss_template_path: str,theme_name='default-dark'):
-        
-        theme.switch_theme(theme_name)
-        theme_ = theme.get_current_theme()
-    
-        if not theme_:
-            print(f"[ERROR] Theme '{theme_name}' not found.")
-            return
-
-        # Load QSS template with placeholders
-        try:
-            with open(qss_template_path, "r", encoding="utf-8") as f: qss_template = f.read()
-        except Exception as e:
-            print(f"[ERROR] Failed to read QSS template: {e}")
-            return
-
-        # Replace placeholders using theme values
-        for category, roles in theme_.items():
-            for role_name, role_info in roles.items():
-                placeholder = f"--{role_name}--"
-                color = role_info.get("color", "")
-                qss_template = qss_template.replace(placeholder, color)
-
-        # Apply stylesheet to app
-        app.setStyleSheet(qss_template)
-        print(f"[INFO] Applied theme '{theme_name}' to app.")
 
 class CLI:
 
@@ -234,18 +206,11 @@ class CLI:
         self.window.add_right_panel_item(github)
         github.setProperty('class','hyperlink')          
 
+
     def on_theme_switch(self,sender:QComboBox):
 
         theme_name = sender.currentText()
-        
-        print(f'theme: {theme_name}')
-
-        if theme.switch_theme(theme_name):
-            template = PySideAbdhUI.get_styles_template()
-
-            print(f'theme resource: {template}')
-            theme.apply_theme(QApplication.instance(),theme_name)
-            # Apply theme immediately
+        theme.apply_theme(QApplication.instance(),theme_name)
 
 
     def create_left_pane(self):
@@ -271,17 +236,16 @@ class CLI:
         left_item.setCheckable(True)
         left_item.setProperty('class','MenuItem')
         self.window.add_left_panel_item(left_item)
-        left_item.clicked.connect(lambda _,s= left_item:self.load_widgets_page(s))
+        left_item.clicked.connect(lambda _,s= left_item:self.load_stacked_page(s))
 
         self.window.left_panel_layout.addStretch(1)
-        
+
+
     def load_theme_editor(self, sender:QPushButton):
         self.uncheck_items(self.window.left_panel_layout)
         sender.setChecked(True)
-
-        color_roles_path ="PySideAbdhUI/resources/styles/color-roles.json"
         
-        if not os.path.exists(color_roles_path):
+        if not os.path.exists(theme.color_roles):
             QMessageBox.warning(self.window,'Error','Color roles not found')
             return 
                     
@@ -297,10 +261,11 @@ class CLI:
             if type(item.widget()) is QPushButton:
                 item.widget().setChecked(False)
 
+
     def toggle_direction(self, direction:Qt.LayoutDirection): self.window.set_direction(direction)
         
 
-    def load_widgets_page(self, sender:QPushButton): 
+    def load_stacked_page(self, sender:QPushButton): 
         
         self.uncheck_items(self.window.left_panel_layout)
 
@@ -311,14 +276,14 @@ class CLI:
         grid_layout.setColumnStretch(2,1)
         self.window.add_page(w)
         
-        lbl = QLabel('WIDGETS')
+        lbl = QLabel('STACKED PAGES')
         lbl.setWordWrap(True)
         lbl.setProperty('class', 'title')
         lbl.setTextFormat(Qt.TextFormat.RichText)
         grid_layout.addWidget(lbl,0,0,alignment=Qt.AlignmentFlag.AlignTop)
 
         s =  '<div style="line-height: 100%; font-size: 16px;">'
-        s += '<b>StackedWidget:</b> is one of advanced widgets that plays imporant rule as a container of other objects.</div>'
+        s += '<b>StackedWidget:</b> is one of advanced widgets that plays important rule as a container of other objects. this widget has powered by adding slide animation feature.</div>'
         lbl = QLabel(s)
         lbl.setWordWrap(True)
         lbl.setTextFormat(Qt.TextFormat.RichText)
@@ -347,17 +312,20 @@ class CLI:
         lbl.setStyleSheet('border:none; background-color: lightblue;color:#000000;font-size:72pt;text-align: center;')  
         stack.add_page(lbl)
         
-        btn = QPushButton('<')
+        btn = QPushButton('')
         btn.setProperty('class','grouped_min')
+        btn.setIcon(QIcon(PySideAbdhUI.utils.get_icon('arrow-left')))
         btn.clicked.connect(stack.go_back)
         grid.addWidget(btn,0,0)
         
-        btn = QPushButton('>')
+        btn = QPushButton('')
         btn.setProperty('class','grouped_min')
+        btn.setIcon(QIcon(PySideAbdhUI.utils.get_icon('arrow-right')))
         btn.clicked.connect(stack.go_next)
         grid.addWidget(btn,0,1)
 
         grid_layout.setRowStretch(3,1)
+
 
     def load_window_properties_page(self, sender:QPushButton): 
         
@@ -457,25 +425,14 @@ class CLI:
 
     def Run(self):
         root = os.path.dirname(__file__)
-        
-        #style_path = PySideAbdhUI.utils.get_styles_template() # "C:\\Users\\AbdhM\\AppData\\Local\\Abdh\\TeacherAssistant\\default-dark.qss" #root + "\\PySideAbdhUI\\resources\\styles\\default-dark.qss"
-        # Using QtStyleSheetManager to manage custom styles
-        #st.load_stylesheet(style_path)
-    
-        #check, value = st.check_accent_color_placeholder()
-                    
-        #if check: st.replace_placeholder(value)
-        # Apply stylesheet on the application
-        #self.app.setStyleSheet(st.stylesheet)
-        
+        icon = PySideAbdhUI.get_icon(package='PySideAbdhUI.resources.png',name='app-icon',ext='png')
         # Our custom ICON is available in application_path + "/resources/icons/
-        self.app.setWindowIcon(QIcon(root + '\\PySideAbdhUI\\resources\\png\\app-icon.png'))
+        self.app.setWindowIcon(QIcon(icon))
         # Create the main customized UI window
         self.window = Window.AbdhWindow()
 
         self.window.initUI(app_title= 'PySideAbdhUI - Application test | ' + PySideAbdhUI.__version__, 
-                           title_logo_path= root + "\\PySideAbdhUI\\resources\\png\\app-icon.png",
-                           direction= Qt.LayoutDirection.LeftToRight)
+                           title_logo_path= icon, direction= Qt.LayoutDirection.LeftToRight)
     
         
         self.create_settings_pane()

@@ -133,56 +133,62 @@ class NotifyPropertyChanged(QObject):
     #        elif isinstance(widget, QTextEdit) and widget.toHtml() != value: # Handle QTextEdit
     #            widget.setHtml(value)
 
+
+
+
+
+
+
+
+# in below code my notifier widget appears out of parent widget, please fix the problem
 class PopupNotifier(QWidget):
     
     active_popups = []  # Keep track of active notifications
+    def __init__(self):
 
-    def __init__(self, title_color='#3A3A3A', background_color='#424242', border_color='BLUE'):
         super().__init__()
-        self.setMinimumWidth(400)
-        self.title_color = title_color
-        self.background_color = background_color
-        self.border_color = border_color
 
-        self.setWindowFlags(Qt.WindowType.FramelessWindowHint | Qt.WindowType.WindowStaysOnTopHint | Qt.WindowType.Popup)
-        self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
-        self.setStyleSheet(f"background-color: {self.background_color}; border-radius: 10px;")
+        #self = QWidget()
+        self.setContentsMargins(0,0,0,0)
+        self.setMinimumWidth(400)
+
+        self.setWindowFlags(Qt.WindowType.FramelessWindowHint | Qt.WindowType.WindowStaysOnTopHint)# | Qt.WindowType.Popup)
+        self.setObjectName('PopupNotifier')
 
         # Layout
         layout = QVBoxLayout(self)
         layout.setSpacing(0)
-        layout.setContentsMargins(20, 10, 20, 10)
+        layout.setContentsMargins(0, 0, 0, 0)
         # Title Label
         self.title_label = QLabel("Notification")
-        self.title_label.setStyleSheet(f"font-weight:bold; padding-left:5px;padding:5px; background-color:{self.title_color}; border-top-left-radius:5px; border-top-right-radius:5px; border-bottom-left-radius:0px; border-bottom-right-radius:0px;")
+        self.title_label.setObjectName('PopupTitle')
         self.title_label.setFixedHeight(32)
 
         # Message Label
         self.message_label = QLabel("This is a sample message.")
-        self.message_label.setStyleSheet(f"padding:5px; background-color:{self.background_color}; border-top-left-radius:0px; border-top-right-radius:0px; border-bottom-left-radius:0px; border-bottom-right-radius:0px;")
+        self.message_label.setObjectName('PopupText')
         self.message_label.setWordWrap(True)
         
         layout.addWidget(self.title_label)
         layout.addWidget(self.message_label)
         
         
-        btn_widget = QWidget()
-        btn_widget.setStyleSheet(f"padding:5px; background-color:{self.background_color}; border-top-left-radius:0px; border-top-right-radius:0px; border-bottom-left-radius:5px; border-bottom-right-radius:5px;")
+        # = QWidget()
         
-        btn_layout = QHBoxLayout(btn_widget)
+        btn_layout = QHBoxLayout()
         #self.countdown_label = QLabel('') # When buttons is hidden
         # Buttons
-        self.timer_button = QPushButton("Close (5s)")
-        self.timer_button.setStyleSheet("background-color: #FF5555; color: white; padding: 5px; border-radius: 5px;")
+        self.timer_button = QPushButton("Pause (5s)")
+        self.timer_button.setObjectName('PopupActionButton')
         self.timer_button.clicked.connect(self.toggle_timer)
 
         self.close_button = QPushButton("Close")
-        self.close_button.setStyleSheet("background-color: #808080; color: white; padding: 5px; border-radius: 5px;")
+        self.close_button.setObjectName('PopupCloseButton')
         self.close_button.clicked.connect(self.close)
 
         btn_layout.addWidget(self.timer_button)
         btn_layout.addWidget(self.close_button)
-        layout.addWidget(btn_widget)
+        layout.addLayout(btn_layout)
             
         # Auto-close Timer
         self.close_timer = QTimer()
@@ -201,70 +207,79 @@ class PopupNotifier(QWidget):
         self.opacity_animation.setEasingCurve(QEasingCurve.Type.InOutQuad)
         self.opacity_animation.setStartValue(0.0)
         self.opacity_animation.setEndValue(1.0)
+    
+    def show_popup(self, parent: QWidget, title='Notification', message='', 
+                   position="bottom-right", delay=5000, buttons=True):
 
-
-    def show_popup(self, parent: QWidget = None, title='Notifier', message='', position="top-right", delay=5000, buttons= True):
-        
+        # 1) Reparent and set as SubWindow → coords are local!
         self.setParent(parent)
+        self.setWindowFlags(Qt.FramelessWindowHint | Qt.SubWindow)
 
-        if title: self.title_label.setText(title)
-        
+        # 2) Update text
+        self.title_label.setText(title)
         self.message_label.setText(message)
-        
         self.adjustSize()
-        
-        self.remaining_time = delay  # Default countdown time
+
+        # 3) Timer/buttons setup
+        self.remaining_time = delay // 1000
         self.timer_button.setVisible(buttons)
         self.close_button.setVisible(buttons)
-        # Get parent geometry if available
-        if parent:
-            parent_geometry = parent.geometry()
-            if position == "top-right":
-                start_x = parent_geometry.width() + 10  # Start off-screen (right)
-                end_x = parent_geometry.width() - self.width() - 10
-                y = 10
-            elif position == "top-left":
-                start_x = -self.width()  # Start off-screen (left)
-                end_x = 10
-                y = 10
-            elif position == "bottom-right":
-                start_x = parent_geometry.width() + 10
-                end_x = parent_geometry.width() - self.width() - 10
-                y = parent_geometry.height() - self.height() - 10
-            elif position == "bottom-left":
-                start_x = -self.width()
-                end_x = 10
-                y = parent_geometry.height() - self.height() - 10
-        else:
-            # Default position if no parent
-            end_x, y = 100, 100
-            start_x = end_x + 300  # Start further right
+        self.timer_button.setText(f"Pause ({self.remaining_time}s)")
 
-        # Set initial position (off-screen)
-        self.setGeometry(start_x, y, self.width(), self.height())
+        # 4) Compute positions in parent-local coords
+        margin = 10
+        w, h = self.width(), self.height()
+        rect = parent.rect()          # (0,0) to (pw,ph)
+        pw, ph = rect.width(), rect.height()
 
-        # Configure slide animation
-        self.slide_animation.setStartValue(QRect(start_x, y, self.width(), self.height()))
-        self.slide_animation.setEndValue(QRect(end_x, y, self.width(), self.height()))
+        if position == "bottom-right":
+            start_x = pw + margin
+            end_x   = pw - w - margin
+            y       = ph - h - margin
+
+        elif position == "top-right":
+            start_x = pw + margin
+            end_x   = pw - w - margin
+            y       = margin
+
+        elif position == "top-left":
+            start_x = -w - margin
+            end_x   = margin
+            y       = margin
+
+        elif position == "bottom-left":
+            start_x = -w - margin
+            end_x   = margin
+            y       = ph - h - margin
+
+        else:  # fallback: bottom-right
+            start_x = pw + margin
+            end_x   = pw - w - margin
+            y       = ph - h - margin
+
+        # 5) Place off-parent to start
+        self.setGeometry(start_x, y, w, h)
+
+        # 6) Slide-in
+        self.slide_animation.setTargetObject(self)
+        self.slide_animation.setStartValue(QRect(start_x, y, w, h))
+        self.slide_animation.setEndValue(QRect(end_x,   y, w, h))
         self.slide_animation.start()
 
-        # Configure fade-in animation
+        # 7) Fade-in
+        self.opacity_animation.setTargetObject(self)
         self.opacity_animation.start()
 
-        # Start auto-close timer
-        self.remaining_time = delay // 1000
-
-        if self.timer_button: self.timer_button.setText(f"Close ({self.remaining_time}s)")
+        # 8) Start countdown & show
         self.timer_active = True
         self.close_timer.start(1000)
-
         self.show()
 
 
     def update_timer(self):
         if self.timer_active and self.remaining_time > 0:
             self.remaining_time -= 1
-            self.timer_button.setText(f"Close ({self.remaining_time}s)")
+            self.timer_button.setText(f"Pause ({self.remaining_time}s)")
         if self.remaining_time == 0:
             self.close()
 
@@ -272,19 +287,19 @@ class PopupNotifier(QWidget):
         if self.timer_active:
             self.close_timer.stop()
             self.timer_active = False
-            self.timer_button.setText("Keep Open")
-            self.timer_button.setStyleSheet("background-color: #4CAF50; color: white; padding: 5px; border-radius: 5px;")
+            self.timer_button.setText("Paused")
+            #self.timer_button.setStyleSheet("background-color: #4CAF50; color: white;")
         else:
             self.close_timer.start(1000)
             self.timer_active = True
-            self.timer_button.setText(f"Close ({self.remaining_time}s)")
-            self.timer_button.setStyleSheet("background-color: #FF5555; color: white; padding: 5px; border-radius: 5px;")
+            self.timer_button.setText(f"Pause ({self.remaining_time}s)")
+            #self.timer_button.setStyleSheet("background-color: #FF5555; color: white;")
 
     def stop_timer(self):
         self.close_timer.stop()
         self.timer_active = False
         self.timer_button.setText("Timer Stopped")
-        self.timer_button.setStyleSheet("background-color: #808080; color: white; padding: 5px; border-radius: 5px;")
+        #self.timer_button.setStyleSheet("background-color: #808080; color: white; padding: 5px; border-radius: 5px;")
 
     def closeEvent(self, event):
         """Intercept close event to ensure animation is used."""
@@ -311,9 +326,9 @@ class PopupNotifier(QWidget):
 
     @staticmethod
     def Notify(parent: QWidget, title='Notifier', message: str = '', position='bottom-right', delay=5000,
-               title_color='#3A3A3A', background_color='#424242', border_color='BLUE',buttons = True):
+               buttons = True):
         
-        popup = PopupNotifier(title_color, background_color, border_color)
+        popup = PopupNotifier()
 
         popup.show_popup(parent, title, message, position, delay,buttons=buttons)
 

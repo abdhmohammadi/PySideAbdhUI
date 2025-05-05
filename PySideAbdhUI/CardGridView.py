@@ -8,20 +8,21 @@ from typing import List, Dict,Optional
 class CardWidget(QWidget):
     clicked = Signal(QWidget)  # Signal emitted when card is clicked
     
-    def __init__(self, widget: QWidget,background="#FFFFFF", parent=None):
+    def __init__(self, widget: QWidget, parent=None):
         super().__init__(parent)
+        # user defined view
         self.widget = widget
-        self.setup_ui(background)
+        self._selected = False
+        self.setup_ui()
         
-    def setup_ui(self, background="#FFFFFF"):
+    def setup_ui(self):
         # Setup the card UI
-        #self.setProperty('class','card')
         layout = QGridLayout(self)
         layout.setContentsMargins(2, 2, 2, 2)
         layout.setSpacing(2)
-        background_layer = QWidget()
-        background_layer.setStyleSheet(f'background-color:{background};')
-        layout.addWidget(background_layer,0,0,1,1)
+        self.background_layer = QWidget()
+        self.background_layer.setProperty('class','card')
+        layout.addWidget(self.background_layer,0,0,1,1)
         # Add the widget to the layout
         layout.addWidget(self.widget,0,0,1,1)
         
@@ -43,7 +44,17 @@ class CardWidget(QWidget):
         self.widget = widget
         self.layout().addWidget(widget)
     
-    
+    def toggle_selection(self):
+
+        self._selected = not self._selected
+        
+        if self._selected: self.background_layer.setProperty('class','card-selected')
+        
+        else: self.background_layer.setProperty('class','card')
+        # update the style of the card
+        self.background_layer.style().unpolish(self.background_layer)
+        self.background_layer.style().polish(self.background_layer)
+        
 class CardGridView(QWidget):
     # Custom widget for displaying cards in a grid layout
     
@@ -56,7 +67,7 @@ class CardGridView(QWidget):
         self.setup_ui()
         self.selected_card: Optional[CardWidget] = None
         self.cards: Dict[int, CardWidget] = {}  # Dictionary to track cards by ID
-        self.columns = columns  # Default number of columns
+        self.columns = columns                  # Default number of columns
         
     def setup_ui(self):
         """Setup the grid view UI"""
@@ -71,9 +82,11 @@ class CardGridView(QWidget):
         
         # Create container widget for grid
         container = QWidget()
+        container.setProperty('class','surface-background-layer')
         self.grid_layout = QGridLayout(container)
+
         self.grid_layout.setSpacing(2)
-        self.grid_layout.setContentsMargins(2, 2, 2, 2)
+        self.grid_layout.setContentsMargins(3, 3, 3, 3)
         
         # Set scroll area widget
         scroll.setWidget(container)
@@ -153,19 +166,16 @@ class CardGridView(QWidget):
     
     def select_card(self, card: CardWidget):
         # Handle card selection
-        old = self.get_selected_card()
         if self.selected_card:
+            self.selected_card.toggle_selection()
 
-            self.selected_card.setStyleSheet("border:2px solid transparent;")
-        
-        card.setProperty('class','card')
-        card.setStyleSheet(r"QWidget.card{border:5px solid #1a73e8;}")
+        card.toggle_selection()
         self.selected_card = card
         self.card_selected.emit(card.widget)
     
-    def get_selected_card(self) -> Optional[QWidget]:
-        """Get the currently selected card widget"""
-        return self.selected_card.widget if self.selected_card else None
+    #def get_selected_card(self) -> Optional[QWidget]:
+    #    """Get the currently selected card widget"""
+    #    return self.selected_card.widget if self.selected_card else None
     
     def _reorganize_cards(self):
         """Reorganize cards in the grid after removal"""
