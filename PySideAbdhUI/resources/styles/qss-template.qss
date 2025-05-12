@@ -59,8 +59,6 @@ QFrame[class="right-sidebar-background-layer"]
     padding: 0px;
 }
 
-
-
 /* Learning materials with white background in the papers */
 QLabel[class="EduText"]
 {
@@ -797,7 +795,7 @@ QRadioButton::indicator
     width: 16px;
     height: 16px;
     border: 1px solid --accent--;
-    border-radius: 8px;
+    border-radius: 4px;
     padding:1px;
 }
 
@@ -805,10 +803,13 @@ QCheckBox::indicator:checked,
 QRadioButton::indicator:checked 
 {
     background-color: --accent--;
-    border: 1px solid --accent-light--;
+    border: 0px;
     image: url(check.png);
 }
-
+QCheckBox:hover
+{
+    border: none;
+}
 QCheckBox::indicator:hover,
 QRadioButton::indicator:hover 
 {
@@ -900,4 +901,77 @@ QMenu::separator
 QMenu::item:disabled 
 {
     color: --text-disabled--;
+}
+
+
+/* Horizontal Groove */
+QSlider::groove:horizontal 
+{
+    border: 1px solid --border--;
+    height: 4px;
+    background: --surface-variant--;
+    margin: 0 8px;
+    border-radius: 2px;
+}
+
+QSlider::groove:vertical 
+{
+    border: 1px solid --border--;
+    width: 4px;
+    background: --surface-variant--;
+    margin: 8px 0;
+    border-radius: 2px;
+}
+
+/* Horizontal Handle */
+QSlider::handle:horizontal 
+{
+    background: --accent--;
+    border: 1px solid --accent--;
+    width: 16px;
+    height: 16px;
+    margin: -6px 0px;
+    border-radius: 8px;
+}
+
+QSlider::handle:vertical
+{
+    background: --accent--;
+    border: 1px solid --accent--;
+    width: 16px;
+    height: 16px;
+    margin: 0px -6px;
+    border-radius: 8px;
+}
+
+/* Hover Effects */
+QSlider::handle:hover 
+{
+    background: --accent-light--;
+    border: 1px solid --accent--;
+}
+
+/* Horizontal Sub-page (filled part) */
+QSlider::sub-page:horizontal 
+{
+    background: --accent--;
+    border-radius: 3px;
+}
+
+QSlider::sub-page:vertical 
+{
+    background: --surface--;
+    border-radius: 3px;
+}
+/* Horizontal Add-page (unfilled part) */
+QSlider::add-page:horizontal 
+{
+    background: --surface--;
+    border-radius: 3px;
+}
+
+QSlider::add-page:vertical 
+{
+    background: --accent--;
+    border-radius: 3px;
 }
