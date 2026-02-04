@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en"> 
+<head>
+  <meta charset="utf-8" />
+  <title>TeacherAssistant — Documentation Manager</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    :root{--bg:#fff;--muted:#666;--accent:#0a84ff;--card:#f7f9fc}
+    body{font-family:Segoe UI, Roboto, Arial, sans-serif;margin:18px;color:#111;background:var(--bg)}
+    header{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+    h1{font-size:1.25rem;margin:0}
+    .controls{margin-left:auto;display:flex;gap:8px}
+    input[type="search"]{padding:8px;border:1px solid #ddd;border-radius:6px;min-width:220px}
+    .wrap{display:grid;grid-template-columns:360px 1fr;gap:16px}
+    .list{background:var(--card);padding:12px;border-radius:8px;max-height:76vh;overflow:auto}
+    .item{padding:10px;border-radius:6px;margin-bottom:8px;background:#fff;border:1px solid #eee;display:flex;flex-direction:column;gap:6px}
+    .meta{font-size:0.85rem;color:var(--muted)}
+    .actions{display:flex;gap:6px;margin-top:6px}
+    button{background:var(--accent);color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer}
+    button.ghost{background:transparent;color:var(--accent);border:1px solid rgba(10,132,255,.12)}
+    iframe.preview{width:100%;height:72vh;border:1px solid #ddd;border-radius:8px}
+    .tag{font-size:0.75rem;padding:4px 6px;border-radius:6px;background:#eef3ff;color:var(--accent);display:inline-block;margin-right:6px}
+    footer{margin-top:10px;font-size:0.85rem;color:var(--muted)}
+    .editor{display:flex;flex-direction:column;height:72vh}
+    textarea.full{flex:1;padding:10px;font-family:Consolas,monospace;resize:none;border:1px solid #ddd;border-radius:6px}
+    .small{font-size:0.9rem}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Documentation Manager for TeacherAssistant App</h1>
+    <div class="controls">
+      <input id="search" type="search" placeholder="Search docs (title or content)..." />
+      <button id="newDoc" title="Create new document">New</button>
+      <button id="refresh" class="ghost" title="Refresh list">Refresh</button>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <aside class="list" id="docList" aria-label="Documentation list">
+      
+      <!-- dynamically populated -->
+    </aside>
+
+    <main>
+      <div id="viewerArea">
+        <iframe id="preview" class="preview" src="developer-guideline.html" title="Preview"></iframe>
+      </div>
+
+      <div id="editorArea" style="display:none" class="editor">
+        <input id="editorTitle" placeholder="Document filename (eg. notes.html)" class="small" />
+        <div style="margin:8px 0" class="meta">Edit then Save (downloads updated file)</div>
+        <textarea id="editor" class="full" spellcheck="false"></textarea>
+        <div style="margin-top:8px;display:flex;gap:8px">
+          <button id="saveFile">Save (download)</button>
+          <button id="cancelEdit" class="ghost">Cancel</button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <footer>
+    <div class="meta">Managed files: developer-guideline.html, user-manual.html, LICENSE</div>
+  </footer>
+
+  <script>
+    // Static registry here - update if you add docs
+    const DOCS = [
+      {title:'Home', file:'home.html', desc:'Main documentation hub', tags:[]},
+      {title:'Developer Notes', file:'developer-guideline.html', desc:'Developer comments for each page', tags:['dev','notes']},
+      {title:'Version History', file:'version-history.html', desc:'Version history and changelog', tags:['version','history']},
+      {title:'User Manual', file:'user-manual.html', desc:'End-user manual and quickstart', tags:['user','manual']},
+      {title:'LICENSE', file:'../LICENSE', desc:'Project license file', tags:['legal']}
+    ];
+
+    const docList = document.getElementById('docList');
+    const preview = document.getElementById('preview');
+    const search = document.getElementById('search');
+    const refresh = document.getElementById('refresh');
+    const newDoc = document.getElementById('newDoc');
+    const viewerArea = document.getElementById('viewerArea');
+    const editorArea = document.getElementById('editorArea');
+    const editor = document.getElementById('editor');
+    const editorTitle = document.getElementById('editorTitle');
+    const saveFile = document.getElementById('saveFile');
+    const cancelEdit = document.getElementById('cancelEdit');
+
+    function renderList(filter='') {
+      docList.innerHTML = '';
+      const q = filter.trim().toLowerCase();
+      DOCS.forEach(d=>{
+        if(q){
+          if(!(d.title.toLowerCase().includes(q) || d.desc.toLowerCase().includes(q) || (d.tags||[]).join(' ').includes(q))) return;
+        }
+        const el = document.createElement('div');
+        el.className='item';
+        el.innerHTML = `<strong>${d.title}</strong>
+          <div class="meta">${d.desc}</div>
+          <div>${(d.tags||[]).map(t=>`<span class="tag">${t}</span>`).join('')}</div>
+          <div class="actions">
+            <button data-file="${d.file}" class="open">Open</button>
+            <button data-file="${d.file}" class="previewBtn ghost">Preview</button>
+            <button data-file="${d.file}" class="download ghost">Download</button>
+            <button data-file="${d.file}" class="edit ghost">Edit</button>
+          </div>`;
+
+        if(d.title === 'Home')
+        {
+          el.innerHTML = `<strong>${d.title}</strong>
+          <div class="meta">${d.desc}</div>
+          <div>${(d.tags||[]).map(t=>`<span class="tag">${t}</span>`).join('')}</div>
+          <div class="actions">
+            <button data-file="${d.file}" class="open">Open</button>
+            <button data-file="${d.file}" class="previewBtn ghost">Preview</button>
+          </div>`;
+        }
+       
+        docList.appendChild(el);
+      });
+      attachButtons();
+    }
+
+    function attachButtons()
+    {
+      docList.querySelectorAll('button.open').forEach(b=>{
+        b.onclick = ()=>{ window.open(b.dataset.file,'_blank'); };
+      });
+      docList.querySelectorAll('button.previewBtn').forEach(b=>{
+        b.onclick = ()=>{ viewerArea.style.display='block'; editorArea.style.display='none'; preview.src = b.dataset.file; };
+      });
+      docList.querySelectorAll('button.download').forEach(b=>{
+        b.onclick = ()=>{ downloadFile(b.dataset.file); };
+      });
+      docList.querySelectorAll('button.edit').forEach(b=>{
+        b.onclick = ()=>{ openEditor(b.dataset.file); };
+      });
+    }
+
+    async function fetchText(path){
+      try{
+        const res = await fetch(path);
+        if(!res.ok) throw new Error('Fetch failed');
+        return await res.text();
+      }catch(e){
+        return null;
+      }
+    }
+
+    async function downloadFile(path){
+      const content = await fetchText(path);
+      if(content===null){ alert('Unable to fetch file. If opening via file://, browser may block fetch. Open file directly in editor.'); return; }
+      const name = path.split('/').pop();
+      const blob = new Blob([content],{type:'text/plain'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = name; document.body.appendChild(a); a.click(); a.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    async function openEditor(path){
+      const content = await fetchText(path);
+      if(content===null){ alert('Cannot load file for editing. Browser fetch restricted when opened as file://. Use VS Code to edit.'); return; }
+      editor.value = content;
+      editorTitle.value = path.split('/').pop();
+      viewerArea.style.display='none';
+      editorArea.style.display='flex';
+      saveFile.dataset.path = path;
+    }
+
+    saveFile.onclick = ()=>{
+      const text = editor.value;
+      const filename = editorTitle.value.trim() || saveFile.dataset.path.split('/').pop();
+      const blob = new Blob([text],{type:'text/html'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href=url; a.download=filename; document.body.appendChild(a); a.click(); a.remove();
+      URL.revokeObjectURL(url);
+      editorArea.style.display='none';
+      viewerArea.style.display='block';
+      // user must manually replace file in repo using editor/IDE after download
+      alert('File downloaded. To persist changes in project, open the downloaded file in your editor and replace the original in the docs folder.');
+    };
+
+    cancelEdit.onclick = ()=>{ editorArea.style.display='none'; viewerArea.style.display='block'; };
+
+    newDoc.onclick = ()=>{
+      const name = prompt('New document filename (e.g. notes.html)');
+      if(!name) return;
+      const template = `<!doctype html>\n<html lang="en\">\n<head><meta charset="utf-8"/><title>${name}</title></head>\n<body>\n<h1>${name}</h1>\n<p>New document.</p>\n</body>\n</html>`;
+      const blob = new Blob([template],{type:'text/html'}); const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href=url; a.download=name; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+      alert('Document downloaded. Move it into the docs folder and refresh the list.');
+    };
+
+    refresh.onclick = ()=>{ renderList(search.value); };
+
+    search.addEventListener('input', ()=>renderList(search.value));
+
+    // Default view
+    renderList();
+    // set default preview to first doc if exists
+    if(DOCS.length) preview.src = DOCS[0].file;
+  </script>
+</body>
+</html>

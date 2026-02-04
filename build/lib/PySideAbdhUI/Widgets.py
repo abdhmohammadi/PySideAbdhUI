@@ -16,18 +16,17 @@ class StackedWidget(QStackedWidget):
         palette.setColor(self.backgroundRole(), Qt.GlobalColor.white)
         self.setPalette(palette)
 
-    def add_page(self, page: QWidget, allow_same_tyoes=True):
-        
-        if not allow_same_tyoes:
-            for i in range(self.count()):
+    def add_page(self, page: QWidget):
+     
+        for i in range(self.count()):
             
-                # Remove any existing widget of the same type
-                for i in range(self.count() - 1, -1, -1):  # Iterate backwards to safely remove
-                    if type(self.widget(i)) == type(page):
-                        widget_to_remove = self.widget(i)
-                        self.removeWidget(widget_to_remove)
-                        print('removed:', widget_to_remove.__class__)
-                        widget_to_remove.deleteLater()  # Clean up the widget
+            # Remove any existing widget of the same type
+            for i in range(self.count() - 1, -1, -1):  # Iterate backwards to safely remove
+                if type(self.widget(i)) == type(page):
+                    widget_to_remove = self.widget(i)
+                    self.removeWidget(widget_to_remove)
+                    print('removed:', widget_to_remove.__class__)
+                    widget_to_remove.deleteLater()  # Clean up the widget
             
                     
         page.setAutoFillBackground(True)

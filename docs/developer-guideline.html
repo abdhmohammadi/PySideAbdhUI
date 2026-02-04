@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en"> 
+<head>
+  <meta charset="utf-8" />
+  <title>PySideAbdhUI — Developer Notes</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    body { font-family: Segoe UI, Roboto, Arial, sans-serif; line-height:1.5; margin:24px; color:#111 }
+    h1,h2 { color:#0b5; }
+    section { margin-bottom:18px; border-left:4px solid #eee; padding-left:12px }
+    .meta { color:#666; font-size:0.9em }
+    ul { margin:8px 0 12px 20px }
+    .todo { color:#b33 }
+    pre { background:#f7f7f7; padding:8px; border-radius:4px; overflow:auto }
+    code { background:#f0f0f0; padding:2px 4px; border-radius:3px; }
+  </style>
+</head>
+<body>
+  <h1>PySideAbdhUI — Developer Notes</h1>
+  <p class="meta">Purpose: Technical documentation for the PySideAbdhUI framework — a comprehensive PySide6 widget and utility library for building modern desktop applications with advanced UI components, theming, and utilities.</p>
+
+  <section>
+    <h2>Project Overview</h2>
+    <p>PySideAbdhUI is a Python library built on PySide6 that provides:</p>
+    <ul>
+      <li>Custom widgets and UI components (Button, Label, Window, etc.)</li>
+      <li>Theme management system with built-in themes</li>
+      <li>Property change notification system</li>
+      <li>Transition animations and effects</li>
+      <li>Utility modules for common tasks</li>
+      <li>Multi-language support (i18n)</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Core Modules</h2>
+    
+    <h3>Widgets Module (<code>PySideAbdhUI.Widgets</code>)</h3>
+    <p>Contains all custom PySide6 widget implementations:</p>
+    <ul>
+      <li><code>Button</code> — Extended QPushButton with theme support and hover effects</li>
+      <li><code>Label</code> — Custom QLabel with textChanged signal</li>
+      <li><code>Window</code> — Custom window with drag support and custom frame</li>
+      <li><code>LineEdit</code> — Enhanced text input with validation support</li>
+      <li><code>ComboBox</code> — Custom combo box with theme integration</li>
+      <li><code>TableWidget</code> — Enhanced table with sorting and filtering</li>
+      <li><code>TreeWidget</code> — Custom tree view with expand/collapse animations</li>
+    </ul>
+    <p><strong>Key Features:</strong></p>
+    <ul>
+      <li>All widgets respect theme settings automatically</li>
+      <li>Consistent styling across the framework</li>
+      <li>Property binding support via NotifyPropertyChanged</li>
+      <li>Custom signals for common interactions</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Theme System (<code>PySideAbdhUI.Themes</code>)</h2>
+    <p>Role: Centralized theme management for application styling.</p>
+    <ul>
+      <li><strong>Built-in Themes:</strong> Light, Dark, Modern, High Contrast</li>
+      <li><strong>Theme File Format:</strong> JSON-based theme definitions with color palettes, fonts, and spacing</li>
+      <li><strong>Dynamic Switching:</strong> Change themes at runtime without restarting</li>
+      <li><strong>Custom Themes:</strong> Extend base themes or create new ones by inheriting from BaseTheme</li>
+      <li><strong>Persistence:</strong> Active theme saved to settings.json</li>
+    </ul>
+    <p><strong>Usage Example:</strong></p>
+    <pre>from PySideAbdhUI.Themes import ThemeManager
+theme_mgr = ThemeManager()
+theme_mgr.set_theme('dark')  # Switch to dark theme
+current_theme = theme_mgr.current_theme()  # Get active theme</pre>
+  </section>
+
+  <section>
+    <h2>Notification System (<code>PySideAbdhUI.Notify</code>)</h2>
+    <p>Role: Property change notifications and property binding.</p>
+    <ul>
+      <li><code>NotifyPropertyChanged</code> — Base class for objects with observable properties</li>
+      <li><strong>Features:</strong>
+        <ul>
+          <li>propertyChanged signal emitted on property updates</li>
+          <li>Automatic support for strings, integers, booleans, lists, and custom types</li>
+          <li>Two-way binding with widgets (ComboBox selected text, CheckBox state, etc.)</li>
+          <li>Change validation and filtering</li>
+        </ul>
+      </li>
+      <li><strong>Integration:</strong> Use with view models to separate business logic from UI</li>
+    </ul>
+    <p><strong>Usage Example:</strong></p>
+    <pre>from PySideAbdhUI.Notify import NotifyPropertyChanged
+
+class MyModel(NotifyPropertyChanged):
+    def __init__(self):
+        super().__init__()
+        self.name = 'John'  # Property with notification support
+        self.propertyChanged.connect(self.on_property_changed)
+    
+    def on_property_changed(self, prop_name, new_value):
+        print(f'{prop_name} changed to {new_value}')</pre>
+  </section>
+
+  <section>
+    <h2>Transitions & Animations (<code>PySideAbdhUI.Transitions</code>)</h2>
+    <p>Role: Smooth transitions and animations for UI state changes.</p>
+    <ul>
+      <li><code>PageTransition</code> — Slide/fade transitions between pages</li>
+      <li><code>PropertyAnimation</code> — Animate property changes over time</li>
+      <li><strong>Supported Effects:</strong>
+        <ul>
+          <li>Slide (left, right, up, down)</li>
+          <li>Fade in/out</li>
+          <li>Scale and rotate</li>
+          <li>Custom easing curves</li>
+        </ul>
+      </li>
+      <li><strong>Notes:</strong> Run animations on main thread; use for non-blocking UI updates</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Utilities Module (<code>PySideAbdhUI.Utils</code>)</h2>
+    <p>Common helper functions and utilities:</p>
+    <ul>
+      <li><code>file_utils.py</code> — File I/O, path validation, batch operations</li>
+      <li><code>string_utils.py</code> — Text formatting, encoding/decoding, string validation</li>
+      <li><code>image_utils.py</code> — Image loading, resizing, format conversion</li>
+      <li><code>json_utils.py</code> — JSON serialization with custom encoders/decoders</li>
+      <li><code>datetime_utils.py</code> — Date/time formatting and parsing</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Architecture Best Practices</h2>
+    <ul>
+      <li><strong>MVC/MVVM Pattern:</strong> Separate models (NotifyPropertyChanged), views (QWidget), and controllers (event handlers)</li>
+      <li><strong>Threading:</strong> Use QThread for long operations; emit signals from worker threads to update UI safely</li>
+      <li><strong>Signal/Slot:</strong> Prefer Qt signals over callbacks for loose coupling</li>
+      <li><strong>Theme Awareness:</strong> Always use theme colors via ThemeManager instead of hardcoded colors</li>
+      <li><strong>Error Handling:</strong> Wrap DB and file operations in try/except; show user-friendly error dialogs</li>
+      <li><strong>Settings Persistence:</strong> Store app state in settings.json; validate on load</li>
+      <li><strong>Localization:</strong> Use string constants from a centralized i18n module, not hardcoded strings</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Common Development Tasks</h2>
+    
+    <h3>Creating a Custom Widget</h3>
+    <pre>from PySideAbdhUI.Widgets import Button
+from PySideAbdhUI.Themes import ThemeManager
+
+class MyCustomButton(Button):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.theme_mgr = ThemeManager()
+        self.setStyleSheet(self.theme_mgr.current_theme().button_style)
+        self.clicked.connect(self.on_click)
+    
+    def on_click(self):
+        print('Button clicked')</pre>
+
+    <h3>Binding a Widget to a Model Property</h3>
+    <pre>from PySideAbdhUI.Notify import NotifyPropertyChanged
+from PySide6.QtWidgets import QLineEdit
+
+class DataModel(NotifyPropertyChanged):
+    def __init__(self):
+        super().__init__()
+        self.username = ''
+
+# In UI setup:
+model = DataModel()
+username_input = QLineEdit()
+model.propertyChanged.connect(
+    lambda prop, val: username_input.setText(val) if prop == 'username' else None
+)</pre>
+
+    <h3>Adding Transition Animation</h3>
+    <pre>from PySideAbdhUI.Transitions import PageTransition
+
+# Slide page transition
+transition = PageTransition(old_page, new_page)
+transition.slide_transition(direction='left', duration=300)
+transition.play()</pre>
+  </section>
+
+  <section>
+    <h2>Testing Guidelines</h2>
+    <ul>
+      <li><strong>Unit Tests:</strong> Test models (NotifyPropertyChanged) and utilities in isolation</li>
+      <li><strong>Widget Tests:</strong> Use QTest for UI interactions (clicks, key presses, etc.)</li>
+      <li><strong>Integration Tests:</strong> Test theme switching, settings persistence, and data flow</li>
+      <li><strong>Mock Data:</strong> Use fixture files for testing with sample resources</li>
+      <li>Run tests: <code>python -m pytest tests/ -v</code></li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Performance Considerations</h2>
+    <ul>
+      <li><strong>Large Lists:</strong> Use QAbstractListModel with lazy loading instead of loading all items at once</li>
+      <li><strong>Images:</strong> Cache scaled images; use async loading for remote resources</li>
+      <li><strong>Property Changes:</strong> Batch updates within a context manager to avoid excessive signals</li>
+      <li><strong>Memory:</strong> Clean up QThread objects after completion; delete signals/slots when widgets are destroyed</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Debugging & Logging</h2>
+    <ul>
+      <li>Enable Qt debug output: <code>QT_DEBUG_PLUGINS=1</code></li>
+      <li>Use Python logging module for application logs</li>
+      <li>Check stylesheet compilation errors in console output</li>
+      <li>Use Qt Creator's debugger for stepping through code</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>File Structure</h2>
+    <pre>PySideAbdhUI/
+├── src/
+│   └── PySideAbdhUI/
+│       ├── __init__.py
+│       ├── Widgets/
+│       │   ├── __init__.py
+│       │   ├── Button.py
+│       │   ├── Label.py
+│       │   ├── Window.py
+│       │   └── ...
+│       ├── Themes/
+│       │   ├── __init__.py
+│       │   ├── ThemeManager.py
+│       │   └── themes/
+│       │       ├── light.json
+│       │       ├── dark.json
+│       │       └── ...
+│       ├── Notify/
+│       │   ├── __init__.py
+│       │   └── NotifyPropertyChanged.py
+│       ├── Transitions/
+│       │   ├── __init__.py
+│       │   └── PageTransition.py
+│       └── Utils/
+│           ├── __init__.py
+│           ├── file_utils.py
+│           ├── string_utils.py
+│           └── ...
+├── tests/
+├── docs/
+└── requirements.txt</pre>
+  </section>
+
+  <section>
+    <h2>Contributing Guidelines</h2>
+    <ul>
+      <li>Follow PEP 8 style guide</li>
+      <li>Add docstrings to all public classes and methods</li>
+      <li>Write tests for new features</li>
+      <li>Update documentation in docs/ folder</li>
+      <li>Use descriptive commit messages</li>
+      <li>Test with multiple PySide6 versions</li>
+    </ul>
+  </section>
+
+  <footer class="meta">Generated: PySideAbdhUI Developer Documentation — Last updated: Nov 2025</footer>
+</body>
+</html>

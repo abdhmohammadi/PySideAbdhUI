@@ -1,15 +1,19 @@
 """
 This app is a model based application, in development of the app 
+
+FileNotFoundError: [Errno 2] No such file or directory: 'F:/Projects/Python/Teaching-assistant-project/abdh/abdh_env/Lib/site-packages/
+PySideAbdhUI/resources/styles/color-roles.json'
 """
-import json
+
 import sys, os
 import PySideAbdhUI
 from PySideAbdhUI import Window, StackedWidget, utils
+from PySideAbdhUI import CardGridView
 from PySideAbdhUI.Notify import PopupNotifier
 
 # PySide6 modules
 from PySide6.QtCore import Qt
-from PySide6.QtGui import QIcon, QFontDatabase, QColor
+from PySide6.QtGui import QIcon,QPixmap, QFontDatabase, QColor
 from PySide6.QtWidgets import (QApplication, QPushButton, QMessageBox, QLabel, QGridLayout,
                                QComboBox, QRadioButton, QHBoxLayout, QVBoxLayout, QWidget,
                                QColorDialog, QScrollArea, QLineEdit)
@@ -271,6 +275,11 @@ class CLI:
 
         if sender: sender.setChecked(True)
 
+        w = CardGridView()
+        grid_layout = QGridLayout(w)
+        grid_layout.setColumnStretch(2,1)
+        self.window.add_page(w)
+
         w = QWidget()
         grid_layout = QGridLayout(w)
         grid_layout.setColumnStretch(2,1)
@@ -426,13 +435,14 @@ class CLI:
     def Run(self):
         root = os.path.dirname(__file__)
         icon = PySideAbdhUI.get_icon(package='PySideAbdhUI.resources.png',name='app-icon',ext='png')
+        logo = QPixmap(icon)
         # Our custom ICON is available in application_path + "/resources/icons/
         self.app.setWindowIcon(QIcon(icon))
         # Create the main customized UI window
         self.window = Window.AbdhWindow()
 
         self.window.initUI(app_title= 'PySideAbdhUI - Application test | ' + PySideAbdhUI.__version__, 
-                           title_logo_path= icon, direction= Qt.LayoutDirection.LeftToRight)
+                           logo= logo, direction= Qt.LayoutDirection.LeftToRight)
     
         
         self.create_settings_pane()

@@ -55,5 +55,5 @@ if __name__ == "__main__":
     
     unittest.main()
 
-# BIULD: python setup.py sdist bdist_wheel
+# Run to BIULD: python setup.py sdist bdist_wheel
 # INSTALL: pip install path\to\dist\PySideAbdhUI-1.0.1-py3-none-any.whl

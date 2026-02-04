@@ -1,17 +1,27 @@
-Metadata-Version: 2.1
+Metadata-Version: 2.4
 Name: PySideAbdhUI
-Version: 1.0.2
+Version: 1.0.8
 Summary: Customized Python GUI components based on PySide6
 Home-page: https://github.com/abdhmohammadi/PySideAbdhUI
 Author: Abdullah Mohammadi
-Author-email: abdhmohammady@gmaile.com
+Author-email: abdhmohammady@gmail.com
 Classifier: Programming Language :: Python :: 3
 Classifier: Operating System :: Microsoft :: Windows
 Classifier: License :: OSI Approved :: MIT License
-Requires-Python: >=3.13
+Requires-Python: >=3.14
 Description-Content-Type: text/markdown
 License-File: LICENSE
 Requires-Dist: PySide6
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: license-file
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
 
 
 # PySideAbdhUI 
@@ -104,16 +114,15 @@ PySideAbdhUI/
 Here’s a quick Python example showing how to use PySideAbdhUI components in your app:
 
 ```python
-from PySideAbdhUI import PopupNotifier
-from PySideAbdhUI import StyleManagers as sm
+from PySideAbdhUI import PopupNotifier, utils
 from PySide6.QtWidgets import QApplication, Window
 
 app = QApplication([])
 
 # Load and apply custom style
-style_manager = sm.QtStyleSheetManager()
-style_manager.load_stylesheet(style_path)
-app.setStyleSheet(style_manager.stylesheet)
+theme = utils.ThemeManager()
+
+theme.apply_theme(QApplication.instance(),theme.get_current_theme_name())
 window = Window.AbdhWindow()
 window.initUI(app_title= 'AbdhUI Application', title_logo_path= state.application_path + "/resources/icons/png/app-icon.png")    
 window.show()

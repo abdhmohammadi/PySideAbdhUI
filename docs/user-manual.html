@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en"> 
+<head>
+  <meta charset="utf-8" />
+  <title>TeacherAssistant — User Manual</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    body { font-family: Segoe UI, Roboto, Arial, sans-serif; margin:20px; color:#111 }
+    h1,h2 { color:#0a6; }
+    nav { margin-bottom:16px }
+    nav a { margin-right:12px; color:#06c; text-decoration:none }
+    section { margin-bottom:18px }
+    pre { background:#f7f7f7; padding:8px; border-radius:4px; overflow:auto }
+    .tip { background:#eef9ee; border-left:4px solid #6c6; padding:8px; margin:8px 0 }
+  </style>
+</head>
+<body>
+  <h1>TeacherAssistant — User Manual</h1>
+  <nav>
+    <a href="#quickstart">Quickstart</a>
+    <a href="#main-overview">Main Overview</a>
+    <a href="#resources">Resources</a>
+    <a href="#students">Students</a>
+    <a href="#tests">Tests</a>
+    <a href="#settings">Settings</a>
+    <a href="#troubleshoot">Troubleshooting</a>
+  </nav>
+
+  <section id="quickstart">
+    <h2>Quickstart</h2>
+    <ol>
+      <li>Open a terminal in the project folder and activate the virtual environment:
+        <pre>PowerShell: .\env\Scripts\Activate.ps1
+cmd.exe: .\env\Scripts\activate.bat</pre>
+      </li>
+      <li>Install dependencies (if not already): <pre>python -m pip install -r requirements.txt</pre></li>
+      <li>Run the app: <pre>python main.py</pre></li>
+    </ol>
+    <div class="tip"><strong>Tip:</strong> If you renamed the environment, re-select interpreter in VS Code: Ctrl+Shift+P → Python: Select Interpreter → choose env\Scripts\python.exe</div>
+  </section>
+
+  <section id="main-overview">
+    <h2>Main Window — Overview</h2>
+    <p>The main window is your starting place. Use the navigation pane to open modules: Resources, Students, Tests, and Settings.</p>
+    <ul>
+      <li>Top toolbar: quick actions (New Resource, New Test, Import, Export).</li>
+      <li>Summary cards: recent items, notifications and quick links.</li>
+    </ul>
+  </section>
+
+  <section id="resources">
+    <h2>Managing Resources</h2>
+    <h3>Open Resource Manager</h3>
+    <p>Click "Resources" in the navigation pane to view the library.</p>
+
+    <h3>Importing a resource</h3>
+    <ol>
+      <li>Click "Import" → choose file (PDF, Image, HTML, or LaTeX files).</li>
+      <li>Enter metadata (title, tags, description) and save.</li>
+    </ol>
+
+    <h3>Editing and Preview</h3>
+    <p>Select a resource and click "Edit" to change content or metadata. Use "Preview" to see how the resource will render.</p>
+
+    <h3>Export</h3>
+    <p>To export selected resources, use the "Export" menu and choose output format (PDF or HTML).</p>
+  </section>
+
+  <section id="students">
+    <h2>Student Management</h2>
+    <h3>View & Search</h3>
+    <p>Open "Students" to see the list. Use the search box and filters to find a student quickly.</p>
+
+    <h3>Add / Edit Student</h3>
+    <ol>
+      <li>Click "New Student" and fill in personal and contact information.</li>
+      <li>To edit, open a student record and click "Edit".</li>
+    </ol>
+
+    <h3>Events and Submissions</h3>
+    <p>From a student's profile you can add behavior events, upload submissions (PDF/image), and assign tests.</p>
+  </section>
+
+  <section id="tests">
+    <h2>Creating and Distributing Tests</h2>
+    <h3>Create a Test</h3>
+    <ol>
+      <li>Open "Tests" → "New Test".</li>
+      <li>Choose template (Quiz or Formal Exam), add questions, and set scoring/time limits.</li>
+      <li>Attach resources or images to questions as needed.</li>
+    </ol>
+
+    <h3>Export & Distribute</h3>
+    <p>Export tests to PDF/HTML using the "Export" action. Use the distribution feature to assign a test to groups or individual students (coming soon in next phase).</p>
+
+    <h3>Collecting Answers</h3>
+    <p>Students submit image/PDF answers. Upload these to the student's profile under "Submissions".</p>
+  </section>
+
+  <section id="settings">
+    <h2>Settings</h2>
+    <p>Adjust application preferences from Settings:</p>
+    <ul>
+      <li>Theme: switch between available themes.</li>
+      <li>Fonts: choose base UI and content fonts.</li>
+      <li>Layout direction: toggle RTL / LTR for Persian/English content.</li>
+      <li>LaTeX: configure LaTeX compilation path and temp folder.</li>
+    </ul>
+    <p>Settings are saved to: %LOCALAPPDATA%/MyJobAssistant/settings.json</p>
+  </section>
+
+  <section id="troubleshoot">
+    <h2>Troubleshooting</h2>
+    <h3>Broken pip/pyinstaller after renaming venv</h3>
+    <p>If pip/pyinstaller wrappers fail with "Fatal error in launcher" after renaming the virtual environment, run:</p>
+    <pre>.\env\Scripts\python.exe -m ensurepip --upgrade
+.\env\Scripts\python.exe -m pip install --upgrade pip setuptools wheel pyinstaller</pre>
+
+    <h3>App does not start</h3>
+    <ul>
+      <li>Confirm environment is activated and required packages are installed.</li>
+      <li>Check logs in the terminal for stack traces.</li>
+      <li>Re-select interpreter in VS Code if using the IDE.</li>
+    </ul>
+
+    <h3>Exported PDF looks wrong</h3>
+    <p>Verify LaTeX rendering settings and that required fonts are installed. Enable export logs in Settings and retry.</p>
+  </section>
+
+  <section id="faq">
+    <h2>FAQ</h2>
+    <dl>
+      <dt>Where are my settings stored?</dt>
+      <dd>%LOCALAPPDATA%/MyJobAssistant/settings.json</dd>
+
+      <dt>How to create an installer?</dt>
+      <dd>Build with PyInstaller using TeacherAssistant.spec and wrap with Inno Setup for Windows installer.</dd>
+    </dl>
+  </section>
+
+  <footer>
+    <p>For more help or to report issues, open an issue on the project repository or consult the developer notes in docs/page_comments.html.</p>
+  </footer>
+</body>
+</html>

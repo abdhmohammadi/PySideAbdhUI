@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+    <meta charset="UTF-8" />
+    <title>Teacher Assistant — Version History</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { 
+            font-family: Segoe UI, Roboto, Arial, sans-serif; 
+            margin: 20px; 
+            color: #111; 
+        }
+        h1, h2 { 
+            color: #0a6; 
+        }
+        .container { 
+            max-width: 900px; 
+            margin: 0 auto; 
+        }
+        .version-section { 
+            margin-bottom: 18px; 
+        }
+        .version-card { 
+            background: #f7f7f7; 
+            border-left: 4px solid #0a6; 
+            padding: 12px; 
+            margin: 12px 0; 
+            border-radius: 4px; 
+        }
+        .version-number { 
+            font-weight: bold; 
+            color: #06c; 
+            font-size: 16px; 
+        }
+        .version-date { 
+            color: #666; 
+            font-size: 14px; 
+            margin: 4px 0 8px 0; 
+        }
+        .version-notes { 
+            margin: 8px 0; 
+            padding-left: 20px; 
+        }
+        .version-notes li { 
+            margin-bottom: 6px; 
+            line-height: 1.5; 
+        }
+        .version-notes p { 
+            margin: 4px 0; 
+            color: #333; 
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1 style="margin:0px;">Teacher Assistant — Updates & Version History</h1>
+    <p style="margin:0px;">
+        A digital assistant for teachers, below listed history of version and updates of <b>Teacher Assistant</b> applicstion.
+        this app was developed to simplify daily tasks of the teachers and improve teaching/learning levels. we started this project
+        at 2025-03-17, and continue it's updates.
+    </p>
+
+        <div class="version-section">
+            <div class="version-card">
+                <div class="version-number">Version 1.0.7</div>
+                <div class="version-date">Released: 2025-12-19(unstable)</div>
+                <ul class="version-notes">
+                    <li>Improved large data loading time.</li>
+                    <li>Improved the code logic.</li>
+                    <li>Fixed navigation bugs</li>
+                </ul>
+            </div>
+            <div class="version-card">
+                <div class="version-number">Version 0.2.5</div>
+                <div class="version-date">Released: 2025-11-28(unstable)</div>
+                <ul class="version-notes">
+                    <li>Enhanced student search.</li>
+                    <li>Added support for bulk student import from csv files.</li>
+                    <li>Updated documentation and user manual.</li>
+                    <li>Bug fixed in profile saveing.</li>
+                    <li>The group test assignment issue has been fixed.</li>
+                </ul>
+            </div>
+            <div class="version-card">
+                <div class="version-number">Version 0.1.8</div>
+                <div class="version-date">Released: 2025-05-11(unstable)</div>
+                <ul class="version-notes">
+                  <li>Resource Editor updated:<br><p style="margin: 0px;">Right click action added to images in resource editor.
+                     Now the user can right click on the image objects and open the image editor.                     
+                     this tool provide resize, rotate, flip, background removal and changing alpha chanel of the selected image. Also it has been 
+                     integrated with built-in snipping tool to capture screenshot</p></li>
+                </ul>
+            </div>
+            
+            <div class="version-card">
+                <div class="version-number">Version 0.1.7</div>
+                <div class="version-date">Released: 2025-05-04(unstable)</div>
+                <ul class="version-notes">
+                  <li>Bug fixed for zero-devisoin when activivty data is analyzed.</li>
+                  <li>Bug fixed in the message mapping of signals, When the user modifies student tracking data(updates or removes)</li>
+                  <li>The display settings of line chart updated in activity tracking page</li>
+                  <li>Profile picture of students has scaled.</li>
+                  <li>Theme name corrected in the Maintainance page. </li>
+                  <li>Searching method in the RESOURCE COLLECTION has automated by text changes.</li>
+                </ul>
+            </div>
+
+            <div class="version-card">
+                <div class="version-number">Version 0.1.6</div>
+                <div class="version-date">Released: 2025-04-30(unstable)</div>
+                <ul class="version-notes">
+                  <li>Bugs fixed.</li>
+                  <li>Student tracking page was updated.</li>
+                  <li>Theme Management moved into base package(PySideAbdhUI).</li>
+                </ul>
+            </div>
+
+            <div class="version-card">
+                <div class="version-number">Version 0.1.5</div>
+                <div class="version-date">Released: 2025-04-14(unstable)</div>
+                <ul class="version-notes">
+                    <li>Some features were added, now the user can backup the database and restore it on any system with Windows OS.</li>
+                    <li>Student tracking page was updated, analytical charts is available.</li>
+                    <li>UI icons ipmroved</li>
+                    <li>Managment of directories was improved</li>
+                    <li>Update NotifyPropertyChanged to support selected text of Comboboxes</li>
+                    <li>Update NotifyPropertyChanged to support boolean types of checkboxes</li>
+                </ul>        
+            </div>
+            <div class="version-card">
+                <div class="version-number">Version 0.1.4</div>
+                <div class="version-date">Released: 2025-04-04(unstable)</div>
+                <ul class="version-notes">
+                <li>Bugs fixed for PySideAbdhUI.Notify.NotifyPropertyChanged</li>
+                <li>Implemented custom QLabel with textChanged signal(PySideAbdhUI.Widgets.Label)</li>
+                <li>Makeing improvment in development logics</li>
+                <li>Can upload list of students from the '*.scv' file.</li>
+                <li>Can grouping the students in the defined classrooms(groups).</li>
+             </ul>
+            </div>
+        <div class="version-card">
+            <div class="version-number">Version 0.1.3</div>
+            <div class="version-date">Released: 2025-03-28(unstable)</div>
+            <ul class="version-notes">
+                <li>Bugs fixed where update the student information</li>
+                    <li>Functionality of Edu-item assignment improved</li>
+                        <li>Student behaviour tracking improved, Now Teacher:<br>
+                        - can view learning history of students<br>
+                        - receives result of assigned activities and homeworks(offline)<br>
+                        - can set score to received results<br>
+                        - adds feedback for received results<br>
+                        - manages behavioral notes(Add, update, remove)<br>
+                        </lu>
+                    <li>Transition animation between pages added to PySideAbdhUI</li>
+                </ul>
+        </div>
+        
+        <div class="version-card">
+            <div class="version-number">Version 0.1.2</div>
+            <div class="version-date">Released: 2025-03-24(unstable)</div>
+            <ul class="version-notes">
+                <li>Edu-item layout and notifications updated in RESOURCE COLLECTION.</li>
+                <li>Data transfer between the model and the view layer has been updated.</li>
+                <li>Popup Notifier updated</li>
+                <li>Assignment of Edu-items to the students added to STUDENTS LIST and RESOURCE COLLECTION pages.</li>
+                <li>Resource distribution updated by adding Language support(Persian and English).</li>
+                <li>Main layout updated with Right To Left support(Just for page display frame not in window range).</li>
+                <li>Global Font, layout direction and Language setting managed in settings.json.</li>
+            </ul>
+        </div>
+
+        <div class="version-card">
+            <div class="version-number">Version 0.1.1</div>
+            <div class="version-date">Released: 2025-03-20(unstable)</div>
+            <ul class="version-notes">
+                <li>Navigation bug fixed in the Edu-Item editor</li>
+                <li>Fix program exit issues</li>
+                <li>Fix output template selection bugs in RESOURCE COLLECTION page.</li>
+                <li>Fix screen-shut cancelation issues.</li>
+                <li>Path managment improved.</li>
+                <li>Review bookmark possiblity added to Edu-items</li>
+                <li>Style sheet managment improved</li>
+                <li>Draging issue solved in PySideAbdhUI.PySideAbdhWindow class</li>
+                <li>Small changes in the UI</li>
+            </ul>
+        </div>
+
+        <div class="version-card">
+            <div class="version-number">Version 0.1.0</div>
+            <div class="version-date">First release: 2025-03-17(unstable)</div>
+            <div style="font-style: oblique;font-weight:bold; text-underline-position: below;">STUDENTS MANAGMENT</div>
+            <ul class="version-notes">
+                <li>Save and update personal data</li>
+                <li>Tracking behavioral observations</li>
+            </ul>
+            <div style="font-style: oblique;font-weight:bold;">RESOURCE EDITOR</div>
+            <p style="margin: 0px;">User(Teacher) able to write education items(e.g questions) manully, can import items as image, plain text, rich text, pdf, html
+            Also he/she can developed LaTeX and HTML scrips, can support with explianed answers and save additional notes for each item.
+            The teacher will used this data to analysis and improve teaching/learning methods.</p>
+
+            <div style="font-style: oblique;font-weight:bold;">RESOURCE COLLECTION</div>
+            <p style="margin: 0px;">This collection is generated by <b>RESOURCE EDITOR</b> page. the goal of this page is view, analysis, sending items to
+            students, Currently the teacher can choose, update additional note, modify score(not saved in database) and distribute selected
+            items in pdf and html format. The items that is distributed is supported by tow template: 1) Classroom quizzes and 2) Formal exams.
+            </p>
+        </div>
+        </div>
+    </div>
+</body>
+</html>
