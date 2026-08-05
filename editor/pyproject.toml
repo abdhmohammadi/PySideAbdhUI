@@ -1,0 +1,55 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "PySideAbdhUI-Editor"
+dynamic = ["version"]
+
+description = "Document editor for PySide6 applications."
+readme = "README.md"
+requires-python = ">=3.9"
+
+license = { text = "MIT" }
+
+authors = [{ name = "Abdh Mohammadi", email="abdhmohammady@gmail.com" }]
+
+keywords = ["PySide6", "Qt", "Editor", "Rich Text", "GUI"]
+
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.14",
+    "Framework :: Qt",
+    "Framework :: Qt :: PySide6",
+    "Operating System :: OS Independent"
+]
+
+dependencies = ["PySide6>=6.5"]
+
+[tool.setuptools.dynamic]
+version = { attr = "PySideAbdhUI.Editor.versions.__version__" }
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["PySideAbdhUI.Editor*"]
+
+[tool.setuptools.package-data]
+"PySideAbdhUI.Editor" = [
+    "resources/*",
+    "resources/KaTeX/*.css",
+    "resources/KaTeX/*.js",
+    "resources/KaTeX/fonts/*.woff2",
+    "resources/pdfJs/*.js",
+    "resources/script.js",
+    "resources/style.css",
+    "resources/base.html"
+]

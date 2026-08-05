@@ -1,0 +1,651 @@
+:root {
+    --background: #121212;
+    --page-width: 794px;
+    --page-height: 1122px;
+    --page-margin: 60px;
+    --content-width: calc(var(--page-width) - 2 * var(--page-margin));
+    --content-height: calc(var(--page-height) - 2 * var(--page-margin));
+    --page-gap: 24px;
+    --page-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+}
+
+* {
+    box-sizing: border-box;
+}
+html 
+    {
+        scrollbar-width: thin;
+        scrollbar-color: #212123 var(--background);
+    }
+
+body {
+    margin: 0;
+    background: var(--background);
+    overflow-x: auto;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #1a1a1a;
+}
+#editor {
+    min-height: 100vh;
+    position: relative;
+}
+
+/* ── Loading overlay ─────────────────────────────────────
+   Fully opaque overlay shown during file loading and
+   initial editor boot. The .visible class is toggled by
+   Editor.showLoading() / Editor.hideLoading() in script.js.
+
+   The overlay is position:fixed so it covers the entire
+   viewport regardless of scroll position. pointer-events
+   is none when hidden (so it doesn't block clicks) and auto
+   when visible (so it absorbs clicks during loading).
+
+   The overlay is FULLY OPAQUE (not semi-transparent) so
+   that content changing underneath (setDocument, paginateAll)
+   is completely hidden — no blinking or flashing visible. */
+#loading-overlay 
+{ 
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    right: 0; 
+    bottom: 0; 
+    background: rgb(18, 18, 18); 
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    z-index: 9999; 
+    opacity: 1; 
+    transition: opacity 0.15s ease;
+}
+#loading-overlay:not(.visible) { opacity: 0; pointer-events: none; }
+
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgb(18, 18, 18);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+}
+
+.loading-overlay.visible 
+{
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+.loading-spinner 
+{
+    width: 64px;
+    height: 64px;
+    border: 4px solid rgba(255, 255, 255, 0.15);
+    border-top-color: #3b82f6;
+    border-radius: 50%;
+    animation: loading-spin 0.8s linear infinite;
+}
+
+.loading-text 
+{
+    color: #1d3a62;
+    font-family: sans-serif;
+    font-size: 2rem;
+    margin-top: 1rem;
+    font-weight:900;
+}
+
+@keyframes loading-spin 
+{
+    to { transform: rotate(360deg); }
+}
+
+.measure-stage {
+    position: fixed;
+    left: -20000px;
+    top: 0;
+    width: var(--content-width);
+    overflow: visible;
+    pointer-events: none;
+}
+
+.pages-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    /* The .page-number marker elements inserted by renumberPages() 
+       now occupy the space between pages.
+       The .page + .page rule below is a fallback for the
+       brief window before markers are inserted (e.g. right after setDocument, before paginateAll runs).
+    */
+    padding: 24px;
+}
+
+/* Fallback spacing when two pages are adjacent (no marker yet). */
+.page + .page 
+{
+    margin-top: var(--page-gap);
+}
+
+/* Marker element rendered in the gap between two pages.
+   Its height equals the gap, so it visually fills the gap
+   while centering the page number text inside it. */
+.page-number 
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;    
+    width: var(--page-width);
+    height: var(--page-gap);
+    padding: 8px 4px;
+    font-size: 8pt;
+    color: #b8b8b8;
+    letter-spacing: .25em;
+    text-transform: uppercase;
+    user-select: none;
+    pointer-events: none;
+}
+
+.page-number::before,
+.page-number::after 
+{
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(
+        to right,
+        transparent,
+        #454545 15%,
+        #707070 50%,
+        #454545 85%,
+        transparent
+    );
+}
+
+.page-number > span 
+{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: .25em;
+    height: 18px;
+    padding: 6px 12px;
+    opacity: 0.75;
+    white-space: nowrap;
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.06),
+        inset 0 -1px 0 rgba(0,0,0,.45);
+}
+
+   
+.page 
+{
+    width: var(--page-width);
+    height: var(--page-height);
+    min-width: var(--page-width);
+    max-width: var(--page-width);
+    padding: var(--page-margin);
+    background: #ffffff;
+    /*box-shadow: var(--page-shadow);*/
+    box-sizing: border-box;
+    overflow: hidden;
+    flex-shrink: 0;
+    outline: none;
+    position: relative;
+}
+
+.page:focus {
+    box-shadow: var(--page-shadow), 0 0 0 2px rgba(59, 130, 246, 0.45);
+}
+
+.page-content {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+#editor.continuous-mode .page {
+    height: auto;           /* was 1122px fixed */
+    min-height: var(--page-height);
+    overflow: visible;       /* was hidden */
+}
+
+#editor.continuous-mode .page-content 
+{
+    height: auto;           /* grows with content */
+    overflow: visible;
+}
+
+#editor.continuous-mode .page-number {
+    display: none !important;  /* hide page-number markers */
+}
+
+#editor.continuous-mode .page + .page {
+    margin-top: 0;          /* no gap between pages */
+}
+.block {
+    width: 100%;
+}
+
+.block p {
+    margin: 0 0 0.6em;
+}
+
+.block p:last-child 
+{
+    margin-bottom: 0;
+}
+.block[data-type="Table"] 
+{
+    width: auto;
+    justify-content: stretch;
+    max-width: 100%;
+    margin: 10px;
+}
+.block table 
+{
+    display: block;
+    max-width: 100%;
+    justify-self: center;
+    border-collapse: collapse;
+    width: fit-content;
+    margin: 0px;
+}
+.block td,
+.block th {
+    border: 1px solid #aaa;
+    padding: 4px 8px;
+    vertical-align: top;
+}
+
+/* ── Table selection & resize ────────────────────────────
+   .table-selected gets a blue outline when the user clicks
+   on a table. .cell-selected highlights the clicked cell so
+   the user knows which row/column add/remove will target.
+
+   The col-resize / row-resize cursors are applied inline by
+   script.js based on mouse proximity to cell borders, so no
+   CSS rule needed for those. */
+.block:has(.table-selected),
+.block.table-block-selected {
+    position: relative;
+}
+
+.block table.table-selected {
+    outline: 2px solid #3b82f6;
+    outline-offset: -2px;
+}
+
+/* Drag handle — appears at top-left of selected table.
+   The user drags this to move the table to a new position.
+   We use a dedicated handle instead of making the <table>
+   draggable because that would conflict with text editing
+   inside cells. */
+.table-drag-handle {
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    border-radius: 3px;
+    border: 1px solid #212123;
+    background-color: #121212d6;
+    color: #edeeef;
+    cursor: move;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    user-select: none;
+    z-index: 10;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+
+.block td.cell-selected,
+.block th.cell-selected 
+{
+    background: rgba(59, 130, 246, 0.12);
+    box-shadow: inset 0 0 0 1px rgba(59, 130, 246, 0.45);
+}
+
+/* Ensure colgroup <col> widths are honored by the layout */
+/* No visible style — just present so width: <px> works */
+/*.block table colgroup col {}*/
+/* Slightly thicker header cells for new tables created via
+   insertTable() — gives them a more spreadsheet-like feel */
+.block th {
+
+    font-weight: 600;
+}
+
+/* ── Image selection & resize ────────────────────────────
+   .image-block-selected gets a blue outline when the user
+   clicks on an image. Four corner .img-handle divs are
+   appended as resize handles.
+
+   .image-dragging is applied during HTML5 drag-and-drop to
+   fade the original block.
+
+   .image-drop-indicator is a thin blue line shown between
+   blocks during dragover, indicating where the image will
+   land on drop. */
+/* Image blocks shrink to fit their image, not stretch to page width.
+   The image itself still respects max-width: 100% so it never
+   overflows the page content area. */
+.block[data-type="Image"] 
+{
+    width: fit-content;
+    position: relative;
+    justify-content: center;
+    justify-self: center;
+    float:right;
+    max-width: 100%;
+    line-height: 0;
+    margin: 10px;
+}
+
+.block.image-block-selected 
+{
+    width: fit-content;
+    justify-content: center;
+    justify-self: center;
+    max-width: 100%;
+    line-height: 0;
+    border: 1px dashed #ef0d0d;
+    position: relative;
+    margin: 10px;
+}
+.block img 
+{
+    display: block;
+    max-width: 100%;
+    justify-self: center;
+    height: auto;
+    margin: 0px;
+    cursor:move;
+}
+
+
+.image-resize-handles 
+{
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.img-handle 
+{
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: #ffffff;
+    border: 2px solid #3b82f6;
+    border-radius: 50%;
+    pointer-events: auto;
+    box-sizing: border-box;
+}
+
+.img-handle-nw 
+{
+    top: -4px;
+    left: -4px;
+    cursor: nwse-resize;
+}
+
+.img-handle-ne 
+{
+    top: -4px;
+    right: -4px;
+    cursor: nesw-resize;
+}
+
+.img-handle-sw {
+    bottom: -4px;
+    left: -4px;
+    cursor: nesw-resize;
+}
+
+.img-handle-se {
+    bottom: -4px;
+    right: -4px;
+    cursor: nwse-resize;
+}
+
+/* Drag state — original block fades while being dragged.
+   Works for both images and tables. */
+.block.image-dragging,
+.block.table-dragging 
+{
+    opacity: 0.4;
+}
+
+/* Drop indicator — thin blue line between blocks.
+   Shared by image and table drag-and-drop. */
+.image-drop-indicator,
+.block-drop-indicator {
+    height: 3px;
+    background: #3b82f6;
+    margin: 4px 0;
+    border-radius: 2px;
+    width: 100%;
+    box-shadow: 0 0 4px rgba(59, 130, 246, 0.5);
+}
+
+/* ── Context menu ─────────────────────────────────────────
+   Shown on right-click inside the editor. Populated and
+   positioned by script.js based on what was clicked:
+   - Text selection: cut/copy/paste/delete
+   - Table cell: + table operations (add/remove row/col, delete table)
+   - Image: cut/copy/paste image
+*/
+.context-menu {
+    position: fixed;
+    min-width: 200px;
+    background: #ffffff;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 4px 0;
+    z-index: 10000;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 13px;
+    user-select: none;
+}
+
+.context-menu-item {
+    padding: 7px 16px 7px 28px;
+    cursor: pointer;
+    color: #1f2937;
+    white-space: nowrap;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+}
+
+.context-menu-item:hover {
+    background: #eff6ff;
+    color: #1d4ed8;
+}
+
+.context-menu-item.disabled {
+    color: #9ca3af;
+    cursor: default;
+    pointer-events: none;
+}
+
+.context-menu-item.disabled:hover {
+    background: transparent;
+    color: #9ca3af;
+}
+
+.context-menu-shortcut {
+    color: #6b7280;
+    font-size: 11px;
+}
+
+.context-menu-separator {
+    height: 1px;
+    background: #e5e7eb;
+    margin: 4px 0;
+}
+
+.context-menu-section-label {
+    padding: 4px 16px;
+    color: #6b7280;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Submenu — shown when hovering a parent menu item with a submenu */
+.context-menu-item.has-submenu {
+    position: relative;
+}
+
+.context-menu-item.has-submenu::after {
+    content: "\27E9";
+    position: absolute;
+    right: 8px;
+    font-size: 9px;
+    color: #6b7280;
+}
+
+.context-submenu {
+    position: absolute;
+    min-width: 200px;
+    background: #ffffff;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 4px 0;
+    display: none;
+    z-index: 10001;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 13px;
+}
+
+.context-menu-item.has-submenu:hover > .context-submenu {
+    display: block;
+    left: 100%;
+    top: 0;
+}
+
+/* Math formula blocks */
+.math-block {
+    display: block;
+    margin: 10px 0;
+    padding: 8px;
+    border: none;
+    overflow-x: auto;
+    cursor: pointer;
+}
+
+.math-inline 
+{
+    display: inline-block;
+    padding: 2px;
+    cursor: pointer;
+}
+
+.math-editing 
+{
+    border: 1px dashed #ef0d0d;
+    text-align: center;
+    border-radius: 8px;
+    padding: 2px 8px 6px 8px;
+}
+
+@media print {
+    @page {
+        size: A4;
+        margin: 0;
+    }
+
+    /* ── Preserve colors in PDF output ──
+       Chromium's default print behavior strips background
+       colors (and other color properties) to "save ink".
+       This forces every element to render with its actual
+       computed colors in the generated PDF / print output.
+       Both the standard `print-color-adjust` and the
+       `-webkit-` prefixed form are needed for QtWebEngine. */
+    html, body, .page, .page-content, .block, .block *,
+    table, td, th, p, span, div {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    body {
+        background: white;
+    }
+
+    .pages-wrapper {
+        gap: 0;
+        padding: 0;
+    }
+
+    .page {
+        width: 100%;
+        height: 100vh;
+        margin: 0;
+        box-shadow: none;
+        page-break-after: always;
+        break-after: page;
+    }
+
+    .page:last-child {
+        page-break-after: auto;
+        break-after: auto;
+    }
+
+    /* Page-number markers are editor-only chrome; hide them
+       in print so they don't bleed onto the printed sheets. */
+    .page-number 
+    {
+        display: none !important;
+    }
+
+    /* ── Hide editor-only chrome ──
+       Anything that exists for in-app interaction (selection
+       highlights, resize handles, drop indicators, context
+       menu, loading overlay) must not appear in the PDF. */
+    .cell-selected,
+    .table-selected,
+    .image-block-selected,
+    .image-resize-handles,
+    .img-handle,
+    .image-drop-indicator,
+    .block-drop-indicator,
+    .block.image-dragging,
+    .block.table-dragging,
+    .block.table-drag-handle,
+    .context-menu,
+    .loading-overlay {
+        display: none !important;
+        background: none !important;
+        box-shadow: none !important;
+    }
+
+    /* Remove any leftover selection box-shadow on cells/rows
+       so they don't appear as colored borders in the PDF. */
+    .block td, .block th {
+        box-shadow: none !important;
+    }
+}

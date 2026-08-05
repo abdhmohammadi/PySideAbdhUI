@@ -1,0 +1,20 @@
+<?xml version="1.0" ?>
+<RCC>
+	<qresource prefix="/icons">
+		<file alias="check.svg">../../../../../../icons/svg/check.svg</file>
+		<file alias="chevron-down.svg">../../../../../../icons/svg/chevron-down.svg</file>
+		<file alias="chevron-up.svg">../../../../../../icons/svg/chevron-up.svg</file>
+		<file alias="arrow-left.svg">../../../../../../icons/svg/arrow-left.svg</file>
+		<file alias="arrow-right.svg">../../../../../../icons/svg/arrow-right.svg</file>
+		<file alias="double-square.svg">../../../../../../icons/svg/double-square.svg</file>
+		<file alias="menu.svg">../../../../../../icons/svg/menu.svg</file>
+		<file alias="minus.svg">../../../../../../icons/svg/minus.svg</file>
+		<file alias="pin.svg">../../../../../../icons/svg/pin.svg</file>
+		<file alias="search.svg">../../../../../../icons/svg/search.svg</file>
+		<file alias="settings.svg">../../../../../../icons/svg/settings.svg</file>
+		<file alias="square.svg">../../../../../../icons/svg/square.svg</file>
+		<file alias="x.svg">../../../../../../icons/svg/x.svg</file>
+		<file alias="v-ellipsis.svg">../../../../../../icons/svg/v-ellipsis.svg</file>
+
+	</qresource>
+</RCC>

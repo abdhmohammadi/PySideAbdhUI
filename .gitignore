@@ -1,0 +1,55 @@
+
+samples/
+test-images/*.png
+test.py
+AbdhWindowUpdateNote.docx
+changelog.html
+# Python artifacts
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+*.pyd
+
+# Virtual environments
+env/
+.venv/
+venv/
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+*.egg
+*.whl
+*.pyz
+
+# Logs and temporary files
+*.log
+*.tmp
+*.swp
+*.swo
+*.bak
+
+# IDE/editor files
+.vscode/
+.idea/
+*.iml
+*.DS_Store
+Thumbs.db
+
+# Test and coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Package distributions
+pip-wheel-metadata/
+
+# Documentation
+docs/_build/
+
+# Misc
+*.sqlite3
+*.db

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="abdh-document" content="version=0.1.2; page-system=multi-page">
+    <title>Editor</title>
+    <link id="katex-style" rel="stylesheet" href="KaTeX/katex.min.css">
+    <!-- The editor's own stylesheet. Always present, never modified
+         by document loads. Identified by id="preserved-style" so
+         save_html_file() can locate and inline it. -->
+    <link id="preserved-style" rel="stylesheet" href="style.css">
+
+    <!-- User-supplied CSS extracted from loaded HTML documents.
+         Populated at runtime by Editor.setCustomStyle(); remains
+         empty for fresh documents. -->
+    <style id="custom-style"></style>
+
+    <script defer src="qrc:///qtwebchannel/qwebchannel.js"></script>
+    <script defer src="script.js"></script>
+    <script defer src="KaTeX/katex.min.js"></script>
+    <script defer src="KaTeX/auto-render.min.js"></script>
+
+</head>
+<body>
+    <div id="editor">
+        <div class="pages-wrapper">
+            <div class="page" data-page="0">
+                <div class="page-content"></div>
+            </div>
+        </div>
+    </div>
+    <!-- Loading overlay — visible by default so it covers the
+         initial editor boot. showLoading()/hideLoading() in
+         script.js toggle the .visible class for subsequent
+         file-open operations. -->
+    <div id="loading-overlay" class="loading-overlay visible">
+        <div class="loading-container">
+            <div class="loading-spinner"></div>
+            <div class="loading-text">Loading…</div>
+        </div>
+    </div>
+
+    <!-- Context menu — populated and positioned by script.js
+         on contextmenu event. Hidden by default. -->
+    <div id="context-menu" class="context-menu" style="display:none;direction: ltr;"></div>
+</body>
+</html>
